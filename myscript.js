@@ -131,6 +131,7 @@ $(function () {
     });
     wrongAudio = new Audio('wrong.mp3');
     correctAudio = new Audio('clap.ogg');
+    
 });
 
 let resizeObserver = new ResizeObserver(() => {
