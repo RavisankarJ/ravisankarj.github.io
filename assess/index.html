@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <link rel="stylesheet" type="text/css"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie|Catamaran">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.2.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Beastly&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="mystyles.css" />
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+        <a class="navbar-brand">Letter Identification</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="nav nav-tabs">
+                <li class="nav-item active">
+                    <a class="nav-link text-light" href="#" onclick="displayTab('divAbt', this)">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="#" onclick="displayTab('divPlay', this)">Play</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="#" onclick="displayTab('divEdit', this)">Edit Questions</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="tabContent" id="divAbt">
+        <div class="container">
+            <section>
+                <div style="text-align: center" class="title">Letter Identification</div>
+                <div class="mb-4 subTitle font-weight-bold text-center">Know your students' knowledge level in alphabets
+                </div>
+                <div class="row">
+                    <div class="col-sm-8 bg-info border border-light rounded-lg">
+                        <h5 class="mt-2 mb-2 font-weight-bold">How to use</h5>
+                        <p class="text-light">
+                            This web application has 3 tabs. The student / teacher has to go to the play tab and enter
+                            an ID. Then the user has to listen the sound plays and select the correct alphabet. Once
+                            answered all the questions teachers may download the
+                            result for analyzing purposes. Teachers can edit words / letters on the '<a
+                                style="cursor: pointer;" onclick="displayTab('divEdit', this)">Edit Questions</a>' tab.
+                        </p>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="text-center mt-4 animate"><a class="btn btn-info type=" button"
+                                style="cursor:pointer; font-weight: bolder;" onclick="displayTab('divPlay', this)">
+                                Play</a></div>
+                    </div>
+                </div>
+                <hr class="my-3">
+                <div class="row">
+                    <div class="col-md-4 bg-success col-sm-12 border border-light rounded-lg mt-2 mb-2 mr-3">
+                        <h5 class="mt-2 mb-2 font-weight-bold ">Audience</h5>
+                        <p class="text-light">
+                            English teachers handling the foundational and preparatory level students (from 1st Standard
+                            to
+                            5th Standard).
+                        </p>
+                    </div>
+                    <div class="col-md-4 bg-success col-sm-12 border border-light rounded-lg mt-2 mb-2 mr-3">
+                        <h5 class="mt-2 mb-2 font-weight-bold ">Objective</h5>
+                        <p class="text-light">
+                            Assess the students’ knowledge in alphabets. Assessment For, As and Of learning)
+                        </p>
+                    </div>
+                    <div class="col-md-3 bg-success col-sm-12 border border-light rounded-lg mt-2 mb-2">
+                        <h5 class="mt-2 mb-2 font-weight-bold">Software Requirements</h5>
+                        <p class="text-light">
+                            Latest browser preferably chrome.
+                        </p>
+                    </div>
+                </div>
+                <hr class="my-3">
+                <div class="row">
+                    <div class="col-sm-12 border border-light rounded-lg">
+                        <h5 class="mb-2 font-weight-bold ">Features</h5>
+                        <p>
+                        <ul class="list-group">
+                            <li class="list-group-item">The teachers may upload the questions using the ‘csv’ data
+                                format file.</li>
+                            <li class="list-group-item">The teachers, the head of the institution, the parents and the
+                                higher officials may get the students’ answers in ‘csv’ data format which can be used,
+                                to analyze where a student misunderstands the concept, to identify which students are
+                                behind the expected level etc. This feature makes this as an ‘assessment for learning’.
+                            </li>
+                        </ul>
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="tabContent" id="divPlay" style="visibility: hidden;">
+        <div class="container">
+            <div id="c" class="container" style="max-width: 640px; min-height: 160px;">
+                <div class="loader container"></div>
+                <svg id="area" class="my-4" style="height: 100%; width: 100%; background-color: #ff006a;" width="640"
+                    height="160" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <style>
+                            text.ansText {
+                                transition-delay: 100ms;
+                                cursor: pointer;
+                                visibility: hidden;
+                            }
+
+                            text.ansText:hover {
+                                filter: url(#hover);
+                            }
+                        </style>
+                        <filter x="-10%" y="-10%" width="120%" height="120%" id="solid">
+                            <feFlood flood-color="white" result="bg" />
+                            <feMerge>
+                                <feMergeNode in="bg" />
+                                <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                        </filter>
+                        <filter x="-10%" y="-10%" width="120%" height="120%" id="hover">
+                            <feFlood flood-color="#fff200" result="bg" />
+                            <feMerge>
+                                <feMergeNode in="bg" />
+                                <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    <g id="successSvg" style="display: none;">
+                        <ellipse vector-effect="non-scaling-stroke" cx="73.72727008467373" cy="78.1389548865628"
+                            rx="52.61937500000002" ry="46.70612276058634" fill="rgb(237,175,6)" />
+                        <clipPath id="_clipPath_jZP6PAo7mHZiJCTjM4n8rYewtEn95vYX">
+                            <ellipse vector-effect="non-scaling-stroke" cx="73.72727008467373" cy="78.1389548865628"
+                                rx="52.61937500000002" ry="46.70612276058634" fill="rgb(255,255,255)" />
+                        </clipPath>
+                        <g clip-path="url(#_clipPath_jZP6PAo7mHZiJCTjM4n8rYewtEn95vYX)">
+                            <g>
+                                <ellipse vector-effect="non-scaling-stroke" cx="75.7412038183871" cy="75.73937426767029"
+                                    rx="52.61937500000002" ry="46.70612276058634" fill="rgb(250,201,64)" />
+                            </g>
+                        </g>
+                        <radialGradient id="_rgradient_2" fx="0.49999999999999956" fy="0.5" cx="0.49999999999999956"
+                            cy="0.5" r="1" gradientTransform="matrix(13.112,0,0,13.112,41.054,63.677)"
+                            gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-opacity="1" style="stop-color:rgb(29,29,29)" />
+                            <stop offset="100%" stop-opacity="1" style="stop-color:rgb(0,0,0)" />
+                        </radialGradient>
+                        <circle vector-effect="non-scaling-stroke" cx="47.61040602726328" cy="70.23319374039025"
+                            r="6.5559970480456045" fill="url(#_rgradient_2)" />
+                        <clipPath id="_clipPath_sTDTr3g3e8qe8wMTpNreXbn29O3WSDF3">
+                            <circle vector-effect="non-scaling-stroke" cx="47.61040602726328" cy="70.23319374039025"
+                                r="6.5559970480456045" fill="rgb(255,255,255)" />
+                        </clipPath>
+                        <g clip-path="url(#_clipPath_sTDTr3g3e8qe8wMTpNreXbn29O3WSDF3)">
+                            <g>
+                                <circle vector-effect="non-scaling-stroke" cx="44.760904042328434"
+                                    cy="73.70401570700264" r="2.8495019849348537" fill="rgb(255,255,255)" />
+                                <circle vector-effect="non-scaling-stroke" cx="47.13905983426656" cy="69.1191027387616"
+                                    r="1.435463405944624" fill="rgb(255,255,255)" />
+                            </g>
+                        </g>
+                        <radialGradient id="_rgradient_3" fx="0.5000000000000009" fy="0.5" cx="0.5000000000000009"
+                            cy="0.5" r="1" gradientTransform="matrix(13.112,0,0,13.112,93.267,63.677)"
+                            gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-opacity="1" style="stop-color:rgb(29,29,29)" />
+                            <stop offset="100%" stop-opacity="1" style="stop-color:rgb(0,0,0)" />
+                        </radialGradient>
+                        <circle vector-effect="non-scaling-stroke" cx="99.82270931512974" cy="70.23319374039025"
+                            r="6.555997048045612" fill="url(#_rgradient_3)" />
+                        <clipPath id="_clipPath_xLCXhx3FCW5Ffx4QFzKiDAdmCfhQZlLA">
+                            <circle vector-effect="non-scaling-stroke" cx="99.82270931512974" cy="70.23319374039025"
+                                r="6.555997048045612" fill="rgb(255,255,255)" />
+                        </clipPath>
+                        <g clip-path="url(#_clipPath_xLCXhx3FCW5Ffx4QFzKiDAdmCfhQZlLA)">
+                            <g>
+                                <circle vector-effect="non-scaling-stroke" cx="96.9732073301949" cy="73.70401570700264"
+                                    r="2.849501984934861" fill="rgb(255,255,255)" />
+                                <circle vector-effect="non-scaling-stroke" cx="99.351363122133" cy="69.1191027387616"
+                                    r="1.4354634059446312" fill="rgb(255,255,255)" />
+                            </g>
+                        </g>
+                        <path
+                            d=" M 53.309 50.694 L 53.781 51.872 L 53.309 53.05 L 52.131 53.543 L 43.283 53.543 L 42.126 53.05 L 41.633 51.872 L 42.104 50.694 L 43.283 50.201 L 52.131 50.201 L 53.309 50.694 Z  M 105.415 49.772 L 105.907 50.951 L 105.415 52.129 L 104.258 52.622 L 95.409 52.622 L 94.231 52.129 L 93.738 50.951 L 94.231 49.772 L 95.409 49.28 L 104.258 49.28 L 105.415 49.772 Z "
+                            fill="rgb(46,13,25)" />
+                        <path
+                            d=" M 77.112 87.737 C 96.395 87.373 107.878 84.374 107.021 81.653 C 110.364 83.088 110.407 95.3 98.43 104.534 C 93.438 108.391 86.175 110.319 78.484 110.983 C 77.712 111.155 76.898 111.262 76.041 111.262 L 71.371 111.262 C 70.535 111.262 69.721 111.155 68.95 110.983 C 61.237 110.34 53.995 108.391 49.024 104.556 C 37.027 95.3 37.069 83.088 40.412 81.631 C 39.555 84.374 51.06 87.373 70.321 87.737 L 71.306 87.737 C 73.242 87.762 75.177 87.762 77.112 87.737 L 77.112 87.737 Z "
+                            fill-rule="evenodd" fill="rgb(255,255,255)" />
+                        <clipPath id="_clipPath_7AryPfJ37HwtIkfd0mfqcqLkeDPtNiPI">
+                            <path
+                                d=" M 77.112 87.737 C 96.395 87.373 107.878 84.374 107.021 81.653 C 110.364 83.088 110.407 95.3 98.43 104.534 C 93.438 108.391 86.175 110.319 78.484 110.983 C 77.712 111.155 76.898 111.262 76.041 111.262 L 71.371 111.262 C 70.535 111.262 69.721 111.155 68.95 110.983 C 61.237 110.34 53.995 108.391 49.024 104.556 C 37.027 95.3 37.069 83.088 40.412 81.631 C 39.555 84.374 51.06 87.373 70.321 87.737 L 71.306 87.737 C 73.242 87.762 75.177 87.762 77.112 87.737 L 77.112 87.737 Z "
+                                fill-rule="evenodd" fill="rgb(255,255,255)" />
+                        </clipPath>
+                        <g clip-path="url(#_clipPath_7AryPfJ37HwtIkfd0mfqcqLkeDPtNiPI)">
+                            <g>
+                                <path
+                                    d=" M 39.598 92.194 C 39.962 92.558 44.954 97.935 51.295 98.235 C 51.295 98.235 43.454 99.607 40.069 96.393 L 39.619 92.194 L 39.598 92.194 Z  M 108.435 92.129 C 108.093 92.494 103.079 97.871 96.759 98.171 C 96.759 98.171 104.6 99.542 107.986 96.329 L 108.435 92.129 Z "
+                                    fill-rule="evenodd" fill="rgb(46,13,25)" />
+                            </g>
+                        </g>
+                    </g>
+                    <g id="ansGroup" style="display: block">
+                        <text class="ansText" filter="url(#solid)" x="10" y="20" font-weight="bold" font-size="1.2em"
+                            fill="green" onmouseover="setTransform(event.target)"
+                            onmouseleave="clearTransform(event.target)">15</text>
+                        <text class="ansText" filter="url(#solid)" x="15" y="20" font-weight="bold" font-size="1.2em"
+                            fill="green" onmouseover="setTransform(event.target)"
+                            onmouseleave="clearTransform(event.target)">Lamda</text>
+                        <text class="ansText" filter="url(#solid)" x="20" y="20" font-weight="bold" font-size="1.2em"
+                            fill="green" onmouseover="setTransform(event.target)"
+                            onmouseleave="clearTransform(event.target)">apple</text>
+                        <text class="ansText" filter="url(#solid)" x="30" y="20" font-weight="bold" font-size="1.2em"
+                            fill="green" onmouseover="setTransform(event.target)"
+                            onmouseleave="clearTransform(event.target)">Mango</text>
+                        <text class="ansText" filter="url(#solid)" x="35" y="20" font-weight="bold" font-size="1.2em"
+                            fill="green" onmouseover="setTransform(event.target)"
+                            onmouseleave="clearTransform(event.target)">umbrella</text>
+                        <text class="ansText" filter="url(#solid)" x="40" y="20" font-weight="bold" font-size="1.2em"
+                            fill="green" onmouseover="setTransform(event.target)"
+                            onmouseleave="clearTransform(event.target)">Cat</text>
+                    </g>
+                    <text id="successText" style="font-weight:bold;font-size:2em;fill:#ffffff; display: none" x="200"
+                        y="150">Hey!! Success!!!</text>
+                </svg>
+                <div style="text-align: center; padding-bottom: 1em;"><button class="btn btn-info" onclick="speakWord()">
+                        <!-- <span id="randText">Listen to the sound. And select the correct text
+                        box.</span> -->
+                        <i class="fa fa-play"></i>&nbsp;Play Audio</button>
+                </div>
+            </div>
+            <div id="divDetails" class="contianer border border-primary rounded"
+                style="border: 2px; max-width: 600px; margin-right: auto; margin-left: auto;">
+                <div id='studentDetailEnquire' style="padding-left: 10px; padding-top: 10px;">
+                    <p>Enter student's id: <input id="stuid" type="text" value="-" />
+                        <button id="startBtn" class="btn btn-primary" onclick="start()">Start</button>
+                    </p>
+                </div>
+                <div id='studentDetails' style="display: none; padding-left: 10px;padding-top: 10px;">
+                    <p>The student's id: </p>
+                </div>
+            </div>
+            <div id="divStatus" class="container justify-content-between d-flex"
+                style="border: 2px; max-width: 640px; margin-right: auto; margin-left: auto; padding: 5px;">
+                <span id="timer"></span>
+                <button id="submitBtn" style="display: none;" class="btn btn-primary"
+                    onclick="submitAns()">Submit</button>
+                <button id="nxtBtn" style="display: none;" class="btn btn-primary" onclick="nxtQuestion()">Next</button>
+                <button id="skipBtn" style="display: none;" class="btn btn-primary"
+                    onclick="skipQuestion()">Skip</button>
+            </div>
+            <div id="score" class="container border border-primary rounded"
+                style="border: 2px; margin-right: auto; margin-left: auto; display: none;">
+                <table class="table table-hover">
+                    <caption style="caption-side: top; text-align: center;">Your result</caption>
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Question</th>
+                            <th>Time<br><span style="font-size: smaller;">(in milli second)</span></th>
+                            <th>Words</th>
+                            <th>Moves</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbdy"></tbody>
+                </table>
+                <div class="d-flex justify-content-between"
+                    style="text-align: center; padding: 5px; padding-left: 10px; padding-right: 10px;">
+                    <button class="btn btn-primary" onclick="dwnloadAns()">Download report</button>
+                    <button class="btn btn-primary" onclick="reload()">Play again</button>
+                    <!-- <button class="btn btn-primary" onclick="nxtLevel()">Next Level</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tabContent" id="divEdit" style="display: none;">
+        <div class="container border border-primary rounded"
+            style="align-content: center; margin-left: auto; margin-right: auto;">
+            <table class="table table-hover">
+                <caption style="caption-side: top; text-align: center;">QUESTIONS</caption>
+                <thead>
+                    <tr>
+                        <th class="qheading">Word</th>
+                        <th class="qheading">Font style</th>
+                        <th class="hideColumn qheading" style="display: none;">Delete</th>
+                    </tr>
+                </thead>
+                <tbody id="tQbdy"></tbody>
+            </table>
+
+            <div class="container-fluid" id="inQuestion" style="display: none;">
+                <div class="row">
+                    <div class="form-group" style="padding: 10px; ">
+                        <label for="word">Word</label>
+                        <input class="form-control" name="word" required type="text" />
+                    </div>
+
+                    <div class="form-group" style="padding: 10px; ">
+                        <label for="font">Font Style</label>
+                        <select class="form-control" name="font">
+                            <option value='normal'>normal</option>
+                            <option value='cursive'>cursive</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between" style="padding-left: 20px; padding-right: 20px;">
+                <div style="width: 75%;">
+                    <button id="editBtn" class="btn btn-primary" onclick="editQuestions()">Edit</button>
+                    <button id="addBtn" class="btn btn-primary" disabled onclick="addQuestion()">Add</button>
+                    <button id="dwnBtn" class="btn btn-primary" onclick="dwnloadQues()">Download Questions</button>
+                </div>
+                <div style="width: 25%; text-align: end;">
+                    <button id="saveBtn" class="btn btn-success" disabled onclick="saveQuestions()">Save</button>
+                </div>
+            </div>
+            <br>
+            <div class="container">
+                <label for="myfile">Select a file:</label>
+                <input type="file" id="myfile" name="myfile">
+                <button class="btn btn-success mt-2" onclick="uploadReport()">Upload Questions</button>
+            </div>
+            <p style="text-align: center; padding: 20px 0; background-color: azure;">---or choose below word set---
+            </p>
+            <div class="container" style="padding: 10px 0;">
+                <div id="questionSetdiv" class="row row-cols-1 row-cols-md-3">
+                    <div class="col mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">No Words</h5>
+                                <p class="card-text">No other word sets are available.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"
+        integrity="sha512-rKFvwjvE4liWPlFnvH4ZhRDfNZ9FOpdkD/BU5gAIA3VS3vOQrQ5BjKgbO3kxebKhHdHcNUHLqxQYSoxee9UwgA=="
+        crossorigin="anonymous"></script>
+    <script src="question_words.js"></script>
+    <script src="myscript.js"></script>
+</body>
+
+</html>

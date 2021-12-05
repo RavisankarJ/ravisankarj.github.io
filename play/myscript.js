@@ -178,6 +178,8 @@ function initialiseToStart() {
 
 function submitAns() {
     stopTimer();
+    correctAudio.pause();
+    correctAudio.currentTime = 0;
     $('#divStatus').removeClass('d-flex');
     $('#divStatus').css('display', 'none');
     $('#studentDetails').css("display", "none");
