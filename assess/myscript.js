@@ -4,7 +4,7 @@ let answer = [];
 let moves = [];
 let level = 0, words, wordQueue = [];
 let speech = new SpeechSynthesisUtterance();
-let wrongAudio, correctAudio;
+let wrongAudio, correctAudio, currentWord;
 
 let svgEle, area, timer, timeDifference, stuid;
 speech.lang = "en";
@@ -61,7 +61,10 @@ function randomizeElements() {
 }
 
 function randomText() {
-    speech.text = wordQueue.pop();
+    currentWord = wordQueue.pop();
+    console.log(currentWord);
+    console.log(currentWord.word);
+    speech.text = currentWord.word;
     // document.querySelector('#randText').innerHTML = speech.text;
     speakWord();
 }
@@ -158,8 +161,9 @@ function start() {
     $('#divStatus').css('display', 'block');
     document.querySelectorAll('text.ansText').forEach((ele) => {
         ele.style.visibility = 'visible';
-        wordQueue.push(ele.textContent);
+        // wordQueue.push(ele.textContent);
     });
+    wordQueue = words.slice();
     // answer.push(stuid);
     wordQueue = shuffleArray(wordQueue);
     if (!wordQueue.length)
@@ -208,8 +212,8 @@ function createAnsTable(tableData) {       //creating answer table
         for (i = 0; i < rowData.length; i++) {
             var cell = document.createElement('td');
             switch (i) {
-                case 3:
-                case 4: var text = "";
+                case 4:
+                case 5: var text = "";
                     rowData[i].forEach(function (cellData) {
                         text += cellData + " ";
                     });
@@ -268,6 +272,10 @@ function success(eleTag) {      //called by correct selection
 
 function storeMoves() {
     answer.push(speech.text);
+    if (currentWord.font)
+        answer.push(currentWord.font);
+    else
+        answer.push('normal');
     answer.push(timeDifference);
     var texts = [];
     document.querySelectorAll('text.ansText').forEach((ele) => {
@@ -412,7 +420,7 @@ function displayTab(tabid, element) {
 
 function dwnloadAns() {
     let csvContent = "data:text/csv;charset=utf-8,";
-    var dataString = "Student ID\tQuestion\tTime (in milli second)\tWords\tMoves\n";
+    var dataString = "Student ID\tQuestion\tFont Type\tTime (in milli second)\tWords\tMoves\n";
     answers.forEach(function (row) {
         row.forEach(function (cell) {
             if (Array.isArray(cell)) {
@@ -575,16 +583,16 @@ function updateQuestionSet() {
     var wordSetElement = document.getElementById('questionSetdiv');
     if (wordSet.length > 0)
         $(wordSetElement).empty();
-    
+
     wordSet.forEach((set, i) => {
         var cardDiv = $('<div class="col mb-4"></div>')
             .append($('<div class="card h-100 text-center"></div>)')
                 .append($('<div class="card-body"></div>')
-                    .append($('<h5 class="card-title"></h5>').html('Word Set <span class="qsetNo"0>' + (i+1)+'</span>'),
+                    .append($('<h5 class="card-title"></h5>').html('Word Set <span class="qsetNo"0>' + (i + 1) + '</span>'),
                         (stringifySet(set)))));
 
         $(wordSetElement).append(cardDiv);
-        
+
     });
     addClickEvent_CardElement();
 }

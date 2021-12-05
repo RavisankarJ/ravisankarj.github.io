@@ -4,7 +4,7 @@ let answer = [];
 let moves = [];
 let level = 0, words, wordQueue = [];
 let speech = new SpeechSynthesisUtterance();
-let wrongAudio, correctAudio;
+let wrongAudio, correctAudio, currentWord;
 
 let svgEle, area, timer, timeDifference, stuid;
 speech.lang = "en";
@@ -61,7 +61,10 @@ function randomizeElements() {
 }
 
 function randomText() {
-    speech.text = wordQueue.pop();
+    currentWord = wordQueue.pop();
+    console.log(currentWord);
+    console.log(currentWord.word);
+    speech.text = currentWord.word;
     // document.querySelector('#randText').innerHTML = speech.text;
     speakWord();
 }
@@ -131,7 +134,7 @@ $(function () {
     });
     wrongAudio = new Audio('wrong.mp3');
     correctAudio = new Audio('clap.ogg');
-    
+
 });
 
 let resizeObserver = new ResizeObserver(() => {
@@ -164,9 +167,10 @@ function initialiseToStart() {
     $('#divStatus').css('display', 'block');
     document.querySelectorAll('text.ansText').forEach((ele) => {
         ele.style.visibility = 'visible';
-        wordQueue.push(ele.textContent);
+        // wordQueue.push(ele.textContent);
     });
-    // answer.push(stuid);
+    wordQueue = words.slice();
+    console.log(words);
     wordQueue = shuffleArray(wordQueue);
     if (!wordQueue.length)
         alert('no questions are there');
@@ -215,7 +219,7 @@ function resetData() {
     wordQueue = [];
     level = 0;
     words = levels[level];
-    updateLevelsUI(level+1);
+    updateLevelsUI(level + 1);
 }
 
 function createAnsTable(tableData) {       //creating answer table
@@ -225,8 +229,8 @@ function createAnsTable(tableData) {       //creating answer table
         for (i = 0; i < rowData.length; i++) {
             var cell = document.createElement('td');
             switch (i) {
-                case 3:
-                case 4: var text = "";
+                case 4:
+                case 5: var text = "";
                     rowData[i].forEach(function (cellData) {
                         text += cellData + " ";
                     });
@@ -285,6 +289,10 @@ function success(eleTag) {      //called by correct selection
 
 function storeMoves() {
     answer.push(speech.text);
+    if (currentWord.font)
+        answer.push(currentWord.font);
+    else
+        answer.push('normal');
     answer.push(timeDifference);
     var texts = [];
     document.querySelectorAll('text.ansText').forEach((ele) => {
@@ -429,7 +437,7 @@ function displayTab(tabid, element) {
 
 function dwnloadAns() {
     let csvContent = "data:text/csv;charset=utf-8,";
-    var dataString = "Student ID\tQuestion\tTime (in milli second)\tWords\tMoves\n";
+    var dataString = "Student ID\tQuestion\tFont Type\tTime (in milli second)\tWords\tMoves\n";
     answers.forEach(function (row) {
         row.forEach(function (cell) {
             if (Array.isArray(cell)) {
@@ -485,7 +493,7 @@ function nxtLevel() {
         words = levels[level];
         updateLevelsUI(level + 1);
         console.log($('#levelID').text());
-        document.getElementById('levelID').innerHTML = "Level "+(level+1);
+        document.getElementById('levelID').innerHTML = "Level " + (level + 1);
         console.log($('#levelID').text());
         // reload();
         initialiseToStart();
