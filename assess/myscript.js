@@ -62,8 +62,6 @@ function randomizeElements() {
 
 function randomText() {
     currentWord = wordQueue.pop();
-    console.log(currentWord);
-    console.log(currentWord.word);
     speech.text = currentWord.word;
     // document.querySelector('#randText').innerHTML = speech.text;
     speakWord();
