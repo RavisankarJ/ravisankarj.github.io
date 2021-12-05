@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<body>
+<svg height="900" width="900">
+
+<filter id="f1">
+<feFlood x="15%" y="10%" width="30%" height="30%" flood-color="green" flood-opacity=".6"/>
+</filter>
+<rect x="10%" y="15%" width="20%" height="20%" fill="none" stroke-width="2" stroke="blue"/>
+<rect x="10%" y="15%" width="20%" height="20%" filter="url(#f1)"/>
+<rect x="40%" y="15%" width="20%" height="20%" fill="none" stroke-width="2" stroke="black"/>
+<rect x="40%" y="15%" width="20%" height="20%" filter="url(#f1)"/>
+
+</svg>
+</body>
+</html>
