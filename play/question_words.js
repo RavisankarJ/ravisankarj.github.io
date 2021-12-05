@@ -45,14 +45,6 @@ levels = [
     ],
 
     [
-        {word: 'a'},
-        {word: 'e'},
-        {word: 'i'},
-        {word: 'o'},
-        {word: 'u'}
-    ],
-
-    [
         {word: 'b', font: 'cursive'},
         {word: 'h', font: 'cursive'},
         {word: 'k', font: 'cursive'},
@@ -73,5 +65,50 @@ levels = [
         {word: 'd'},
         {word: 'p'},
         {word: 'q'}
+    ],
+
+    [
+        {word: 'A'},
+        {word: 'B'},
+        {word: 'C'},
+        {word: 'D'}
+    ],
+
+    [
+        {word: 'E'},
+        {word: 'F'},
+        {word: 'G'}
+        
+    ],
+
+    [
+        {word: 'H'},
+        {word: 'I'},
+        {word: 'J'},
+        {word: 'K'}
+    ],
+
+    [
+        {word: 'L'},
+        {word: 'M'},
+        {word: 'N'},
+        {word: 'O'},
+        {word: 'P'}
+    ],
+    
+    [
+        {word: 'Q'},
+        {word: 'R'},
+        {word: 'S'},
+        {word: 'T'}
+    ],
+
+    [
+        {word: 'U'},
+        {word: 'V'},
+        {word: 'W'},
+        {word: 'X'},
+        {word: 'Y'},
+        {word: 'Z'}
     ]
 ];
