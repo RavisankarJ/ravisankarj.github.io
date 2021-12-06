@@ -9,7 +9,7 @@ let wrongAudio, correctAudio, currentWord;
 let svgEle, area, timer, timeDifference, stuid;
 speech.lang = "en";
 window.speechSynthesis.onvoiceschanged = () => {
-    speech.rate = 1;
+    speech.rate = 0.8;
     speech.volume = 1;
     speech.pitch = 1;
 }
@@ -71,12 +71,16 @@ function speakWord() {
     window.speechSynthesis.speak(speech);
     console.log(speech.text);
 }
-
+function speakWordwithHint(){
+    speech.text = currentWord.hint;
+    speakWord();
+    speech.text = currentWord.word;
+}
 function addClickEvent_TextElement() {
     document.querySelectorAll('text.ansText').forEach((ele) => {
         ele.addEventListener('click',
             (event) => {
-                if (speech.text === event.target.textContent)
+                if (currentWord.word === event.target.textContent)
                     success(ele);
                 else
                     failure(ele);
@@ -286,7 +290,7 @@ function success(eleTag) {      //called by correct selection
 }
 
 function storeMoves() {
-    answer.push(speech.text);
+    answer.push(currentWord.word);
     if (currentWord.font)
         answer.push(currentWord.font);
     else
