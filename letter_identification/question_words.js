@@ -1,8 +1,8 @@
 samplewords = [
-    {word: 'b', font: 'cursive', hint: 'b for ball'},
-    {word: 'l', font: 'cursive', hint: 'l for lollipop'},
-    {word: 'p', font: 'cursive', hint: 'p for parrot'},
-    {word: 'Q', font: 'cursive', hint: 'q for queen'},
+    {word: 'b', hint: 'b for ball', font: 'cursive'},
+    {word: 'l', hint: 'l for lollipop', font: 'cursive'},
+    {word: 'p', hint: 'p for parrot', font: 'cursive'},
+    {word: 'Q', hint: 'q for queen', font: 'cursive'},
     {word: 'w', hint: 'w for window'}
 ];
 
@@ -55,19 +55,19 @@ wordSet = [
     ],
 
     [
-        {word: 'b', font: 'cursive', hint: 'b for ball'},
-        {word: 'h', font: 'cursive', hint: 'h for hen'},
-        {word: 'k', font: 'cursive', hint: 'k for kangaroo'},
-        {word: 'l', font: 'cursive', hint: 'l for lollipop'}
+        {word: 'b', hint: 'b for ball', font: 'cursive'},
+        {word: 'h', hint: 'h for hen', font: 'cursive'},
+        {word: 'k', hint: 'k for kangaroo', font: 'cursive'},
+        {word: 'l', hint: 'l for lollipop', font: 'cursive'}
     ],
 
     [
-        {word: 'p', font: 'cursive', hint: 'p for parrot'},
-        {word: 'q', font: 'cursive', hint: 'q for queen'},
-        {word: 'f', font: 'cursive', hint: 'f for frog'},
-        {word: 'y', font: 'cursive', hint: 'y for yellow'},
-        {word: 'g', font: 'cursive', hint: 'g for goat'},
-        {word: 'j', font: 'cursive', hint: 'j for jug'}
+        {word: 'p', hint: 'p for parrot', font: 'cursive'},
+        {word: 'q', hint: 'q for queen', font: 'cursive'},
+        {word: 'f', hint: 'f for frog', font: 'cursive'},
+        {word: 'y', hint: 'y for yellow', font: 'cursive'},
+        {word: 'g', hint: 'g for goat', font: 'cursive'},
+        {word: 'j', hint: 'j for jug', font: 'cursive'}
     ],
 
     [
@@ -169,3 +169,4 @@ wordSet = [
 ];
 
 
+levels = [...wordSet];
