@@ -42,10 +42,11 @@
                     <div class="col-sm-8 bg-info border border-light rounded-lg">
                         <h5 class="mt-2 mb-2 font-weight-bold">How to use</h5>
                         <p class="text-light">
-                            This web application has 2 tabs. The student has to go to the play tab and enter
+                            This web application has 3 tabs. The student / teacher has to go to the play tab and enter
                             an ID. Then the user has to listen the sound plays and select the correct alphabet. Once
                             answered all the questions teachers may download the
-                            result for analyzing purposes.
+                            result for analyzing purposes. Teachers can edit words / letters on the '<a
+                                style="cursor: pointer;" onclick="displayTab('divEdit', this)">Edit Questions</a>' tab.
                         </p>
                     </div>
                     <div class="col-sm-4">
@@ -59,7 +60,9 @@
                     <div class="col-md-4 bg-success col-sm-12 border border-light rounded-lg mt-2 mb-2 mr-3">
                         <h5 class="mt-2 mb-2 font-weight-bold ">Audience</h5>
                         <p class="text-light">
-                            Foundation level students (from 1st Standard to 2nd Standard).
+                            English teachers handling the foundational and preparatory level students (from 1st Standard
+                            to
+                            5th Standard).
                         </p>
                     </div>
                     <div class="col-md-4 bg-success col-sm-12 border border-light rounded-lg mt-2 mb-2 mr-3">
@@ -81,6 +84,8 @@
                         <h5 class="mb-2 font-weight-bold ">Features</h5>
                         <p>
                         <ul class="list-group">
+                            <li class="list-group-item">The teachers may upload the questions using the ‘csv’ data
+                                format file.</li>
                             <li class="list-group-item">The teachers, the head of the institution, the parents and the
                                 higher officials may get the students’ answers in ‘csv’ data format which can be used,
                                 to analyze where a student misunderstands the concept, to identify which students are
@@ -278,6 +283,7 @@
                         <div class="d-flex justify-content-between"
                             style="text-align: center; padding: 5px; padding-left: 10px; padding-right: 10px;">
                             <button class="btn btn-primary" onclick="dwnloadAns()">Download report</button>
+                    <button id="uploadAns" class="btn btn-info" onclick="uploadAns()">Upload report</button>
                             <button class="btn btn-primary" onclick="reload()">Play again</button>
                             <!-- <button class="btn btn-primary" onclick="nxtLevel()">Next Level</button> -->
                         </div>

@@ -136,7 +136,6 @@ $(function () {
     });
     wrongAudio = new Audio('wrong.mp3');
     correctAudio = new Audio('clap.ogg');
-
 });
 
 let resizeObserver = new ResizeObserver(() => {
@@ -172,13 +171,13 @@ function initialiseToStart() {
         // wordQueue.push(ele.textContent);
     });
     wordQueue = words.slice();
-    console.log(words);
+    // console.log(words);
     wordQueue = shuffleArray(wordQueue);
     if (!wordQueue.length)
         alert('no questions are there');
     else {
         nxtQuestion();
-        // $('.nav-link')[2].setAttribute('onclick', 'alert("you can not edit question while playing.")');
+        $('.nav-link')[2].setAttribute('onclick', 'alert("you can not edit question while playing.")');
     }
 }
 
@@ -192,7 +191,7 @@ function submitAns() {
     $('#c').css('display', 'none');
     $('#score').css("display", "block");
     createAnsTable(answers);
-    // $('.nav-link')[2].setAttribute("onclick", "displayTab('divEdit', this)");
+    $('.nav-link')[2].setAttribute("onclick", "displayTab('divEdit', this)");
 }
 
 function reload() {
@@ -204,7 +203,9 @@ function resetTextsUI() {
     $('#divDetails').css("display", "block");
     $('#studentDetailEnquire').css("display", "block");
     $('#studentDetails').css("display", "none");
-
+    document.getElementById('uploadAns').disabled = 'false';
+    document.getElementById('uploadAns').removeAttribute('disabled');
+    document.getElementById('uploadAns').innerHTML = "Upload";
     $('#divStatus').removeClass('d-flex');
     $('#divStatus').css("display", "none");
     $('#score').css("display", "none");
@@ -432,7 +433,11 @@ function displayTab(tabid, element) {
         linkTags[i].classList.remove('active');
     }
     element.parentElement.classList.add('active');
-    if (element.innerText.trim() === 'Play')
+    if (element.innerText === 'Edit Questions') {
+        createQuestionsTable(words);
+        updateQuestionSet();
+    }
+    else if (element.innerText.trim() === 'Play')
         $('#divPlay').css('visibility', 'visible');
 }
 

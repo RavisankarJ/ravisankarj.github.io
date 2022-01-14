@@ -5,11 +5,13 @@ let moves = [];
 let level = 0, words, wordQueue = [];
 let speech = new SpeechSynthesisUtterance();
 let wrongAudio, correctAudio, currentWord;
+let mode;   //mode = 0 indicates play mode, 1 indicates assessment mode, 2 indicates learning mode
+let selectedQuestionSet = [];    //to store currently selected question set from edit question tab
 
 let svgEle, area, timer, timeDifference, stuid;
 speech.lang = "en";
 window.speechSynthesis.onvoiceschanged = () => {
-    speech.rate = 1;
+    speech.rate = 0.8;
     speech.volume = 1;
     speech.pitch = 1;
 }
@@ -71,7 +73,7 @@ function speakWord() {
     window.speechSynthesis.speak(speech);
     console.log(speech.text);
 }
-function speakWordwithHint(){
+function speakWordwithHint() {
     speech.text = currentWord.hint;
     speakWord();
     speech.text = currentWord.word;
@@ -105,7 +107,8 @@ function clearTransform(ele) {
 
 $(function () {
     svgEle = $('#c svg');
-    words = samplewords;
+    mode = 0;
+    words = levels[0];
     loadQuestions();
     svgEle.attr('width', $('#c').outerWidth());
     if ((area * 20 / svgEle.attr('width')) > 260)
@@ -136,6 +139,23 @@ $(function () {
     });
     wrongAudio = new Audio('wrong.mp3');
     correctAudio = new Audio('clap.ogg');
+    $('input[type=radio][name="mode"]').change(function () {
+        switch (this.value) {
+            case 'Play Mode': console.log('you pressed play mode');
+                mode = 0;
+                $('#levelDiv').css('display', 'flex');
+                $('#levelID').css('display', 'block');
+                words = levels[0];
+                break;
+            case 'Test Mode': console.log('you pressed test mode');
+                $('#levelDiv').css('display', 'none');
+                $('#levelID').css('display', 'none');
+                mode = 1;
+                words = selectedQuestionSet;
+                break;
+            default: console.log('you pressed nothing');
+        }
+    });
 });
 
 let resizeObserver = new ResizeObserver(() => {
@@ -152,7 +172,26 @@ function setSvgDimension() {
 }
 
 function start() {
+    initialiseToStart();
+    if (mode == 0) {
+        generateLevelsUI();
+
+    }
+    else {
+        $('#levelDiv').css('display', 'none');
+        $('#levelID').css('display', 'none');
+    }
+
+}
+
+function initialiseToStart() {
     $('#c').css('display', 'block');
+    if (mode == 1) {
+        if (selectedQuestionSet.length > 0)
+            words = selectedQuestionSet;
+        else
+            words = samplewords;
+    }
     loadQuestions();
     wordQueue = [];
     stuid = $('#stuid').val();
@@ -165,8 +204,9 @@ function start() {
         ele.style.visibility = 'visible';
         // wordQueue.push(ele.textContent);
     });
+
     wordQueue = words.slice();
-    // answer.push(stuid);
+    // console.log(words);
     wordQueue = shuffleArray(wordQueue);
     if (!wordQueue.length)
         alert('no questions are there');
@@ -176,9 +216,10 @@ function start() {
     }
 }
 
-
 function submitAns() {
     stopTimer();
+    correctAudio.pause();
+    correctAudio.currentTime = 0;
     $('#divStatus').removeClass('d-flex');
     $('#divStatus').css('display', 'none');
     $('#studentDetails').css("display", "none");
@@ -186,10 +227,16 @@ function submitAns() {
     $('#score').css("display", "block");
     createAnsTable(answers);
     $('.nav-link')[2].setAttribute("onclick", "displayTab('divEdit', this)");
+    correctAudio.pause();
+    correctAudio.currentTime = 0;
 }
 
 function reload() {
+    resetTextsUI();
+    resetData();
+}
 
+function resetTextsUI() {
     $('#divDetails').css("display", "block");
     $('#studentDetailEnquire').css("display", "block");
     $('#studentDetails').css("display", "none");
@@ -203,10 +250,18 @@ function reload() {
     $('#nxtBtn').css("display", "none");
     $('#skipBtn').css("display", "block");
     $('#tbdy').html("");
+}
+
+function resetData() {
     answer = [];
     answers = [];
     moves = [];
     wordQueue = [];
+    level = 0;
+    if (mode == 0) {
+        words = levels[level];
+        updateLevelsUI(level + 1);
+    }
 }
 
 function createAnsTable(tableData) {       //creating answer table
@@ -335,7 +390,10 @@ function nxtQuestion() {
         startTimer();
     }
     else {
-        submitAns();
+        if (mode == 1)
+            submitAns();
+        else if (mode == 0)
+            nxtLevel();
     }
     correctAudio.pause();
     correctAudio.currentTime = 0;
@@ -351,10 +409,10 @@ function skipQuestion() {
         startTimer();
     }
     else
-        submitAns();
-
-        correctAudio.pause();
-        correctAudio.currentTime = 0;
+        // submitAns();
+        nxtLevel();
+    correctAudio.pause();
+    correctAudio.currentTime = 0;
 }
 
 function resetAnimation() {
@@ -408,6 +466,7 @@ function shuffleArray(array) {
     return array.sort(() => Math.random() - 0.5);
 
 }
+
 function displayTab(tabid, element) {
     $('.tabContent').css("display", "none");
     $('#' + tabid).css("display", "block");
@@ -422,6 +481,8 @@ function displayTab(tabid, element) {
     }
     else if (element.innerText.trim() === 'Play')
         $('#divPlay').css('visibility', 'visible');
+    if (tabid === 'divPlay')
+        $('#divPlay').css('visibility', 'visible')
 }
 
 
@@ -622,10 +683,65 @@ function addClickEvent_CardElement() {
             (event) => {
                 var k = event.currentTarget.children[0].children[0].children[0].textContent;
                 console.log(parseInt(k));
-                words = wordSet[parseInt(k) - 1];
-                createQuestionsTable(words);
+                // words = wordSet[parseInt(k) - 1];
+                selectedQuestionSet = wordSet[parseInt(k) - 1];
+                words = selectedQuestionSet;
+                createQuestionsTable(selectedQuestionSet);
+                mode = 1;
+                $('#levelDiv').css('display', 'none');
+                $('#assessmentMode').prop('checked', true).trigger('change');
+                var playTab = document.getElementById('divPlay');
+                displayTab('divPlay', $('.nav-item').eq(1).children()[0]);
             }
         );
     });
 }
 
+function updateLevelsUI(currentActive) {
+    var progress = document.getElementById('progress');
+    var stepCircles = document.querySelectorAll(".circle");
+    // console.log(document.getElementById('progress'));
+    stepCircles.forEach((circle, i) => {
+        if (i < currentActive) {
+            circle.classList.add("active");
+        } else {
+            circle.classList.remove("active");
+        }
+    });
+
+    const activeCircles = document.querySelectorAll(".circle.active");
+    progress.style.height =
+        ((activeCircles.length - 1) / (stepCircles.length)) * 100 + "%";
+    document.getElementsByClassName('car')[0].style.top = progress.style.height;
+}
+
+function nxtLevel() {
+    if (level < levels.length - 1) {
+        level += 1;
+        words = levels[level];
+        updateLevelsUI(level + 1);
+        console.log($('#levelID').text());
+        document.getElementById('levelID').innerHTML = "Level " + (level + 1);
+        console.log($('#levelID').text());
+        // reload();
+        initialiseToStart();
+    } else {
+        submitAns();
+    }
+}
+
+function generateLevelsUI() {
+    $('#levelDiv').css('display', 'flex');
+    $('#levelID').css('display', 'block');
+    var progressContainer = $('.progress-container');
+    $('div').remove('.circle');
+    for (var i = 0; i < levels.length; i++) {
+        if (i == 0) {
+            progressContainer.append($('<div class="circle active first"></div>').text((i + 1)));
+        } else if (i == level.length - 1) {
+            progressContainer.append($('<div class="circle last"></div>').text((i + 1)));
+        } else {
+            progressContainer.append($('<div class="circle"></div>').text((i + 1)));
+        }
+    }
+}
