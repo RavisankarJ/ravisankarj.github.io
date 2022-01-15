@@ -10,12 +10,14 @@ function uploadAns() {
     var i =0;
     answers.forEach((answer) => {
         formData.append(i++, formatedDate);    
+        formData.append(i++, schoolid);    
+        formData.append(i++, stuid);    
         formData.append(i++, answer[0]);
         formData.append(i++, answer[1]);
         formData.append(i++, answer[2]);
         formData.append(i++, answer[3]);
         formData.append(i++, answer[4]);
-        formData.append(i++, answer[5]);
+        
         // console.log(formData);
     });
     formData.append('rows', i);

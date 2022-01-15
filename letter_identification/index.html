@@ -259,49 +259,57 @@
                     <div id="divDetails" class="contianer border border-primary rounded"
                         style="border: 2px; max-width: 600px; margin-right: auto; margin-left: auto;">
                         <div id='studentDetailEnquire' style="padding-left: 10px; padding-top: 10px;">
-                            <!-- <form> -->
+                            <div class="form-group">
                                 <label for="udise">School ID</label>
-                                <input id="udise" name="udise" type="number" value="0" />
+                                <input id="udise" name="udise" type="text" value="0" />
+                            </div>
+                            <div class="form-group">
                                 <label for="stuid">Student ID:</label>
                                 <input id="stuid" name="stuid" type="text" value="0" />
+                            </div>
+                            <div class="form-group">
                                 <label for="mode">Choose mode:</label>
                                 <input type="radio" id="playMode" name="mode" value="Play Mode" checked>
                                 <label for="playMode">Play Mode</label>
                                 <input type="radio" id="assessmentMode" name="mode" value="Test Mode">
                                 <label for="assessmentMode">Test Mode</label>
-                                <!-- <input type="radio" id="learnMode" name="mode" value="Learn Mode">
+                            </div>
+
+                            <!-- <input type="radio" id="learnMode" name="mode" value="Learn Mode">
                                 <label for="learnMode">Learn Mode</label> -->
-                                <button id="startBtn" class="btn btn-primary" onclick="start()">Start</button>
-                            <!-- </form> -->
-                            <!-- <p>Enter student's id: <input id="stuid" type="text" value="-" />
-                                <button id="startBtn" class="btn btn-primary" onclick="start()">Start</button>
-                            </p> -->
+                            <button id="startBtn" class="btn btn-primary" onclick="start()">Start</button>
                         </div>
                         <div id='studentDetails' style="display: none; padding-left: 10px;padding-top: 10px;">
                             <p>The student's id: </p>
                         </div>
-                    </div>
-                    <div id="divStatus" class="container justify-content-between d-flex"
-                        style="border: 2px; max-width: 640px; margin-right: auto; margin-left: auto; padding: 5px;">
-                        <span id="timer"></span>
-                        <button id="submitBtn" style="display: none;" class="btn btn-primary"
-                            onclick="submitAns()">Submit
-                        </button>
-                        <button id="nxtBtn" style="display: none;" class="btn btn-primary" onclick="nxtQuestion()">
-                            Next
-                        </button>
-                        <button id="skipBtn" style="display: none;" class="btn btn-primary"
-                            onclick="skipQuestion()">Skip
-                        </button>
-                    </div>
 
+                        <div id="divStatus" class="container justify-content-between d-flex"
+                            style="border: 2px; max-width: 640px; margin-right: auto; margin-left: auto; padding: 5px;">
+                            <span id="timer"></span>
+                            <button id="submitBtn" style="display: none;" class="btn btn-primary"
+                                onclick="submitAns()">Submit
+                            </button>
+                            <button id="nxtBtn" style="display: none;" class="btn btn-primary" onclick="nxtQuestion()">
+                                Next
+                            </button>
+                            <button id="skipBtn" style="display: none;" class="btn btn-primary"
+                                onclick="skipQuestion()">Skip
+                            </button>
+                        </div>
+                    </div>
                     <div id="score" class="container border border-primary rounded"
                         style="border: 2px; margin-right: auto; margin-left: auto; display: none;">
                         <table class="table table-hover">
                             <caption style="caption-side: top; text-align: center;">Your result</caption>
                             <thead>
                                 <tr>
-                                    <th>Student ID</th>
+                                    <th>School ID:</th><th><span id="score_school_ID"></span></th>
+                                </tr>
+                                <tr>
+                                    <th>Student ID:</th><th><span id="score_student_ID"></span></th>
+                                </tr>
+                                <tr>
+                                    <!-- <th>Student ID</th> -->
                                     <th>Question</th>
                                     <th>Font Type</th>
                                     <th>Time<br><span style="font-size: smaller;">(in milli second)</span></th>
@@ -320,6 +328,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-sm-4">
                     <div class="level_container" id="levelDiv">
                         <div class="progress-container">

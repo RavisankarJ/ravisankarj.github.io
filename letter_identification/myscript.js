@@ -8,7 +8,7 @@ let wrongAudio, correctAudio, currentWord;
 let mode;   //mode = 0 indicates play mode, 1 indicates assessment mode, 2 indicates learning mode
 let selectedQuestionSet = [];    //to store currently selected question set from edit question tab
 
-let svgEle, area, timer, timeDifference, stuid;
+let svgEle, area, timer, timeDifference, stuid, schoolid;
 speech.lang = "en";
 window.speechSynthesis.onvoiceschanged = () => {
     speech.rate = 0.8;
@@ -151,7 +151,10 @@ $(function () {
                 $('#levelDiv').css('display', 'none');
                 $('#levelID').css('display', 'none');
                 mode = 1;
-                words = selectedQuestionSet;
+                if (selectedQuestionSet.length)
+                    words = selectedQuestionSet;
+                else
+                    words = samplewords;
                 break;
             default: console.log('you pressed nothing');
         }
@@ -195,6 +198,7 @@ function initialiseToStart() {
     loadQuestions();
     wordQueue = [];
     stuid = $('#stuid').val();
+    schoolid = $('#udise').val();
     $('#studentDetailEnquire').css("display", "none");
     $('#studentDetails').css("display", "block");
     $('#studentDetails').children().first().text("Student's ID: " + stuid);
@@ -265,6 +269,8 @@ function resetData() {
 }
 
 function createAnsTable(tableData) {       //creating answer table
+    document.getElementById('score_school_ID').innerHTML = schoolid;
+    document.getElementById('score_student_ID').innerHTML = stuid;
     tableData.forEach(function (rowData) {
         var row = document.createElement('tr');
         // row.appendChild(document.createElement('td').appendChild(document.createElement('b').appendChild(document.createTextNode(stuid))));
@@ -385,7 +391,7 @@ function nxtQuestion() {
     $('#ansGroup').css('display', 'block');
     randomizeElements();
     if (wordQueue.length) {
-        answer.push(stuid);
+        // answer.push(stuid);
         randomText();
         startTimer();
     }
@@ -404,13 +410,16 @@ function skipQuestion() {
     storeMoves();
     randomizeElements();
     if (wordQueue.length) {
-        answer.push(stuid);
+        // answer.push(stuid);
         randomText();
         startTimer();
     }
-    else
-        // submitAns();
-        nxtLevel();
+    else {
+        if (mode == 1)
+            submitAns();
+        else if (mode == 0)
+            nxtLevel();
+    }
     correctAudio.pause();
     correctAudio.currentTime = 0;
 }
@@ -488,8 +497,10 @@ function displayTab(tabid, element) {
 
 function dwnloadAns() {
     let csvContent = "data:text/csv;charset=utf-8,";
-    var dataString = "Student ID\tQuestion\tFont Type\tTime (in milli second)\tWords\tMoves\n";
+    var dataString = "School ID\tStudent ID\tQuestion\tFont Type\tTime (in milli second)\tWords\tMoves\n";
     answers.forEach(function (row) {
+        dataString += "" + schoolid + "\t";
+        dataString += "" + stuid + "\t";
         row.forEach(function (cell) {
             if (Array.isArray(cell)) {
                 dataString += cell.join(", ");
