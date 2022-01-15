@@ -29,6 +29,9 @@
                 <li class="nav-item">
                     <a class="nav-link text-light" href="#" onclick="displayTab('divPlay', this)">Play</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="#" onclick="displayTab('divEdit', this)">Edit Questions</a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -42,14 +45,15 @@
                     <div class="col-sm-8 bg-info border border-light rounded-lg">
                         <h5 class="mt-2 mb-2 font-weight-bold">How to use</h5>
                         <p class="text-light">
-                            This web application has 2 tabs. The student has to go to the play tab and enter
+                            This web application has 3 tabs. The student / teacher has to go to the play tab and enter
                             an ID. Then the user has to listen the sound plays and select the correct alphabet. Once
                             answered all the questions teachers may download the
-                            result for analyzing purposes.
+                            result for analyzing purposes. Teachers can edit words / letters on the '<a
+                                style="cursor: pointer;" onclick="displayTab('divEdit', this)">Edit Questions</a>' tab.
                         </p>
                     </div>
                     <div class="col-sm-4">
-                        <div class="text-center mt-4 animate"><a class="btn btn-info type=" button"
+                        <div class="text-center mt-4 animate"><a class="btn btn-info" type="button"
                                 style="cursor:pointer; font-weight: bolder;" onclick="displayTab('divPlay', this)">
                                 Play</a></div>
                     </div>
@@ -59,7 +63,9 @@
                     <div class="col-md-4 bg-success col-sm-12 border border-light rounded-lg mt-2 mb-2 mr-3">
                         <h5 class="mt-2 mb-2 font-weight-bold ">Audience</h5>
                         <p class="text-light">
-                            Foundation level students (from 1st Standard to 2nd Standard).
+                            English teachers handling the foundational and preparatory level students (from 1st Standard
+                            to
+                            5th Standard).
                         </p>
                     </div>
                     <div class="col-md-4 bg-success col-sm-12 border border-light rounded-lg mt-2 mb-2 mr-3">
@@ -81,6 +87,9 @@
                         <h5 class="mb-2 font-weight-bold ">Features</h5>
                         <p>
                         <ul class="list-group">
+                            <li class="list-group-item">The teachers may upload the questions using the ‘csv’ data
+                                format file.
+                            </li>
                             <li class="list-group-item">The teachers, the head of the institution, the parents and the
                                 higher officials may get the students’ answers in ‘csv’ data format which can be used,
                                 to analyze where a student misunderstands the concept, to identify which students are
@@ -108,6 +117,7 @@
                                         cursor: pointer;
                                         visibility: hidden;
                                     }
+
                                     text.ansText:hover {
                                         filter: url(#hover);
                                     }
@@ -206,58 +216,86 @@
                             <g id="ansGroup" style="display: block">
                                 <text class="ansText" filter="url(#solid)" x="10" y="20" font-weight="bold"
                                     font-size="1.2em" fill="green" onmouseover="setTransform(event.target)"
-                                    onmouseleave="clearTransform(event.target)">15</text>
+                                    onmouseleave="clearTransform(event.target)">15
+                                </text>
                                 <text class="ansText" filter="url(#solid)" x="15" y="20" font-weight="bold"
                                     font-size="1.2em" fill="green" onmouseover="setTransform(event.target)"
-                                    onmouseleave="clearTransform(event.target)">Lamda</text>
+                                    onmouseleave="clearTransform(event.target)">Lamda
+                                </text>
                                 <text class="ansText" filter="url(#solid)" x="20" y="20" font-weight="bold"
                                     font-size="1.2em" fill="green" onmouseover="setTransform(event.target)"
-                                    onmouseleave="clearTransform(event.target)">apple</text>
+                                    onmouseleave="clearTransform(event.target)">apple
+                                </text>
                                 <text class="ansText" filter="url(#solid)" x="30" y="20" font-weight="bold"
                                     font-size="1.2em" fill="green" onmouseover="setTransform(event.target)"
-                                    onmouseleave="clearTransform(event.target)">Mango</text>
+                                    onmouseleave="clearTransform(event.target)">Mango
+                                </text>
                                 <text class="ansText" filter="url(#solid)" x="35" y="20" font-weight="bold"
                                     font-size="1.2em" fill="green" onmouseover="setTransform(event.target)"
-                                    onmouseleave="clearTransform(event.target)">umbrella</text>
+                                    onmouseleave="clearTransform(event.target)">umbrella
+                                </text>
                                 <text class="ansText" filter="url(#solid)" x="40" y="20" font-weight="bold"
                                     font-size="1.2em" fill="green" onmouseover="setTransform(event.target)"
-                                    onmouseleave="clearTransform(event.target)">Cat</text>
+                                    onmouseleave="clearTransform(event.target)">Cat
+                                </text>
                             </g>
                             <text id="successText" style="font-weight:bold;font-size:2em;fill:#ffffff; display: none"
-                                x="200" y="150">Hey!! Success!!!</text>
+                                x="200" y="150">Hey!! Success!!!
+                            </text>
                         </svg>
                         <div class="d-flex justify-content-between" style="text-align: center; padding-bottom: 1em;">
-                                    <span id="levelID">Level 1</span>
+                            <span id="levelID">Level 1</span>
                             <button class="btn btn-dark" onclick="submitAns()">Quit</button>
-                            <button onclick="speakWord()" class="btn btn-info">
-                                <i class="fa fa-play"></i>&nbsp;Play
-                                Audio
-                            </button>
-                            <button onclick="speakWordwithHint()" class="btn btn-info">
-                                <i class="fa fa-play"></i>&nbsp;Play Hint
-                            </button>
+                            <div style="text-align: center; padding-bottom: 1em;">
+                                <button class="btn btn-info" onclick="speakWord()">
+                                    <i class="fa fa-play"></i>&nbsp;Play Audio
+                                </button>
+                                <button onclick="speakWordwithHint()" class="btn btn-info">
+                                    <i class="fa fa-play"></i>&nbsp;Play Hint
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div id="divDetails" class="contianer border border-primary rounded"
                         style="border: 2px; max-width: 600px; margin-right: auto; margin-left: auto;">
                         <div id='studentDetailEnquire' style="padding-left: 10px; padding-top: 10px;">
-                            <p>Enter student's id: <input id="stuid" type="text" value="-" />
-                                <button id="startBtn" class="btn btn-primary" onclick="start()">Start</button>
-                            </p>
+                            <div class="form-group">
+                                <label for="udise">School ID</label>
+                                <input id="udise" name="udise" type="text" value="0" />
+                            </div>
+                            <div class="form-group">
+                                <label for="stuid">Student ID:</label>
+                                <input id="stuid" name="stuid" type="text" value="0" />
+                            </div>
+                            <div class="form-group">
+                                <label for="mode">Choose mode:</label>
+                                <input type="radio" id="playMode" name="mode" value="Play Mode" checked>
+                                <label for="playMode">Play Mode</label>
+                                <input type="radio" id="assessmentMode" name="mode" value="Test Mode">
+                                <label for="assessmentMode">Test Mode</label>
+                            </div>
+
+                            <!-- <input type="radio" id="learnMode" name="mode" value="Learn Mode">
+                                <label for="learnMode">Learn Mode</label> -->
+                            <button id="startBtn" class="btn btn-primary" onclick="start()">Start</button>
                         </div>
                         <div id='studentDetails' style="display: none; padding-left: 10px;padding-top: 10px;">
                             <p>The student's id: </p>
                         </div>
-                    </div>
-                    <div id="divStatus" class="container justify-content-between d-flex"
-                        style="border: 2px; max-width: 640px; margin-right: auto; margin-left: auto; padding: 5px;">
-                        <span id="timer"></span>
-                        <button id="submitBtn" style="display: none;" class="btn btn-primary"
-                            onclick="submitAns()">Submit</button>
-                        <button id="nxtBtn" style="display: none;" class="btn btn-primary"
-                            onclick="nxtQuestion()">Next</button>
-                        <button id="skipBtn" style="display: none;" class="btn btn-primary"
-                            onclick="skipQuestion()">Skip</button>
+
+                        <div id="divStatus" class="container justify-content-between d-flex"
+                            style="border: 2px; max-width: 640px; margin-right: auto; margin-left: auto; padding: 5px;">
+                            <span id="timer"></span>
+                            <button id="submitBtn" style="display: none;" class="btn btn-primary"
+                                onclick="submitAns()">Submit
+                            </button>
+                            <button id="nxtBtn" style="display: none;" class="btn btn-primary" onclick="nxtQuestion()">
+                                Next
+                            </button>
+                            <button id="skipBtn" style="display: none;" class="btn btn-primary"
+                                onclick="skipQuestion()">Skip
+                            </button>
+                        </div>
                     </div>
                     <div id="score" class="container border border-primary rounded"
                         style="border: 2px; margin-right: auto; margin-left: auto; display: none;">
@@ -265,7 +303,13 @@
                             <caption style="caption-side: top; text-align: center;">Your result</caption>
                             <thead>
                                 <tr>
-                                    <th>Student ID</th>
+                                    <th>School ID:</th><th><span id="score_school_ID"></span></th>
+                                </tr>
+                                <tr>
+                                    <th>Student ID:</th><th><span id="score_student_ID"></span></th>
+                                </tr>
+                                <tr>
+                                    <!-- <th>Student ID</th> -->
                                     <th>Question</th>
                                     <th>Font Type</th>
                                     <th>Time<br><span style="font-size: smaller;">(in milli second)</span></th>
@@ -278,16 +322,82 @@
                         <div class="d-flex justify-content-between"
                             style="text-align: center; padding: 5px; padding-left: 10px; padding-right: 10px;">
                             <button class="btn btn-primary" onclick="dwnloadAns()">Download report</button>
+                            <button id="uploadAns" class="btn btn-info" onclick="uploadAns()">Upload report</button>
                             <button class="btn btn-primary" onclick="reload()">Play again</button>
                             <!-- <button class="btn btn-primary" onclick="nxtLevel()">Next Level</button> -->
                         </div>
                     </div>
                 </div>
+
                 <div class="col-sm-4">
                     <div class="level_container" id="levelDiv">
                         <div class="progress-container">
                             <div class="progress" id="progress"></div>
                             <div class="car"><i class="fas fa-car"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tabContent" id="divEdit" style="display: none;">
+        <div class="container border border-primary rounded"
+            style="align-content: center; margin-left: auto; margin-right: auto;">
+            <table class="table table-hover">
+                <caption style="caption-side: top; text-align: center;">QUESTIONS</caption>
+                <thead>
+                    <tr>
+                        <th class="qheading">Word</th>
+                        <th class="qheading">Word Hint</th>
+                        <th class="qheading">Font Style</th>
+                        <th class="hideColumn qheading" style="display: none;">Delete</th>
+                    </tr>
+                </thead>
+                <tbody id="tQbdy"></tbody>
+            </table>
+
+            <div class="container-fluid" id="inQuestion" style="display: none;">
+                <div class="row">
+                    <div class="form-group" style="padding: 10px; ">
+                        <label for="word">Word</label>
+                        <input class="form-control" name="word" required type="text" />
+                    </div>
+
+                    <div class="form-group" style="padding: 10px; ">
+                        <label for="font">Font Style</label>
+                        <select class="form-control" name="font">
+                            <option value='normal'>normal</option>
+                            <option value='cursive'>cursive</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between" style="padding-left: 20px; padding-right: 20px;">
+                <div style="width: 75%;">
+                    <button id="editBtn" class="btn btn-primary" onclick="editQuestions()">Edit</button>
+                    <button id="addBtn" class="btn btn-primary" disabled onclick="addQuestion()">Add</button>
+                    <button id="dwnBtn" class="btn btn-primary" onclick="dwnloadQues()">Download Questions</button>
+                </div>
+                <div style="width: 25%; text-align: end;">
+                    <button id="saveBtn" class="btn btn-success" disabled onclick="saveQuestions()">Save</button>
+                </div>
+            </div>
+            <br>
+            <div class="container">
+                <label for="myfile">Select a file:</label>
+                <input type="file" id="myfile" name="myfile">
+                <button class="btn btn-success mt-2" onclick="uploadReport()">Upload Questions</button>
+            </div>
+            <p style="text-align: center; padding: 20px 0; background-color: azure;">---or choose below word set---
+            </p>
+            <div class="container" style="padding: 10px 0;">
+                <div id="questionSetdiv" class="row row-cols-1 row-cols-md-3">
+                    <div class="col mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">No Words</h5>
+                                <p class="card-text">No other word sets are available.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -301,6 +411,7 @@
         crossorigin="anonymous"></script>
     <script src="question_words.js"></script>
     <script src="myscript.js"></script>
+    <script src="submitData.js"></script>
 </body>
 
 </html>
