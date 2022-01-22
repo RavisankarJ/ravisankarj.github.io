@@ -18,7 +18,7 @@
         display: block;
     }
 
-    #score thead,
+    #score thead tr:nth-of-type(3),
     #divEdit thead{
         display: none;
     }
@@ -46,8 +46,8 @@
     #divEdit td:nth-of-type(1) b:before { content: "Word"; }
 	#divEdit td:nth-of-type(2) b:before { content: "Font Style"; }
 	
-    #score td:nth-of-type(1) b:before { content: "Stu ID"; }
-	#score td:nth-of-type(2) b:before { content: "Question"; }
+    #score td:nth-of-type(1) b:before { content: "Question"; }
+	#score td:nth-of-type(2) b:before { content: "Font Style"; }
 	#score td:nth-of-type(3) b:before { content: "Time (ms)"; }
 	#score td:nth-of-type(4) b:before { content: "Words"; }
 	#score td:nth-of-type(5) b:before { content: "Moves"; }
