@@ -53,9 +53,11 @@
                         </p>
                     </div>
                     <div class="col-sm-4">
-                        <div class="text-center mt-4 animate"><a class="btn btn-info" type="button"
-                                style="cursor:pointer; font-weight: bolder;" onclick="displayTab('divPlay', this)">
-                                Play</a></div>
+                        <div class="text-center mt-4 animate">
+                            <a class="btn btn-info" type="button" style="cursor:pointer; font-weight: bolder;"
+                                onclick="displayTab('divPlay', this)">Play</a>
+                                <!-- <button onclick="generateRandomLetters(66,4)">Random</button> -->
+                        </div>
                     </div>
                 </div>
                 <hr class="my-3">
@@ -270,14 +272,64 @@
                             <div class="form-group">
                                 <label for="mode">Choose mode:</label>
                                 <input type="radio" id="playMode" name="mode" value="Play Mode" checked>
-                                <label for="playMode">Play Mode</label>
+                                <label for="playMode">Play Mode</label><br>
                                 <input type="radio" id="assessmentMode" name="mode" value="Test Mode">
-                                <label for="assessmentMode">Test Mode</label>
-                            </div>
+                                <label for="assessmentMode">Test Mode</label><br>
+                                <input type="radio" id="learnMode" name="mode" value="Training Mode" data-toggle="modal" data-target="#myModal">
+                                <label for="learnMode">Training Mode</label>
+                            <button type="button" id="show_training_cards" style="display: none; font-size: small;" class="btn btn-info btn-lg m-1" data-toggle="modal" data-target="#myModal">Training Cards</button>
 
-                            <!-- <input type="radio" id="learnMode" name="mode" value="Learn Mode">
-                                <label for="learnMode">Learn Mode</label> -->
-                            <button id="startBtn" class="btn btn-primary" onclick="start()">Start</button>
+                            </div>
+                            <div id="myModal" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                              
+                                  <!-- Modal content-->
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                      <h4 class="modal-title">Choose a letter for Training</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                      <div class="container" style="padding: 10px 0;">
+                                          <div class="row">
+                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="65" data-hint="a for apple"><div class="card-body"><h5 class="card-title">a</h5><p class="card-text">a, A, <span style='font-family: Cookie'>a, </span><span style='font-family: Cookie'> A</span></p></div></div></div></div>
+                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="66" data-hint="b for ball"><div class="card-body"><h5 class="card-title">b</h5><p class="card-text">b, B, <span style='font-family: Cookie'>b, </span><span style='font-family: Cookie'> B</span></p></div></div></div></div>
+                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="67" data-hint="c for cat"><div class="card-body"><h5 class="card-title">c</h5><p class="card-text">c, C, <span style='font-family: Cookie'>c, </span><span style='font-family: Cookie'> C</span></p></div></div></div></div>
+                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="68" data-hint="d for dog"><div class="card-body"><h5 class="card-title">d</h5><p class="card-text">d, D, <span style='font-family: Cookie'>d, </span><span style='font-family: Cookie'> D</span></p></div></div></div></div>
+                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="69" data-hint="e for elephant"><div class="card-body"><h5 class="card-title">e</h5><p class="card-text">e, E, <span style='font-family: Cookie'>e, </span><span style='font-family: Cookie'> E</span></p></div></div></div></div>
+                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="70" data-hint="f for fox"><div class="card-body"><h5 class="card-title">f</h5><p class="card-text">f, F, <span style='font-family: Cookie'>f, </span><span style='font-family: Cookie'> F</span></p></div></div></div></div>
+                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="71" data-hint="g for goat"><div class="card-body"><h5 class="card-title">g</h5><p class="card-text">g, G, <span style='font-family: Cookie'>g, </span><span style='font-family: Cookie'> G</span></p></div></div></div></div>
+                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="72" data-hint="h for hen"><div class="card-body"><h5 class="card-title">h</h5><p class="card-text">h, H, <span style='font-family: Cookie'>h, </span><span style='font-family: Cookie'> H</span></p></div></div></div></div>
+                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="73" data-hint="i for India"><div class="card-body"><h5 class="card-title">i</h5><p class="card-text">i, I, <span style='font-family: Cookie'>i, </span><span style='font-family: Cookie'> I</span></p></div></div></div></div>
+                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="74" data-hint="j for jug"><div class="card-body"><h5 class="card-title">j</h5><p class="card-text">j, J, <span style='font-family: Cookie'>j, </span><span style='font-family: Cookie'> J</span></p></div></div></div></div>
+                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="75" data-hint="k for kite"><div class="card-body"><h5 class="card-title">k</h5><p class="card-text">k, K, <span style='font-family: Cookie'>k, </span><span style='font-family: Cookie'> K</span></p></div></div></div></div>
+                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="76" data-hint="l for lollipop"><div class="card-body"><h5 class="card-title">l</h5><p class="card-text">l, L, <span style='font-family: Cookie'>l, </span><span style='font-family: Cookie'> L</span></p></div></div></div></div>
+                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="77" data-hint="m for mango"><div class="card-body"><h5 class="card-title">m</h5><p class="card-text">m, M, <span style='font-family: Cookie'>m, </span><span style='font-family: Cookie'> M</span></p></div></div></div></div>
+                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="78" data-hint="n for November"><div class="card-body"><h5 class="card-title">n</h5><p class="card-text">n, N, <span style='font-family: Cookie'>n, </span><span style='font-family: Cookie'> N</span></p></div></div></div></div>
+                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="79" data-hint="o for orange"><div class="card-body"><h5 class="card-title">o</h5><p class="card-text">o, O, <span style='font-family: Cookie'>o, </span><span style='font-family: Cookie'> O</span></p></div></div></div></div>
+                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="80" data-hint="p for parrot"><div class="card-body"><h5 class="card-title">p</h5><p class="card-text">p, P, <span style='font-family: Cookie'>p, </span><span style='font-family: Cookie'> P</span></p></div></div></div></div>
+                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="81" data-hint="q for queen"><div class="card-body"><h5 class="card-title">q</h5><p class="card-text">q, Q, <span style='font-family: Cookie'>q, </span><span style='font-family: Cookie'> Q</span></p></div></div></div></div>
+                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="82" data-hint="r for rat"><div class="card-body"><h5 class="card-title">r</h5><p class="card-text">r, R, <span style='font-family: Cookie'>r, </span><span style='font-family: Cookie'> R</span></p></div></div></div></div>
+                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="83" data-hint="s for six"><div class="card-body"><h5 class="card-title">s</h5><p class="card-text">s, S, <span style='font-family: Cookie'>s, </span><span style='font-family: Cookie'> S</span></p></div></div></div></div>
+                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="84" data-hint="t for ten"><div class="card-body"><h5 class="card-title">t</h5><p class="card-text">t, T, <span style='font-family: Cookie'>t, </span><span style='font-family: Cookie'> T</span></p></div></div></div></div>
+                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="85" data-hint="u for up"><div class="card-body"><h5 class="card-title">u</h5><p class="card-text">u, U, <span style='font-family: Cookie'>u, </span><span style='font-family: Cookie'> U</span></p></div></div></div></div>
+                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="86" data-hint="v for van"><div class="card-body"><h5 class="card-title">v</h5><p class="card-text">v, V, <span style='font-family: Cookie'>v, </span><span style='font-family: Cookie'> V</span></p></div></div></div></div>
+                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="87" data-hint="w for window"><div class="card-body"><h5 class="card-title">w</h5><p class="card-text">w, W, <span style='font-family: Cookie'>w, </span><span style='font-family: Cookie'> W</span></p></div></div></div></div>
+                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="88" data-hint="x for xerox"><div class="card-body"><h5 class="card-title">x</h5><p class="card-text">x, X, <span style='font-family: Cookie'>x, </span><span style='font-family: Cookie'> X</span></p></div></div></div></div>
+                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="89" data-hint="y for yellow"><div class="card-body"><h5 class="card-title">y</h5><p class="card-text">y, Y, <span style='font-family: Cookie'>y, </span><span style='font-family: Cookie'> Y</span></p></div></div></div></div>
+                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="90" data-hint="z for zebra"><div class="card-body"><h5 class="card-title">z</h5><p class="card-text">z, Z, <span style='font-family: Cookie'>z, </span><span style='font-family: Cookie'> Z</span></p></div></div></div></div>
+                                          </div>
+                                      </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                  </div>
+                              
+                                </div>
+                              </div>
+
+                            <button id="startBtn" class="btn btn-primary m-1" onclick="start()">Start</button>
                         </div>
                         <div id='studentDetails' style="display: none; padding-left: 10px;padding-top: 10px;">
                             <p>The student's id: </p>
@@ -303,11 +355,12 @@
                             <caption style="caption-side: top; text-align: center;">Your result</caption>
                             <thead>
                                 <tr>
-                                    <th>School ID:</th><th><span id="score_school_ID"></span></th>
+                                    <th>School ID:</th>
+                                    <th><span id="score_school_ID"></span></th>
+                                    <th>Student ID:</th>
+                                    <th><span id="score_student_ID"></span></th>
                                 </tr>
-                                <tr>
-                                    <th>Student ID:</th><th><span id="score_student_ID"></span></th>
-                                </tr>
+                                
                                 <tr>
                                     <!-- <th>Student ID</th> -->
                                     <th>Question</th>
@@ -411,6 +464,7 @@
         crossorigin="anonymous"></script>
     <script src="question_words.js"></script>
     <script src="myscript.js"></script>
+    <script src="training.js"></script>
     <script src="submitData.js"></script>
 </body>
 

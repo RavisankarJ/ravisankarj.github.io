@@ -8,7 +8,7 @@ let wrongAudio, correctAudio, currentWord;
 let mode;   //mode = 0 indicates play mode, 1 indicates assessment mode, 2 indicates learning mode
 let selectedQuestionSet = [];    //to store currently selected question set from edit question tab
 
-let svgEle, area, timer, timeDifference, stuid, schoolid;
+let svgEle, area, timer, timeDifference, stuid, schoolid, trainingCounter = 4;
 speech.lang = "en";
 window.speechSynthesis.onvoiceschanged = () => {
     speech.rate = 0.8;
@@ -63,7 +63,13 @@ function randomizeElements() {
 }
 
 function randomText() {
-    currentWord = wordQueue.pop();
+    if (mode == 2)
+    {
+        words = trainingSet.pop();
+        currentWord = words[0];
+    }
+    else
+        currentWord = wordQueue.pop();
     speech.text = currentWord.word;
     // document.querySelector('#randText').innerHTML = speech.text;
     speakWord();
@@ -141,20 +147,27 @@ $(function () {
     correctAudio = new Audio('clap.ogg');
     $('input[type=radio][name="mode"]').change(function () {
         switch (this.value) {
-            case 'Play Mode': console.log('you pressed play mode');
+            case 'Play Mode':
                 mode = 0;
                 $('#levelDiv').css('display', 'flex');
                 $('#levelID').css('display', 'block');
+                $('#show_training_cards').css('display', 'none');
                 words = levels[0];
                 break;
-            case 'Test Mode': console.log('you pressed test mode');
+            case 'Test Mode':
                 $('#levelDiv').css('display', 'none');
                 $('#levelID').css('display', 'none');
+                $('#show_training_cards').css('display', 'none');
                 mode = 1;
                 if (selectedQuestionSet.length)
                     words = selectedQuestionSet;
                 else
                     words = samplewords;
+                break;
+            case 'Training Mode': mode = 2;
+                $('#levelDiv').css('display', 'none');
+                $('#levelID').css('display', 'none');
+                $('#show_training_cards').css('display', 'block');
                 break;
             default: console.log('you pressed nothing');
         }
@@ -194,6 +207,8 @@ function initialiseToStart() {
             words = selectedQuestionSet;
         else
             words = samplewords;
+    } else if (mode == 2) {
+        createTrainingQuestions();
     }
     loadQuestions();
     wordQueue = [];
@@ -262,6 +277,7 @@ function resetData() {
     moves = [];
     wordQueue = [];
     level = 0;
+    trainingCounter = 4;
     if (mode == 0) {
         words = levels[level];
         updateLevelsUI(level + 1);
@@ -389,18 +405,31 @@ function nxtQuestion() {
     //     ele.style.display = 'block';
     // });
     $('#ansGroup').css('display', 'block');
-    randomizeElements();
-    if (wordQueue.length) {
-        // answer.push(stuid);
-        randomText();
-        startTimer();
-    }
-    else {
-        if (mode == 1)
+    
+    if (mode == 2)
+        if (trainingSet.length) {
+            randomText();
+            loadQuestions();
+            document.querySelectorAll('text.ansText').forEach((ele) => {
+                ele.style.visibility = 'visible';
+            });
+            startTimer();
+        }
+        else
             submitAns();
-        else if (mode == 0)
-            nxtLevel();
-    }
+    else
+        if (wordQueue.length) {
+            // answer.push(stuid);
+            randomText();
+            startTimer();
+        }
+        else {
+            if (mode == 1)
+                submitAns();
+            else if (mode == 0)
+                nxtLevel();
+        }
+        randomizeElements();
     correctAudio.pause();
     correctAudio.currentTime = 0;
 }
@@ -408,18 +437,31 @@ function nxtQuestion() {
 function skipQuestion() {
     stopTimer();
     storeMoves();
-    randomizeElements();
-    if (wordQueue.length) {
-        // answer.push(stuid);
-        randomText();
-        startTimer();
-    }
-    else {
-        if (mode == 1)
+    
+    if (mode == 2)
+        if (trainingSet.length) {
+            randomText();
+            loadQuestions();
+            document.querySelectorAll('text.ansText').forEach((ele) => {
+                ele.style.visibility = 'visible';
+            });
+            startTimer();
+        }
+        else
             submitAns();
-        else if (mode == 0)
-            nxtLevel();
-    }
+    else
+        if (wordQueue.length) {
+            // answer.push(stuid);
+            randomText();
+            startTimer();
+        }
+        else {
+            if (mode == 1)
+                submitAns();
+            else if (mode == 0)
+                nxtLevel();
+        }
+        randomizeElements();
     correctAudio.pause();
     correctAudio.currentTime = 0;
 }
@@ -445,7 +487,10 @@ function loadQuestions() {
         svgText.setAttribute("onmouseleave", "clearTransform(event.target)");
 
         svgText.setAttribute("font-family", findFont(item));
-        svgText.textContent = item.word;
+        if (item.word)
+            svgText.textContent = item.word;
+        else
+            svgText.textContent = item;
         document.querySelector('#ansGroup').appendChild(svgText);
     });
     // randomizeElements();
@@ -693,11 +738,15 @@ function addClickEvent_CardElement() {
         ele.addEventListener('click',
             (event) => {
                 var k = event.currentTarget.children[0].children[0].children[0].textContent;
-                console.log(parseInt(k));
+                // console.log(parseInt(k));
                 // words = wordSet[parseInt(k) - 1];
                 selectedQuestionSet = wordSet[parseInt(k) - 1];
                 words = selectedQuestionSet;
                 createQuestionsTable(selectedQuestionSet);
+                // document.querySelectorAll('.card.active').forEach((card)=>{
+                //     card.classList.remove('active');
+                // });
+                // ele.classList.add('active');
                 mode = 1;
                 $('#levelDiv').css('display', 'none');
                 $('#assessmentMode').prop('checked', true).trigger('change');
