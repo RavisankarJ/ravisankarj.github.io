@@ -144,6 +144,10 @@ a.btn:hover {
     background-color: #00ff37;
 }
 
+.card.active{
+    background-color: #00ff37;
+}
+
 
 .level_container {
     margin-top: 15px;
