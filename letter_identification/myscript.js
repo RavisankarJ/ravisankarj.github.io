@@ -412,10 +412,8 @@ function nxtQuestion() {
             loadQuestions();
             document.querySelectorAll('text.ansText').forEach((ele) => {
                 ele.style.visibility = 'visible';
-                // wordQueue.push(ele.textContent);
             });
             startTimer();
-            // trainingCounter--;
         }
         else
             submitAns();
@@ -439,12 +437,15 @@ function nxtQuestion() {
 function skipQuestion() {
     stopTimer();
     storeMoves();
-    randomizeElements();
+    
     if (mode == 2)
-        if (trainingCounter > 0) {
+        if (trainingSet.length) {
             randomText();
+            loadQuestions();
+            document.querySelectorAll('text.ansText').forEach((ele) => {
+                ele.style.visibility = 'visible';
+            });
             startTimer();
-            trainingCounter--;
         }
         else
             submitAns();
@@ -460,6 +461,7 @@ function skipQuestion() {
             else if (mode == 0)
                 nxtLevel();
         }
+        randomizeElements();
     correctAudio.pause();
     correctAudio.currentTime = 0;
 }
