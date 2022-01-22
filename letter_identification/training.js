@@ -24,40 +24,45 @@ let trainingQuestion = [
 ];
 
 let trainingSet = [];
-function generateRandom(a) {
-    var l;
+function generateRandom(lettercode) {
+    var randomletter;
+    if (lettercode < 91)
+        randomletter = getRandomInt(65, 91);
+    else
+        randomletter = getRandomInt(97, 123);
+    if (randomletter == lettercode)
+        randomletter = generateRandom(lettercode);
 
-    l = getRandomInt(65, 123);
-    if ((l < 97 && l > 90) || l == a || l == (a + 32))
-        l = generateRandom(a);
-
-    return l;
+    return randomletter;
 }
 
-function generateRandomLetters(a, i) {
+function generateRandomLetters(lettercode, numberofletters, fontStyle) {
     var trainingLetters = [];
 
-    while (i > 0) {
-        trainingLetters.push(String.fromCharCode(generateRandom(a)));
-        i--;
+    while (numberofletters > 0) {
+        trainingLetters.push({
+            word: String.fromCharCode(generateRandom(lettercode)),
+            font: fontStyle ? fontStyle : 'normal'
+        });
+        numberofletters--;
     }
     return trainingLetters;
 }
 
 function createTrainingQuestions() {
     trainingSet = [
-        [trainingQuestion[3], ...generateRandomLetters(trainingQuestion[3].lettercode, 4)],
-        [trainingQuestion[3], ...generateRandomLetters(trainingQuestion[3].lettercode, 3)],
-        [trainingQuestion[3], ...generateRandomLetters(trainingQuestion[3].lettercode, 2)],
-        [trainingQuestion[2], ...generateRandomLetters(trainingQuestion[2].lettercode, 4)],
-        [trainingQuestion[2], ...generateRandomLetters(trainingQuestion[2].lettercode, 3)],
-        [trainingQuestion[2], ...generateRandomLetters(trainingQuestion[2].lettercode, 2)],
-        [trainingQuestion[1], ...generateRandomLetters(trainingQuestion[1].lettercode, 4)],
-        [trainingQuestion[1], ...generateRandomLetters(trainingQuestion[1].lettercode, 3)],
-        [trainingQuestion[1], ...generateRandomLetters(trainingQuestion[1].lettercode, 2)],
-        [trainingQuestion[0], ...generateRandomLetters(trainingQuestion[0].lettercode, 4)],
-        [trainingQuestion[0], ...generateRandomLetters(trainingQuestion[0].lettercode, 3)],
-        [trainingQuestion[0], ...generateRandomLetters(trainingQuestion[0].lettercode, 2)],
+        [trainingQuestion[3], ...generateRandomLetters(trainingQuestion[3].lettercode, 4, trainingQuestion[3].font)],
+        [trainingQuestion[3], ...generateRandomLetters(trainingQuestion[3].lettercode, 3, trainingQuestion[3].font)],
+        [trainingQuestion[3], ...generateRandomLetters(trainingQuestion[3].lettercode, 2, trainingQuestion[3].font)],
+        [trainingQuestion[2], ...generateRandomLetters(trainingQuestion[2].lettercode, 4, trainingQuestion[2].font)],
+        [trainingQuestion[2], ...generateRandomLetters(trainingQuestion[2].lettercode, 3, trainingQuestion[2].font)],
+        [trainingQuestion[2], ...generateRandomLetters(trainingQuestion[2].lettercode, 2, trainingQuestion[2].font)],
+        [trainingQuestion[1], ...generateRandomLetters(trainingQuestion[1].lettercode, 4, trainingQuestion[1].font)],
+        [trainingQuestion[1], ...generateRandomLetters(trainingQuestion[1].lettercode, 3, trainingQuestion[1].font)],
+        [trainingQuestion[1], ...generateRandomLetters(trainingQuestion[1].lettercode, 2, trainingQuestion[1].font)],
+        [trainingQuestion[0], ...generateRandomLetters(trainingQuestion[0].lettercode, 4, trainingQuestion[0].font)],
+        [trainingQuestion[0], ...generateRandomLetters(trainingQuestion[0].lettercode, 3, trainingQuestion[0].font)],
+        [trainingQuestion[0], ...generateRandomLetters(trainingQuestion[0].lettercode, 2, trainingQuestion[0].font)],
     ];
     // words = trainingSet.pop();
 }
