@@ -3,89 +3,541 @@
 <html>
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <link rel="stylesheet" type="text/css"
-        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie|Catamaran">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.2.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Rubik+Beastly&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="mystyles.css" />
+  <link rel="stylesheet" type="text/css"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <style>
+    div.letter {
+      border-radius: 50%;
+      min-height: 1em;
+      min-width: 1em;
+      max-height: 8em;
+      max-width: 8em;
+      display: inline-block;
+      margin: 1em;
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    div.correct {
+      background-color: rgb(135, 255, 55);
+    }
+
+    div.wrong {
+      background-color: rgb(255, 102, 55);
+    }
+
+    div.confused {
+      background-color: rgb(184, 159, 48);
+    }
+
+    div.skipped {
+      background-color: rgb(98, 114, 88);
+    }
+
+    .report_category {
+      text-align: center;
+    }
+  </style>
+
+
 
 </head>
 
 <body>
-    <div class="form-group">
-        <label for="mode">Choose mode:</label>
-        <input type="radio" id="playMode" name="mode" value="Play Mode" checked>
-        <label for="playMode">Play Mode</label>
-        <input type="radio" id="assessmentMode" name="mode" value="Test Mode">
-        <label for="assessmentMode">Test Mode</label>
-        <input type="radio" id="learnMode" name="mode" value="Training Mode" data-toggle="modal" data-target="#myModal">
-        <label for="learnMode">Training Mode</label>
+  <div class="container">
+    <p style="text-align: center;">The bigger the circle the more you took time to answer</p>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 p-1" style="min-height: 5em;">
+
+      <div class="col my-1" id="rightAnswers" style="border: 1px solid rgb(252, 136, 136);">No letters</div>
+      <div class="col my-1" id="confusedAnswers" style="border: 1px solid rgb(252, 136, 136);">No letters</div>
+      <div class="col my-1" id="skippedAnswers" style="border: 1px solid rgb(252, 136, 136);">No letters</div>
+      <div class="col my-1" id="wrongAnswers" style="border: 1px solid rgb(252, 136, 136);">No letters</div>
     </div>
-    <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
-
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Choose a letter for Training</h4>
-      </div>
-      <div class="modal-body">
-        <div class="container" style="padding: 10px 0;">
-            <div class="row">
-                <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="65"><div class="card-body"><h5 class="card-title">a</h5><p class="card-text">a, A, <span style='font-family: Cookie'>a, </span><span style='font-family: Cookie'> A</span></p></div></div></div></div>
-                <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="66"><div class="card-body"><h5 class="card-title">b</h5><p class="card-text">b, B, <span style='font-family: Cookie'>b, </span><span style='font-family: Cookie'> B</span></p></div></div></div></div>
-                <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="67"><div class="card-body"><h5 class="card-title">c</h5><p class="card-text">c, C, <span style='font-family: Cookie'>c, </span><span style='font-family: Cookie'> C</span></p></div></div></div></div>
-                <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="68"><div class="card-body"><h5 class="card-title">d</h5><p class="card-text">d, D, <span style='font-family: Cookie'>d, </span><span style='font-family: Cookie'> D</span></p></div></div></div></div>
-                <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="69"><div class="card-body"><h5 class="card-title">e</h5><p class="card-text">e, E, <span style='font-family: Cookie'>e, </span><span style='font-family: Cookie'> E</span></p></div></div></div></div>
-                <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="70"><div class="card-body"><h5 class="card-title">f</h5><p class="card-text">f, F, <span style='font-family: Cookie'>f, </span><span style='font-family: Cookie'> F</span></p></div></div></div></div>
-                <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="71"><div class="card-body"><h5 class="card-title">g</h5><p class="card-text">g, G, <span style='font-family: Cookie'>g, </span><span style='font-family: Cookie'> G</span></p></div></div></div></div>
-                <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="72"><div class="card-body"><h5 class="card-title">h</h5><p class="card-text">h, H, <span style='font-family: Cookie'>h, </span><span style='font-family: Cookie'> H</span></p></div></div></div></div>
-                <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="73"><div class="card-body"><h5 class="card-title">i</h5><p class="card-text">i, I, <span style='font-family: Cookie'>i, </span><span style='font-family: Cookie'> I</span></p></div></div></div></div>
-                <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="74"><div class="card-body"><h5 class="card-title">j</h5><p class="card-text">j, J, <span style='font-family: Cookie'>j, </span><span style='font-family: Cookie'> J</span></p></div></div></div></div>
-                <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="75"><div class="card-body"><h5 class="card-title">k</h5><p class="card-text">k, K, <span style='font-family: Cookie'>k, </span><span style='font-family: Cookie'> K</span></p></div></div></div></div>
-                <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="76"><div class="card-body"><h5 class="card-title">l</h5><p class="card-text">l, L, <span style='font-family: Cookie'>l, </span><span style='font-family: Cookie'> L</span></p></div></div></div></div>
-                <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="77"><div class="card-body"><h5 class="card-title">m</h5><p class="card-text">m, M, <span style='font-family: Cookie'>m, </span><span style='font-family: Cookie'> M</span></p></div></div></div></div>
-                <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="78"><div class="card-body"><h5 class="card-title">n</h5><p class="card-text">n, N, <span style='font-family: Cookie'>n, </span><span style='font-family: Cookie'> N</span></p></div></div></div></div>
-                <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="79"><div class="card-body"><h5 class="card-title">o</h5><p class="card-text">o, O, <span style='font-family: Cookie'>o, </span><span style='font-family: Cookie'> O</span></p></div></div></div></div>
-                <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="80"><div class="card-body"><h5 class="card-title">p</h5><p class="card-text">p, P, <span style='font-family: Cookie'>p, </span><span style='font-family: Cookie'> P</span></p></div></div></div></div>
-                <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="81"><div class="card-body"><h5 class="card-title">q</h5><p class="card-text">q, Q, <span style='font-family: Cookie'>q, </span><span style='font-family: Cookie'> Q</span></p></div></div></div></div>
-                <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="82"><div class="card-body"><h5 class="card-title">r</h5><p class="card-text">r, R, <span style='font-family: Cookie'>r, </span><span style='font-family: Cookie'> R</span></p></div></div></div></div>
-                <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="83"><div class="card-body"><h5 class="card-title">s</h5><p class="card-text">s, S, <span style='font-family: Cookie'>s, </span><span style='font-family: Cookie'> S</span></p></div></div></div></div>
-                <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="84"><div class="card-body"><h5 class="card-title">t</h5><p class="card-text">t, T, <span style='font-family: Cookie'>t, </span><span style='font-family: Cookie'> T</span></p></div></div></div></div>
-                <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="85"><div class="card-body"><h5 class="card-title">u</h5><p class="card-text">u, U, <span style='font-family: Cookie'>u, </span><span style='font-family: Cookie'> U</span></p></div></div></div></div>
-                <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="86"><div class="card-body"><h5 class="card-title">v</h5><p class="card-text">v, V, <span style='font-family: Cookie'>v, </span><span style='font-family: Cookie'> V</span></p></div></div></div></div>
-                <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="87"><div class="card-body"><h5 class="card-title">w</h5><p class="card-text">w, W, <span style='font-family: Cookie'>w, </span><span style='font-family: Cookie'> W</span></p></div></div></div></div>
-                <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="88"><div class="card-body"><h5 class="card-title">x</h5><p class="card-text">x, X, <span style='font-family: Cookie'>x, </span><span style='font-family: Cookie'> X</span></p></div></div></div></div>
-                <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="89"><div class="card-body"><h5 class="card-title">y</h5><p class="card-text">y, Y, <span style='font-family: Cookie'>y, </span><span style='font-family: Cookie'> Y</span></p></div></div></div></div>
-                <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="90"><div class="card-body"><h5 class="card-title">z</h5><p class="card-text">z, Z, <span style='font-family: Cookie'>z, </span><span style='font-family: Cookie'> Z</span></p></div></div></div></div>
-            </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-
   </div>
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        function setActive(target){
-            document.querySelectorAll('.card.active').forEach((ele)=>{
-                ele.classList.remove('active');
-            });
-            target.classList.add('active');
-        }
-    </script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+    let data1 = [
+      ['a', 'normal', 4000, ['a', 'b', 'c', 'd'], ['a']],
+      ['b', 'normal', 11000, ['a', 'b', 'c', 'd'], ['c', 'd', 'd', 'b']],
+      ['d', 'normal', 8900, ['a', 'b', 'c', 'd'], ['b']],
+      ['c', 'normal', 4500, ['a', 'b', 'c', 'd'], ['c']]
+    ];
+    let data = [
+      [
+        "c",
+        "normal",
+        170000,
+        [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        [
+          "c"
+        ]
+      ],
+      [
+        "d",
+        "normal",
+        4000,
+        [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        [
+          "b",
+          "d"
+        ]
+      ],
+      [
+        "b",
+        "normal",
+        15000,
+        [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        [
+          "b"
+        ]
+      ],
+      [
+        "a",
+        "normal",
+        1004,
+        [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        [
+          "a"
+        ]
+      ],
+      [
+        "g",
+        "normal",
+        2500,
+        [
+          "e",
+          "f",
+          "g"
+        ],
+        [
+          "g"
+        ]
+      ],
+      [
+        "e",
+        "normal",
+        2000,
+        [
+          "e",
+          "f",
+          "g"
+        ],
+        [
+          "e"
+        ]
+      ],
+      [
+        "f",
+        "normal",
+        1000,
+        [
+          "e",
+          "f",
+          "g"
+        ],
+        [
+          "f"
+        ]
+      ],
+      [
+        "k",
+        "normal",
+        1001,
+        [
+          "h",
+          "i",
+          "j",
+          "k"
+        ],
+        [
+          "k"
+        ]
+      ],
+      [
+        "j",
+        "normal",
+        1501,
+        [
+          "h",
+          "i",
+          "j",
+          "k"
+        ],
+        [
+          "j"
+        ]
+      ],
+      [
+        "i",
+        "normal",
+        1001,
+        [
+          "h",
+          "i",
+          "j",
+          "k"
+        ],
+        [
+          "i"
+        ]
+      ],
+      [
+        "h",
+        "normal",
+        3000,
+        [
+          "h",
+          "i",
+          "j",
+          "k"
+        ],
+        [
+          "h"
+        ]
+      ],
+      [
+        "l",
+        "normal",
+        2000,
+        [
+          "l",
+          "m",
+          "n",
+          "o",
+          "p"
+        ],
+        [
+          "l"
+        ]
+      ],
+      [
+        "p",
+        "normal",
+        1500,
+        [
+          "l",
+          "m",
+          "n",
+          "o",
+          "p"
+        ],
+        [
+          "p"
+        ]
+      ],
+      [
+        "m",
+        "normal",
+        10002,
+        [
+          "l",
+          "m",
+          "n",
+          "o",
+          "p"
+        ],
+        [
+          "m"
+        ]
+      ],
+      [
+        "o",
+        "normal",
+        2500,
+        [
+          "l",
+          "m",
+          "n",
+          "o",
+          "p"
+        ],
+        [
+          "n",
+          "o"
+        ]
+      ],
+      [
+        "n",
+        "normal",
+        1500,
+        [
+          "l",
+          "m",
+          "n",
+          "o",
+          "p"
+        ],
+        [
+          "n"
+        ]
+      ],
+      [
+        "s",
+        "normal",
+        1500,
+        [
+          "q",
+          "r",
+          "s",
+          "t"
+        ],
+        [
+          "s"
+        ]
+      ],
+      [
+        "r",
+        "normal",
+        2500,
+        [
+          "q",
+          "r",
+          "s",
+          "t"
+        ],
+        [
+          "t",
+          "r"
+        ]
+      ],
+      [
+        "t",
+        "normal",
+        1000,
+        [
+          "q",
+          "r",
+          "s",
+          "t"
+        ],
+        [
+          "t"
+        ]
+      ],
+      [
+        "q",
+        "normal",
+        2001,
+        [
+          "q",
+          "r",
+          "s",
+          "t"
+        ],
+        []
+      ],
+      [
+        "x",
+        "normal",
+        1500,
+        [
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        []
+      ],
+      [
+        "w",
+        "normal",
+        1500,
+        [
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        []
+      ],
+      [
+        "y",
+        "normal",
+        1500,
+        [
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        []
+      ],
+      [
+        "u",
+        "normal",
+        1500,
+        [
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        []
+      ],
+      [
+        "z",
+        "normal",
+        1500,
+        [
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        []
+      ],
+      [
+        "v",
+        "normal",
+        1500,
+        [
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z"
+        ],
+        []
+      ],
+      [
+        "b",
+        "cursive",
+        3001,
+        [
+          "b",
+          "h",
+          "k",
+          "l"
+        ],
+        [
+          "b"
+        ]
+      ]
+    ];
+    let answerReport = [];
+
+    function categoriseAnswer() {
+      var tem, counter = 0;
+      data.forEach((item) => {
+        answerReport.push({
+          letter: item[0],
+          attempt: item[item.length - 1].length,
+          skipped: item[0] != item[item.length - 1].at(-1),
+          duration: item[2],
+          confused: findConfused(item[0])
+        });
+
+      });
+      console.log(answerReport);
+    }
+
+    function findConfused(l) {
+      var confused = false;
+      data.forEach((item) => {
+        if (l != item[0])
+          if (item.at(-1).find(a => a == l))
+            confused = true;
+      });
+      return confused;
+    }
+    var scale = d3.scaleLinear()
+      .domain([1000, 10000])
+      .range([1, 6]);
+
+    function createChart() {
+      var rightAnswers = answerReport.filter(item => item.attempt == 1 && !item.skipped && !item.confused);
+      d3.select('#rightAnswers')
+        .html("<p class='report_category'>You identified these letters correctly</p>")
+        .selectAll('div')
+        .data(rightAnswers)
+        .enter()
+        .append('div')
+        .attr('class', 'letter correct')
+        .style('width', (d) => scale(d.duration) + 'em')
+        .style('height', (d) => scale(d.duration) + 'em')
+        .text(function (d) {
+          return d.letter;
+        });
+      d3.select('#confusedAnswers')
+        .html("<p class='report_category'>You have confused with these letters</p>")
+        .selectAll('div')
+        .data(answerReport.filter(item => item.attempt == 1 && !item.skipped && item.confused))
+        .enter()
+        .append('div')
+        .attr('class', 'letter confused')
+        .style('width', (d) => scale(d.duration) + 'em')
+        .style('height', (d) => scale(d.duration) + 'em')
+        .text(function (d) {
+          return d.letter;
+        });
+      d3.select('#skippedAnswers')
+        .html("<p class='report_category'>You skipped these letters</p>")
+        .selectAll('div')
+        .data(answerReport.filter(item => item.skipped))
+        .enter()
+        .append('div')
+        .attr('class', 'letter skipped')
+        .style('width', (d) => scale(d.duration) + 'em')
+        .style('height', (d) => scale(d.duration) + 'em')
+        .text(function (d) {
+          return d.letter;
+        });
+      d3.select('#wrongAnswers')
+        .html("<p class='report_category'>You wrongly identify these letters</p>")
+        .selectAll('div')
+        .data(answerReport.filter(item => item.attempt > 1 && !item.skipped))
+        .enter()
+        .append('div')
+        .attr('class', 'letter wrong')
+        .style('width', (d) => scale(d.duration) + 'em')
+        .style('height', (d) => scale(d.duration) + 'em')
+        .text(function (d) {
+          return d.letter;
+        });
+    }
+
+
+  </script>
 </body>
 
 </html>

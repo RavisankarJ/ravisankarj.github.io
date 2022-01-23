@@ -242,8 +242,10 @@ function submitAns() {
     $('#divStatus').removeClass('d-flex');
     $('#divStatus').css('display', 'none');
     $('#studentDetails').css("display", "none");
+    $('#levelDiv').css('display', 'none');
     $('#c').css('display', 'none');
     $('#score').css("display", "block");
+    createReport(answers);
     createAnsTable(answers);
     $('.nav-link')[2].setAttribute("onclick", "displayTab('divEdit', this)");
     correctAudio.pause();
