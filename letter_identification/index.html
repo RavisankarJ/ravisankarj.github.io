@@ -56,7 +56,7 @@
                         <div class="text-center mt-4 animate">
                             <a class="btn btn-info" type="button" style="cursor:pointer; font-weight: bolder;"
                                 onclick="displayTab('divPlay', this)">Play</a>
-                                <!-- <button onclick="generateRandomLetters(66,4)">Random</button> -->
+                            <!-- <button onclick="generateRandomLetters(66,4)">Random</button> -->
                         </div>
                     </div>
                 </div>
@@ -275,59 +275,375 @@
                                 <label for="playMode">Play Mode</label><br>
                                 <input type="radio" id="assessmentMode" name="mode" value="Test Mode">
                                 <label for="assessmentMode">Test Mode</label><br>
-                                <input type="radio" id="learnMode" name="mode" value="Training Mode" data-toggle="modal" data-target="#myModal">
+                                <input type="radio" id="learnMode" name="mode" value="Training Mode" data-toggle="modal"
+                                    data-target="#myModal">
                                 <label for="learnMode">Training Mode</label>
-                            <button type="button" id="show_training_cards" style="display: none; font-size: small;" class="btn btn-info btn-lg m-1" data-toggle="modal" data-target="#myModal">Training Cards</button>
+                                <button type="button" id="show_training_cards" style="display: none; font-size: small;"
+                                    class="btn btn-info btn-lg m-1" data-toggle="modal" data-target="#myModal">Training
+                                    Cards</button>
 
                             </div>
                             <div id="myModal" class="modal fade" role="dialog">
                                 <div class="modal-dialog">
-                              
-                                  <!-- Modal content-->
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                      <h4 class="modal-title">Choose a letter for Training</h4>
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">Choose a letter for Training</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="container" style="padding: 10px 0;">
+                                                <div class="row">
+                                                    <div class="col-xs-2">
+                                                        <div class="col mb-4">
+                                                            <div class="card h-100" onclick="setActive(this)"
+                                                                data-letter="65" data-hint="a for apple">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">a</h5>
+                                                                    <p class="card-text">a, A, <span
+                                                                            style='font-family: Cookie'>a, </span><span
+                                                                            style='font-family: Cookie'> A</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="col mb-4">
+                                                            <div class="card h-100" onclick="setActive(this)"
+                                                                data-letter="66" data-hint="b for ball">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">b</h5>
+                                                                    <p class="card-text">b, B, <span
+                                                                            style='font-family: Cookie'>b, </span><span
+                                                                            style='font-family: Cookie'> B</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="col mb-4">
+                                                            <div class="card h-100" onclick="setActive(this)"
+                                                                data-letter="67" data-hint="c for cat">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">c</h5>
+                                                                    <p class="card-text">c, C, <span
+                                                                            style='font-family: Cookie'>c, </span><span
+                                                                            style='font-family: Cookie'> C</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="col mb-4">
+                                                            <div class="card h-100" onclick="setActive(this)"
+                                                                data-letter="68" data-hint="d for dog">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">d</h5>
+                                                                    <p class="card-text">d, D, <span
+                                                                            style='font-family: Cookie'>d, </span><span
+                                                                            style='font-family: Cookie'> D</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="col mb-4">
+                                                            <div class="card h-100" onclick="setActive(this)"
+                                                                data-letter="69" data-hint="e for elephant">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">e</h5>
+                                                                    <p class="card-text">e, E, <span
+                                                                            style='font-family: Cookie'>e, </span><span
+                                                                            style='font-family: Cookie'> E</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="col mb-4">
+                                                            <div class="card h-100" onclick="setActive(this)"
+                                                                data-letter="70" data-hint="f for fox">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">f</h5>
+                                                                    <p class="card-text">f, F, <span
+                                                                            style='font-family: Cookie'>f, </span><span
+                                                                            style='font-family: Cookie'> F</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="col mb-4">
+                                                            <div class="card h-100" onclick="setActive(this)"
+                                                                data-letter="71" data-hint="g for goat">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">g</h5>
+                                                                    <p class="card-text">g, G, <span
+                                                                            style='font-family: Cookie'>g, </span><span
+                                                                            style='font-family: Cookie'> G</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="col mb-4">
+                                                            <div class="card h-100" onclick="setActive(this)"
+                                                                data-letter="72" data-hint="h for hen">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">h</h5>
+                                                                    <p class="card-text">h, H, <span
+                                                                            style='font-family: Cookie'>h, </span><span
+                                                                            style='font-family: Cookie'> H</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="col mb-4">
+                                                            <div class="card h-100" onclick="setActive(this)"
+                                                                data-letter="73" data-hint="i for India">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">i</h5>
+                                                                    <p class="card-text">i, I, <span
+                                                                            style='font-family: Cookie'>i, </span><span
+                                                                            style='font-family: Cookie'> I</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="col mb-4">
+                                                            <div class="card h-100" onclick="setActive(this)"
+                                                                data-letter="74" data-hint="j for jug">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">j</h5>
+                                                                    <p class="card-text">j, J, <span
+                                                                            style='font-family: Cookie'>j, </span><span
+                                                                            style='font-family: Cookie'> J</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="col mb-4">
+                                                            <div class="card h-100" onclick="setActive(this)"
+                                                                data-letter="75" data-hint="k for kite">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">k</h5>
+                                                                    <p class="card-text">k, K, <span
+                                                                            style='font-family: Cookie'>k, </span><span
+                                                                            style='font-family: Cookie'> K</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="col mb-4">
+                                                            <div class="card h-100" onclick="setActive(this)"
+                                                                data-letter="76" data-hint="l for lollipop">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">l</h5>
+                                                                    <p class="card-text">l, L, <span
+                                                                            style='font-family: Cookie'>l, </span><span
+                                                                            style='font-family: Cookie'> L</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="col mb-4">
+                                                            <div class="card h-100" onclick="setActive(this)"
+                                                                data-letter="77" data-hint="m for mango">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">m</h5>
+                                                                    <p class="card-text">m, M, <span
+                                                                            style='font-family: Cookie'>m, </span><span
+                                                                            style='font-family: Cookie'> M</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="col mb-4">
+                                                            <div class="card h-100" onclick="setActive(this)"
+                                                                data-letter="78" data-hint="n for November">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">n</h5>
+                                                                    <p class="card-text">n, N, <span
+                                                                            style='font-family: Cookie'>n, </span><span
+                                                                            style='font-family: Cookie'> N</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="col mb-4">
+                                                            <div class="card h-100" onclick="setActive(this)"
+                                                                data-letter="79" data-hint="o for orange">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">o</h5>
+                                                                    <p class="card-text">o, O, <span
+                                                                            style='font-family: Cookie'>o, </span><span
+                                                                            style='font-family: Cookie'> O</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="col mb-4">
+                                                            <div class="card h-100" onclick="setActive(this)"
+                                                                data-letter="80" data-hint="p for parrot">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">p</h5>
+                                                                    <p class="card-text">p, P, <span
+                                                                            style='font-family: Cookie'>p, </span><span
+                                                                            style='font-family: Cookie'> P</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="col mb-4">
+                                                            <div class="card h-100" onclick="setActive(this)"
+                                                                data-letter="81" data-hint="q for queen">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">q</h5>
+                                                                    <p class="card-text">q, Q, <span
+                                                                            style='font-family: Cookie'>q, </span><span
+                                                                            style='font-family: Cookie'> Q</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="col mb-4">
+                                                            <div class="card h-100" onclick="setActive(this)"
+                                                                data-letter="82" data-hint="r for rat">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">r</h5>
+                                                                    <p class="card-text">r, R, <span
+                                                                            style='font-family: Cookie'>r, </span><span
+                                                                            style='font-family: Cookie'> R</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="col mb-4">
+                                                            <div class="card h-100" onclick="setActive(this)"
+                                                                data-letter="83" data-hint="s for six">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">s</h5>
+                                                                    <p class="card-text">s, S, <span
+                                                                            style='font-family: Cookie'>s, </span><span
+                                                                            style='font-family: Cookie'> S</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="col mb-4">
+                                                            <div class="card h-100" onclick="setActive(this)"
+                                                                data-letter="84" data-hint="t for ten">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">t</h5>
+                                                                    <p class="card-text">t, T, <span
+                                                                            style='font-family: Cookie'>t, </span><span
+                                                                            style='font-family: Cookie'> T</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="col mb-4">
+                                                            <div class="card h-100" onclick="setActive(this)"
+                                                                data-letter="85" data-hint="u for up">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">u</h5>
+                                                                    <p class="card-text">u, U, <span
+                                                                            style='font-family: Cookie'>u, </span><span
+                                                                            style='font-family: Cookie'> U</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="col mb-4">
+                                                            <div class="card h-100" onclick="setActive(this)"
+                                                                data-letter="86" data-hint="v for van">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">v</h5>
+                                                                    <p class="card-text">v, V, <span
+                                                                            style='font-family: Cookie'>v, </span><span
+                                                                            style='font-family: Cookie'> V</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="col mb-4">
+                                                            <div class="card h-100" onclick="setActive(this)"
+                                                                data-letter="87" data-hint="w for window">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">w</h5>
+                                                                    <p class="card-text">w, W, <span
+                                                                            style='font-family: Cookie'>w, </span><span
+                                                                            style='font-family: Cookie'> W</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="col mb-4">
+                                                            <div class="card h-100" onclick="setActive(this)"
+                                                                data-letter="88" data-hint="x for xerox">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">x</h5>
+                                                                    <p class="card-text">x, X, <span
+                                                                            style='font-family: Cookie'>x, </span><span
+                                                                            style='font-family: Cookie'> X</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="col mb-4">
+                                                            <div class="card h-100" onclick="setActive(this)"
+                                                                data-letter="89" data-hint="y for yellow">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">y</h5>
+                                                                    <p class="card-text">y, Y, <span
+                                                                            style='font-family: Cookie'>y, </span><span
+                                                                            style='font-family: Cookie'> Y</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="col mb-4">
+                                                            <div class="card h-100" onclick="setActive(this)"
+                                                                data-letter="90" data-hint="z for zebra">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">z</h5>
+                                                                    <p class="card-text">z, Z, <span
+                                                                            style='font-family: Cookie'>z, </span><span
+                                                                            style='font-family: Cookie'> Z</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default"
+                                                data-dismiss="modal">Close</button>
+                                        </div>
                                     </div>
-                                    <div class="modal-body">
-                                      <div class="container" style="padding: 10px 0;">
-                                          <div class="row">
-                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="65" data-hint="a for apple"><div class="card-body"><h5 class="card-title">a</h5><p class="card-text">a, A, <span style='font-family: Cookie'>a, </span><span style='font-family: Cookie'> A</span></p></div></div></div></div>
-                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="66" data-hint="b for ball"><div class="card-body"><h5 class="card-title">b</h5><p class="card-text">b, B, <span style='font-family: Cookie'>b, </span><span style='font-family: Cookie'> B</span></p></div></div></div></div>
-                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="67" data-hint="c for cat"><div class="card-body"><h5 class="card-title">c</h5><p class="card-text">c, C, <span style='font-family: Cookie'>c, </span><span style='font-family: Cookie'> C</span></p></div></div></div></div>
-                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="68" data-hint="d for dog"><div class="card-body"><h5 class="card-title">d</h5><p class="card-text">d, D, <span style='font-family: Cookie'>d, </span><span style='font-family: Cookie'> D</span></p></div></div></div></div>
-                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="69" data-hint="e for elephant"><div class="card-body"><h5 class="card-title">e</h5><p class="card-text">e, E, <span style='font-family: Cookie'>e, </span><span style='font-family: Cookie'> E</span></p></div></div></div></div>
-                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="70" data-hint="f for fox"><div class="card-body"><h5 class="card-title">f</h5><p class="card-text">f, F, <span style='font-family: Cookie'>f, </span><span style='font-family: Cookie'> F</span></p></div></div></div></div>
-                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="71" data-hint="g for goat"><div class="card-body"><h5 class="card-title">g</h5><p class="card-text">g, G, <span style='font-family: Cookie'>g, </span><span style='font-family: Cookie'> G</span></p></div></div></div></div>
-                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="72" data-hint="h for hen"><div class="card-body"><h5 class="card-title">h</h5><p class="card-text">h, H, <span style='font-family: Cookie'>h, </span><span style='font-family: Cookie'> H</span></p></div></div></div></div>
-                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="73" data-hint="i for India"><div class="card-body"><h5 class="card-title">i</h5><p class="card-text">i, I, <span style='font-family: Cookie'>i, </span><span style='font-family: Cookie'> I</span></p></div></div></div></div>
-                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="74" data-hint="j for jug"><div class="card-body"><h5 class="card-title">j</h5><p class="card-text">j, J, <span style='font-family: Cookie'>j, </span><span style='font-family: Cookie'> J</span></p></div></div></div></div>
-                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="75" data-hint="k for kite"><div class="card-body"><h5 class="card-title">k</h5><p class="card-text">k, K, <span style='font-family: Cookie'>k, </span><span style='font-family: Cookie'> K</span></p></div></div></div></div>
-                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="76" data-hint="l for lollipop"><div class="card-body"><h5 class="card-title">l</h5><p class="card-text">l, L, <span style='font-family: Cookie'>l, </span><span style='font-family: Cookie'> L</span></p></div></div></div></div>
-                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="77" data-hint="m for mango"><div class="card-body"><h5 class="card-title">m</h5><p class="card-text">m, M, <span style='font-family: Cookie'>m, </span><span style='font-family: Cookie'> M</span></p></div></div></div></div>
-                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="78" data-hint="n for November"><div class="card-body"><h5 class="card-title">n</h5><p class="card-text">n, N, <span style='font-family: Cookie'>n, </span><span style='font-family: Cookie'> N</span></p></div></div></div></div>
-                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="79" data-hint="o for orange"><div class="card-body"><h5 class="card-title">o</h5><p class="card-text">o, O, <span style='font-family: Cookie'>o, </span><span style='font-family: Cookie'> O</span></p></div></div></div></div>
-                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="80" data-hint="p for parrot"><div class="card-body"><h5 class="card-title">p</h5><p class="card-text">p, P, <span style='font-family: Cookie'>p, </span><span style='font-family: Cookie'> P</span></p></div></div></div></div>
-                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="81" data-hint="q for queen"><div class="card-body"><h5 class="card-title">q</h5><p class="card-text">q, Q, <span style='font-family: Cookie'>q, </span><span style='font-family: Cookie'> Q</span></p></div></div></div></div>
-                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="82" data-hint="r for rat"><div class="card-body"><h5 class="card-title">r</h5><p class="card-text">r, R, <span style='font-family: Cookie'>r, </span><span style='font-family: Cookie'> R</span></p></div></div></div></div>
-                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="83" data-hint="s for six"><div class="card-body"><h5 class="card-title">s</h5><p class="card-text">s, S, <span style='font-family: Cookie'>s, </span><span style='font-family: Cookie'> S</span></p></div></div></div></div>
-                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="84" data-hint="t for ten"><div class="card-body"><h5 class="card-title">t</h5><p class="card-text">t, T, <span style='font-family: Cookie'>t, </span><span style='font-family: Cookie'> T</span></p></div></div></div></div>
-                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="85" data-hint="u for up"><div class="card-body"><h5 class="card-title">u</h5><p class="card-text">u, U, <span style='font-family: Cookie'>u, </span><span style='font-family: Cookie'> U</span></p></div></div></div></div>
-                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="86" data-hint="v for van"><div class="card-body"><h5 class="card-title">v</h5><p class="card-text">v, V, <span style='font-family: Cookie'>v, </span><span style='font-family: Cookie'> V</span></p></div></div></div></div>
-                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="87" data-hint="w for window"><div class="card-body"><h5 class="card-title">w</h5><p class="card-text">w, W, <span style='font-family: Cookie'>w, </span><span style='font-family: Cookie'> W</span></p></div></div></div></div>
-                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="88" data-hint="x for xerox"><div class="card-body"><h5 class="card-title">x</h5><p class="card-text">x, X, <span style='font-family: Cookie'>x, </span><span style='font-family: Cookie'> X</span></p></div></div></div></div>
-                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="89" data-hint="y for yellow"><div class="card-body"><h5 class="card-title">y</h5><p class="card-text">y, Y, <span style='font-family: Cookie'>y, </span><span style='font-family: Cookie'> Y</span></p></div></div></div></div>
-                                              <div class="col-xs-2"><div class="col mb-4"><div class="card h-100" onclick="setActive(this)" data-letter="90" data-hint="z for zebra"><div class="card-body"><h5 class="card-title">z</h5><p class="card-text">z, Z, <span style='font-family: Cookie'>z, </span><span style='font-family: Cookie'> Z</span></p></div></div></div></div>
-                                          </div>
-                                      </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    </div>
-                                  </div>
-                              
+
                                 </div>
-                              </div>
+                            </div>
 
                             <button id="startBtn" class="btn btn-primary m-1" onclick="start()">Start</button>
                         </div>
@@ -349,37 +665,7 @@
                             </button>
                         </div>
                     </div>
-                    <div id="score" class="container border border-primary rounded"
-                        style="border: 2px; margin-right: auto; margin-left: auto; display: none;">
-                        <table class="table table-hover">
-                            <caption style="caption-side: top; text-align: center;">Your result</caption>
-                            <thead>
-                                <tr>
-                                    <th>School ID:</th>
-                                    <th><span id="score_school_ID"></span></th>
-                                    <th>Student ID:</th>
-                                    <th><span id="score_student_ID"></span></th>
-                                </tr>
-                                
-                                <tr>
-                                    <!-- <th>Student ID</th> -->
-                                    <th>Question</th>
-                                    <th>Font Type</th>
-                                    <th>Time<br><span style="font-size: smaller;">(in milli second)</span></th>
-                                    <th>Words</th>
-                                    <th>Moves</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbdy"></tbody>
-                        </table>
-                        <div class="d-flex justify-content-between"
-                            style="text-align: center; padding: 5px; padding-left: 10px; padding-right: 10px;">
-                            <button class="btn btn-primary" onclick="dwnloadAns()">Download report</button>
-                            <button id="uploadAns" class="btn btn-info" onclick="uploadAns()">Upload report</button>
-                            <button class="btn btn-primary" onclick="reload()">Play again</button>
-                            <!-- <button class="btn btn-primary" onclick="nxtLevel()">Next Level</button> -->
-                        </div>
-                    </div>
+
                 </div>
 
                 <div class="col-sm-4">
@@ -390,82 +676,142 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="tabContent" id="divEdit" style="display: none;">
-        <div class="container border border-primary rounded"
-            style="align-content: center; margin-left: auto; margin-right: auto;">
-            <table class="table table-hover">
-                <caption style="caption-side: top; text-align: center;">QUESTIONS</caption>
-                <thead>
-                    <tr>
-                        <th class="qheading">Word</th>
-                        <th class="qheading">Word Hint</th>
-                        <th class="qheading">Font Style</th>
-                        <th class="hideColumn qheading" style="display: none;">Delete</th>
-                    </tr>
-                </thead>
-                <tbody id="tQbdy"></tbody>
-            </table>
 
-            <div class="container-fluid" id="inQuestion" style="display: none;">
-                <div class="row">
-                    <div class="form-group" style="padding: 10px; ">
-                        <label for="word">Word</label>
-                        <input class="form-control" name="word" required type="text" />
+            </div>
+            <div id="score" class="container border border-primary rounded"
+                style="border: 2px; margin-right: auto; margin-left: auto; display: none;">
+                <div class="container m-1">
+                    <div class="d-flex justify-content-between">
+                        <div>School ID:
+                            <span id="score_school_ID" class="px-1"></span>
+                        </div>
+                        <div>Student ID:</th>
+                            <span id="score_student_ID" class="px-1"></span>
+                        </div>
                     </div>
 
-                    <div class="form-group" style="padding: 10px; ">
-                        <label for="font">Font Style</label>
-                        <select class="form-control" name="font">
-                            <option value='normal'>normal</option>
-                            <option value='cursive'>cursive</option>
-                        </select>
+                    <p style="text-align: center;">The bigger the circle the more you took time to answer</p>
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 p-1" style="min-height: 5em;">
+
+                        <div class="col m-1" id="rightAnswers" style="border: 1px solid rgb(252, 136, 136);">No letters
+                        </div>
+                        <div class="col m-1" id="confusedAnswers" style="border: 1px solid rgb(252, 136, 136);">No
+                            letters</div>
+                        <div class="col m-1" id="skippedAnswers" style="border: 1px solid rgb(252, 136, 136);">No
+                            letters</div>
+                        <div class="col m-1" id="wrongAnswers" style="border: 1px solid rgb(252, 136, 136);">No letters
+                        </div>
+                    </div>
+                </div>
+                
+                                <button data-toggle="collapse" href="#collapse1" class="btn btn-info">Detailed results</button>
+                        <div id="collapse1" class="collapse">
+                            <table class="table table-hover">
+                                <caption style="caption-side: top; text-align: center;">Your detailed result</caption>
+                                <thead>
+
+
+                                    <tr>
+                                        <!-- <th>Student ID</th> -->
+                                        <th>Question</th>
+                                        <th>Font Type</th>
+                                        <th>Time<br><span style="font-size: smaller;">(in milli second)</span></th>
+                                        <th>Words</th>
+                                        <th>Moves</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbdy"></tbody>
+                            </table>
+                        </div>
+                        <div class="d-flex justify-content-between"
+                            style="text-align: center; padding: 5px; padding-left: 10px; padding-right: 10px;">
+                            <button class="btn btn-primary" onclick="dwnloadAns()">Download report</button>
+                            <button id="uploadAns" class="btn btn-info" onclick="uploadAns()">Upload report</button>
+                            <button class="btn btn-primary" onclick="reload()">Play again</button>
+                            <!-- <button class="btn btn-primary" onclick="nxtLevel()">Next Level</button> -->
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-between" style="padding-left: 20px; padding-right: 20px;">
-                <div style="width: 75%;">
-                    <button id="editBtn" class="btn btn-primary" onclick="editQuestions()">Edit</button>
-                    <button id="addBtn" class="btn btn-primary" disabled onclick="addQuestion()">Add</button>
-                    <button id="dwnBtn" class="btn btn-primary" onclick="dwnloadQues()">Download Questions</button>
-                </div>
-                <div style="width: 25%; text-align: end;">
-                    <button id="saveBtn" class="btn btn-success" disabled onclick="saveQuestions()">Save</button>
-                </div>
-            </div>
-            <br>
-            <div class="container">
-                <label for="myfile">Select a file:</label>
-                <input type="file" id="myfile" name="myfile">
-                <button class="btn btn-success mt-2" onclick="uploadReport()">Upload Questions</button>
-            </div>
-            <p style="text-align: center; padding: 20px 0; background-color: azure;">---or choose below word set---
-            </p>
-            <div class="container" style="padding: 10px 0;">
-                <div id="questionSetdiv" class="row row-cols-1 row-cols-md-3">
-                    <div class="col mb-4">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <h5 class="card-title">No Words</h5>
-                                <p class="card-text">No other word sets are available.</p>
+            <div class="tabContent" id="divEdit" style="display: none;">
+                <div class="container border border-primary rounded"
+                    style="align-content: center; margin-left: auto; margin-right: auto;">
+                    <table class="table table-hover">
+                        <caption style="caption-side: top; text-align: center;">QUESTIONS</caption>
+                        <thead>
+                            <tr>
+                                <th class="qheading">Word</th>
+                                <th class="qheading">Word Hint</th>
+                                <th class="qheading">Font Style</th>
+                                <th class="hideColumn qheading" style="display: none;">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tQbdy"></tbody>
+                    </table>
+
+                    <div class="container-fluid" id="inQuestion" style="display: none;">
+                        <div class="row">
+                            <div class="form-group" style="padding: 10px; ">
+                                <label for="word">Word</label>
+                                <input class="form-control" name="word" required type="text" />
+                            </div>
+
+                            <div class="form-group" style="padding: 10px; ">
+                                <label for="font">Font Style</label>
+                                <select class="form-control" name="font">
+                                    <option value='normal'>normal</option>
+                                    <option value='cursive'>cursive</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between" style="padding-left: 20px; padding-right: 20px;">
+                        <div style="width: 75%;">
+                            <button id="editBtn" class="btn btn-primary" onclick="editQuestions()">Edit</button>
+                            <button id="addBtn" class="btn btn-primary" disabled onclick="addQuestion()">Add</button>
+                            <button id="dwnBtn" class="btn btn-primary" onclick="dwnloadQues()">Download
+                                Questions</button>
+                        </div>
+                        <div style="width: 25%; text-align: end;">
+                            <button id="saveBtn" class="btn btn-success" disabled
+                                onclick="saveQuestions()">Save</button>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="container">
+                        <label for="myfile">Select a file:</label>
+                        <input type="file" id="myfile" name="myfile">
+                        <button class="btn btn-success mt-2" onclick="uploadReport()">Upload Questions</button>
+                    </div>
+                    <p style="text-align: center; padding: 20px 0; background-color: azure;">---or choose below word
+                        set---
+                    </p>
+                    <div class="container" style="padding: 10px 0;">
+                        <div id="questionSetdiv" class="row row-cols-1 row-cols-md-3">
+                            <div class="col mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">No Words</h5>
+                                        <p class="card-text">No other word sets are available.</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"
-        integrity="sha512-rKFvwjvE4liWPlFnvH4ZhRDfNZ9FOpdkD/BU5gAIA3VS3vOQrQ5BjKgbO3kxebKhHdHcNUHLqxQYSoxee9UwgA=="
-        crossorigin="anonymous"></script>
-    <script src="question_words.js"></script>
-    <script src="myscript.js"></script>
-    <script src="training.js"></script>
-    <script src="submitData.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+            <script src="https://d3js.org/d3.v7.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"
+                integrity="sha512-rKFvwjvE4liWPlFnvH4ZhRDfNZ9FOpdkD/BU5gAIA3VS3vOQrQ5BjKgbO3kxebKhHdHcNUHLqxQYSoxee9UwgA=="
+                crossorigin="anonymous"></script>
+            <script src="question_words.js"></script>
+            <script src="myscript.js"></script>
+            <script src="training.js"></script>
+            <script src="submitData.js"></script>
+            <script src="report_answer.js"></script>
+
 </body>
 
 </html>
