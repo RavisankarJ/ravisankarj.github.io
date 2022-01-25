@@ -244,10 +244,9 @@ function submitAns() {
     $('#levelDiv').css('display', 'none');
     $('#c').css('display', 'none');
     $('#score').css("display", "block");
+    createReport(answers);
     if (mode == 2)
         $('#visualReport').css('display', 'none');
-    else
-        createReport(answers);
     createAnsTable(answers);
     $('.nav-link')[2].setAttribute("onclick", "displayTab('divEdit', this)");
     correctAudio.pause();
@@ -738,7 +737,7 @@ function stringifySet(set) {
 }
 
 function addClickEvent_CardElement() {
-    document.querySelectorAll('.card').forEach((ele) => {
+    document.querySelectorAll('#questionSetdiv .card').forEach((ele) => {
         // console.log(ele);
         ele.addEventListener('click',
             (event) => {
