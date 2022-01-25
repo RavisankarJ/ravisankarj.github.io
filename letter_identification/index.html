@@ -679,9 +679,9 @@
 
             </div>
             <div id="score" class="container border border-primary rounded"
-                style="border: 2px; margin-right: auto; margin-left: auto; display: none;">
+                style="border: 2px; margin-right: auto; margin-left: auto; display: none; text-align: center;">
                 <div class="container m-1">
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between m-1">
                         <div>School ID:
                             <span id="score_school_ID" class="px-1"></span>
                         </div>
@@ -689,128 +689,128 @@
                             <span id="score_student_ID" class="px-1"></span>
                         </div>
                     </div>
+                    <div id="visualReport">
+                        <p style="text-align: center;">The bigger the circle the more you took time to answer</p>
+                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 p-1"
+                            style="min-height: 5em; justify-content: center;">
 
-                    <p style="text-align: center;">The bigger the circle the more you took time to answer</p>
-                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 p-1" style="min-height: 5em;">
-
-                        <div class="col m-1" id="rightAnswers" style="border: 1px solid rgb(252, 136, 136);">No letters
-                        </div>
-                        <div class="col m-1" id="confusedAnswers" style="border: 1px solid rgb(252, 136, 136);">No
-                            letters</div>
-                        <div class="col m-1" id="skippedAnswers" style="border: 1px solid rgb(252, 136, 136);">No
-                            letters</div>
-                        <div class="col m-1" id="wrongAnswers" style="border: 1px solid rgb(252, 136, 136);">No letters
-                        </div>
-                    </div>
-                </div>
-                
-                                <button data-toggle="collapse" href="#collapse1" class="btn btn-info">Detailed results</button>
-                        <div id="collapse1" class="collapse">
-                            <table class="table table-hover">
-                                <caption style="caption-side: top; text-align: center;">Your detailed result</caption>
-                                <thead>
-
-
-                                    <tr>
-                                        <!-- <th>Student ID</th> -->
-                                        <th>Question</th>
-                                        <th>Font Type</th>
-                                        <th>Time<br><span style="font-size: smaller;">(in milli second)</span></th>
-                                        <th>Words</th>
-                                        <th>Moves</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbdy"></tbody>
-                            </table>
-                        </div>
-                        <div class="d-flex justify-content-between"
-                            style="text-align: center; padding: 5px; padding-left: 10px; padding-right: 10px;">
-                            <button class="btn btn-primary" onclick="dwnloadAns()">Download report</button>
-                            <button id="uploadAns" class="btn btn-info" onclick="uploadAns()">Upload report</button>
-                            <button class="btn btn-primary" onclick="reload()">Play again</button>
-                            <!-- <button class="btn btn-primary" onclick="nxtLevel()">Next Level</button> -->
+                            <div class="col m-1" id="rightAnswers" style="border: 1px solid rgb(252, 136, 136);">No
+                                letters
+                            </div>
+                            <div class="col m-1" id="confusedAnswers" style="border: 1px solid rgb(252, 136, 136);">No
+                                letters</div>
+                            <div class="col m-1" id="skippedAnswers" style="border: 1px solid rgb(252, 136, 136);">No
+                                letters</div>
+                            <div class="col m-1" id="wrongAnswers" style="border: 1px solid rgb(252, 136, 136);">No
+                                letters
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="tabContent" id="divEdit" style="display: none;">
-                <div class="container border border-primary rounded"
-                    style="align-content: center; margin-left: auto; margin-right: auto;">
+                <button data-toggle="collapse" href="#collapse1" class="btn btn-info">Detailed results</button>
+                <div id="collapse1" class="collapse">
                     <table class="table table-hover">
-                        <caption style="caption-side: top; text-align: center;">QUESTIONS</caption>
+                        <caption style="caption-side: top; text-align: center;">Your detailed result</caption>
                         <thead>
                             <tr>
-                                <th class="qheading">Word</th>
-                                <th class="qheading">Word Hint</th>
-                                <th class="qheading">Font Style</th>
-                                <th class="hideColumn qheading" style="display: none;">Delete</th>
+                                <th>Question</th>
+                                <th>Font Type</th>
+                                <th>Time<br><span style="font-size: smaller;">(in milli second)</span></th>
+                                <th>Words</th>
+                                <th>Moves</th>
                             </tr>
                         </thead>
-                        <tbody id="tQbdy"></tbody>
+                        <tbody id="tbdy"></tbody>
                     </table>
+                    <div class="d-flex justify-content-between"
+                        style="text-align: center; padding: 5px; padding-left: 10px; padding-right: 10px;">
+                        <button class="btn btn-primary" onclick="dwnloadAns()">Download report</button>
+                        <button id="uploadAns" class="btn btn-info" onclick="uploadAns()">Upload report</button>
 
-                    <div class="container-fluid" id="inQuestion" style="display: none;">
-                        <div class="row">
-                            <div class="form-group" style="padding: 10px; ">
-                                <label for="word">Word</label>
-                                <input class="form-control" name="word" required type="text" />
-                            </div>
+                        <!-- <button class="btn btn-primary" onclick="nxtLevel()">Next Level</button> -->
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="reload()">Play again</button>
+            </div>
+        </div>
+    </div>
+    <div class="tabContent" id="divEdit" style="display: none;">
+        <div class="container border border-primary rounded"
+            style="align-content: center; margin-left: auto; margin-right: auto;">
+            <table class="table table-hover">
+                <caption style="caption-side: top; text-align: center;">QUESTIONS</caption>
+                <thead>
+                    <tr>
+                        <th class="qheading">Word</th>
+                        <th class="qheading">Word Hint</th>
+                        <th class="qheading">Font Style</th>
+                        <th class="hideColumn qheading" style="display: none;">Delete</th>
+                    </tr>
+                </thead>
+                <tbody id="tQbdy"></tbody>
+            </table>
 
-                            <div class="form-group" style="padding: 10px; ">
-                                <label for="font">Font Style</label>
-                                <select class="form-control" name="font">
-                                    <option value='normal'>normal</option>
-                                    <option value='cursive'>cursive</option>
-                                </select>
-                            </div>
-                        </div>
+            <div class="container-fluid" id="inQuestion" style="display: none;">
+                <div class="row">
+                    <div class="form-group" style="padding: 10px; ">
+                        <label for="word">Word</label>
+                        <input class="form-control" name="word" required type="text" />
                     </div>
-                    <div class="d-flex justify-content-between" style="padding-left: 20px; padding-right: 20px;">
-                        <div style="width: 75%;">
-                            <button id="editBtn" class="btn btn-primary" onclick="editQuestions()">Edit</button>
-                            <button id="addBtn" class="btn btn-primary" disabled onclick="addQuestion()">Add</button>
-                            <button id="dwnBtn" class="btn btn-primary" onclick="dwnloadQues()">Download
-                                Questions</button>
-                        </div>
-                        <div style="width: 25%; text-align: end;">
-                            <button id="saveBtn" class="btn btn-success" disabled
-                                onclick="saveQuestions()">Save</button>
-                        </div>
+
+                    <div class="form-group" style="padding: 10px; ">
+                        <label for="font">Font Style</label>
+                        <select class="form-control" name="font">
+                            <option value='normal'>normal</option>
+                            <option value='cursive'>cursive</option>
+                        </select>
                     </div>
-                    <br>
-                    <div class="container">
-                        <label for="myfile">Select a file:</label>
-                        <input type="file" id="myfile" name="myfile">
-                        <button class="btn btn-success mt-2" onclick="uploadReport()">Upload Questions</button>
-                    </div>
-                    <p style="text-align: center; padding: 20px 0; background-color: azure;">---or choose below word
-                        set---
-                    </p>
-                    <div class="container" style="padding: 10px 0;">
-                        <div id="questionSetdiv" class="row row-cols-1 row-cols-md-3">
-                            <div class="col mb-4">
-                                <div class="card h-100">
-                                    <div class="card-body">
-                                        <h5 class="card-title">No Words</h5>
-                                        <p class="card-text">No other word sets are available.</p>
-                                    </div>
-                                </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between" style="padding-left: 20px; padding-right: 20px;">
+                <div style="width: 75%;">
+                    <button id="editBtn" class="btn btn-primary" onclick="editQuestions()">Edit</button>
+                    <button id="addBtn" class="btn btn-primary" disabled onclick="addQuestion()">Add</button>
+                    <button id="dwnBtn" class="btn btn-primary" onclick="dwnloadQues()">Download
+                        Questions</button>
+                </div>
+                <div style="width: 25%; text-align: end;">
+                    <button id="saveBtn" class="btn btn-success" disabled onclick="saveQuestions()">Save</button>
+                </div>
+            </div>
+            <br>
+            <div class="container">
+                <label for="myfile">Select a file:</label>
+                <input type="file" id="myfile" name="myfile">
+                <button class="btn btn-success mt-2" onclick="uploadReport()">Upload Questions</button>
+            </div>
+            <p style="text-align: center; padding: 20px 0; background-color: azure;">---or choose below word
+                set---
+            </p>
+            <div class="container" style="padding: 10px 0;">
+                <div id="questionSetdiv" class="row row-cols-1 row-cols-md-3">
+                    <div class="col mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">No Words</h5>
+                                <p class="card-text">No other word sets are available.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-            <script src="https://d3js.org/d3.v7.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"
-                integrity="sha512-rKFvwjvE4liWPlFnvH4ZhRDfNZ9FOpdkD/BU5gAIA3VS3vOQrQ5BjKgbO3kxebKhHdHcNUHLqxQYSoxee9UwgA=="
-                crossorigin="anonymous"></script>
-            <script src="question_words.js"></script>
-            <script src="myscript.js"></script>
-            <script src="training.js"></script>
-            <script src="submitData.js"></script>
-            <script src="report_answer.js"></script>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"
+        integrity="sha512-rKFvwjvE4liWPlFnvH4ZhRDfNZ9FOpdkD/BU5gAIA3VS3vOQrQ5BjKgbO3kxebKhHdHcNUHLqxQYSoxee9UwgA=="
+        crossorigin="anonymous"></script>
+    <script src="question_words.js"></script>
+    <script src="myscript.js"></script>
+    <script src="training.js"></script>
+    <script src="submitData.js"></script>
+    <script src="report_answer.js"></script>
 
 </body>
 

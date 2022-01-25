@@ -8,7 +8,7 @@ let wrongAudio, correctAudio, currentWord;
 let mode;   //mode = 0 indicates play mode, 1 indicates assessment mode, 2 indicates learning mode
 let selectedQuestionSet = [];    //to store currently selected question set from edit question tab
 
-let svgEle, area, timer, timeDifference, stuid, schoolid, trainingCounter = 4;
+let svgEle, area, timer, timeDifference, stuid, schoolid;
 speech.lang = "en";
 window.speechSynthesis.onvoiceschanged = () => {
     speech.rate = 0.8;
@@ -63,8 +63,7 @@ function randomizeElements() {
 }
 
 function randomText() {
-    if (mode == 2)
-    {
+    if (mode == 2) {
         words = trainingSet.pop();
         currentWord = words[0];
     }
@@ -245,7 +244,10 @@ function submitAns() {
     $('#levelDiv').css('display', 'none');
     $('#c').css('display', 'none');
     $('#score').css("display", "block");
-    createReport(answers);
+    if (mode == 2)
+        $('#visualReport').css('display', 'none');
+    else
+        createReport(answers);
     createAnsTable(answers);
     $('.nav-link')[2].setAttribute("onclick", "displayTab('divEdit', this)");
     correctAudio.pause();
@@ -267,6 +269,7 @@ function resetTextsUI() {
     $('#divStatus').removeClass('d-flex');
     $('#divStatus').css("display", "none");
     $('#score').css("display", "none");
+    $('#visualReport').css('display', 'block');
     $('#submitBtn').css("display", "none");
     $('#nxtBtn').css("display", "none");
     $('#skipBtn').css("display", "block");
@@ -279,7 +282,7 @@ function resetData() {
     moves = [];
     wordQueue = [];
     level = 0;
-    trainingCounter = 4;
+    answerReport = [];
     if (mode == 0) {
         words = levels[level];
         updateLevelsUI(level + 1);
@@ -407,7 +410,7 @@ function nxtQuestion() {
     //     ele.style.display = 'block';
     // });
     $('#ansGroup').css('display', 'block');
-    
+
     if (mode == 2)
         if (trainingSet.length) {
             randomText();
@@ -431,7 +434,7 @@ function nxtQuestion() {
             else if (mode == 0)
                 nxtLevel();
         }
-        randomizeElements();
+    randomizeElements();
     correctAudio.pause();
     correctAudio.currentTime = 0;
 }
@@ -439,7 +442,7 @@ function nxtQuestion() {
 function skipQuestion() {
     stopTimer();
     storeMoves();
-    
+
     if (mode == 2)
         if (trainingSet.length) {
             randomText();
@@ -463,7 +466,7 @@ function skipQuestion() {
             else if (mode == 0)
                 nxtLevel();
         }
-        randomizeElements();
+    randomizeElements();
     correctAudio.pause();
     correctAudio.currentTime = 0;
 }
