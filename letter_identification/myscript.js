@@ -737,7 +737,7 @@ function stringifySet(set) {
 }
 
 function addClickEvent_CardElement() {
-    document.querySelectorAll('.card').forEach((ele) => {
+    document.querySelectorAll('#questionSetdiv .card').forEach((ele) => {
         // console.log(ele);
         ele.addEventListener('click',
             (event) => {
