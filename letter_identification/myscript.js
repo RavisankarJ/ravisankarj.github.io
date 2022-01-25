@@ -244,10 +244,9 @@ function submitAns() {
     $('#levelDiv').css('display', 'none');
     $('#c').css('display', 'none');
     $('#score').css("display", "block");
+    createReport(answers);
     if (mode == 2)
         $('#visualReport').css('display', 'none');
-    else
-        createReport(answers);
     createAnsTable(answers);
     $('.nav-link')[2].setAttribute("onclick", "displayTab('divEdit', this)");
     correctAudio.pause();

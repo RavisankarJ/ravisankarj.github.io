@@ -30,52 +30,61 @@ var scale = d3.scaleLinear()
 
 function createReport(data) {
   categoriseAnswer(data);
-  d3.select('#rightAnswers')
-    .html("<p class='report_category'>You identified these letters correctly</p>")
-    .selectAll('div')
-    .data(answerReport.filter(item => item.attempt == 1 && !item.skipped && !item.confused))
-    .enter()
-    .append('div')
-    .attr('class', 'letter correct')
-    .style('width', (d) => scale(d.duration) + 'em')
-    .style('height', (d) => scale(d.duration) + 'em')
-    .text(function (d) {
-      return d.letter;
+  d3.select('#finalScore')
+    .text(function () {
+      var rightanswers = answerReport.filter(item => item.attempt == 1 && !item.skipped && !item.confused).length;
+      var confusedanswers = answerReport.filter(item => item.attempt == 1 && !item.skipped && item.confused).length;
+      var totalletters = answerReport.length;
+      return ((rightanswers * 2) + (confusedanswers * 1) + ' / ' + totalletters * 2);
     });
-  d3.select('#confusedAnswers')
-    .html("<p class='report_category'>You have confused with these letters</p>")
-    .selectAll('div')
-    .data(answerReport.filter(item => item.attempt == 1 && !item.skipped && item.confused))
-    .enter()
-    .append('div')
-    .attr('class', 'letter confused')
-    .style('width', (d) => scale(d.duration) + 'em')
-    .style('height', (d) => scale(d.duration) + 'em')
-    .text(function (d) {
-      return d.letter;
-    });
-  d3.select('#skippedAnswers')
-    .html("<p class='report_category'>You skipped these letters</p>")
-    .selectAll('div')
-    .data(answerReport.filter(item => item.skipped))
-    .enter()
-    .append('div')
-    .attr('class', 'letter skipped')
-    .style('width', (d) => scale(d.duration) + 'em')
-    .style('height', (d) => scale(d.duration) + 'em')
-    .text(function (d) {
-      return d.letter;
-    });
-  d3.select('#wrongAnswers')
-    .html("<p class='report_category'>You wrongly identify these letters</p>")
-    .selectAll('div')
-    .data(answerReport.filter(item => item.attempt > 1 && !item.skipped))
-    .enter()
-    .append('div')
-    .attr('class', 'letter wrong')
-    .style('width', (d) => scale(d.duration) + 'em')
-    .style('height', (d) => scale(d.duration) + 'em')
-    .text(function (d) {
-      return d.letter;
-    });
+  if (mode != 2) {
+    d3.select('#rightAnswers')
+      .html("<p class='report_category'>You identified these letters correctly</p>")
+      .selectAll('div')
+      .data(answerReport.filter(item => item.attempt == 1 && !item.skipped && !item.confused))
+      .enter()
+      .append('div')
+      .attr('class', 'letter correct')
+      .style('width', (d) => scale(d.duration) + 'em')
+      .style('height', (d) => scale(d.duration) + 'em')
+      .text(function (d) {
+        return d.letter;
+      });
+    d3.select('#confusedAnswers')
+      .html("<p class='report_category'>You have confused with these letters</p>")
+      .selectAll('div')
+      .data(answerReport.filter(item => item.attempt == 1 && !item.skipped && item.confused))
+      .enter()
+      .append('div')
+      .attr('class', 'letter confused')
+      .style('width', (d) => scale(d.duration) + 'em')
+      .style('height', (d) => scale(d.duration) + 'em')
+      .text(function (d) {
+        return d.letter;
+      });
+    d3.select('#skippedAnswers')
+      .html("<p class='report_category'>You skipped these letters</p>")
+      .selectAll('div')
+      .data(answerReport.filter(item => item.skipped))
+      .enter()
+      .append('div')
+      .attr('class', 'letter skipped')
+      .style('width', (d) => scale(d.duration) + 'em')
+      .style('height', (d) => scale(d.duration) + 'em')
+      .text(function (d) {
+        return d.letter;
+      });
+    d3.select('#wrongAnswers')
+      .html("<p class='report_category'>You wrongly identify these letters</p>")
+      .selectAll('div')
+      .data(answerReport.filter(item => item.attempt > 1 && !item.skipped))
+      .enter()
+      .append('div')
+      .attr('class', 'letter wrong')
+      .style('width', (d) => scale(d.duration) + 'em')
+      .style('height', (d) => scale(d.duration) + 'em')
+      .text(function (d) {
+        return d.letter;
+      });
+  }
 }
