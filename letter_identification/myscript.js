@@ -583,17 +583,24 @@ function createQuestionsTable(tableData) {
     $('#tQbdy').html("");
     tableData.forEach(function (rowData) {
         var row = document.createElement('tr');
+        var cellCount = 0;
         Object.values(rowData).forEach(function (cellData) {
             var cell = document.createElement('td');
             cell.appendChild(document.createElement('b'));
             cell.appendChild(document.createTextNode(cellData));
             row.appendChild(cell);
+            cellCount++;
         });
         var cell = document.createElement('td');
         cell.classList.add('hideColumn');
         cell.style.display = "none";
         cell.innerHTML = '<b></b><a class="btn btn-secondary" onclick="this.parentElement.parentElement.remove()">X</a>';
-        row.appendChild(cell);
+        if (cellCount >= 3)
+            row.appendChild(cell);
+        else if (cellCount = 2) {
+            row.appendChild(document.createElement('td'));
+            row.appendChild(cell);
+        }
         $('#tQbdy').append(row);
     });
 }
@@ -610,9 +617,8 @@ function editQuestions() {
 }
 
 function saveQuestions() {
-    words = [];
+    selectedQuestionSet = [];
     $('.hideColumn').css('display', 'none');
-
     $('#addBtn').attr('disabled', true);
     $('#saveBtn').attr('disabled', true);
     $('#editBtn').attr('disabled', false);
@@ -620,9 +626,10 @@ function saveQuestions() {
     var tableBody = $('#tQbdy');
     for (i = 0; i < tableBody.children().length; i++) {
         var ele = tableBody.children().eq(i);
-        words.push({
+        selectedQuestionSet.push({
             word: ele.children().first().text(),
-            font: ele.children().eq(1).text()
+            hint: ele.children().eq(1).text(),
+            font: ele.children().eq(2).text()
         });
     }
     $('.nav-link').first().attr('onclick', "displayTab('divAbt', this)");
@@ -632,12 +639,15 @@ function saveQuestions() {
 function addQuestion() {
     var word = $("[name='word']:first");
     var fontStyle = $("[name='font']:first");
-
+    var hint = $("[name='hint']:first");
 
     if (word.val() !== "") {
         var row = document.createElement('tr');
         var cell = document.createElement('td');
         cell.appendChild(document.createTextNode(word.val()));
+        row.appendChild(cell);
+        cell = document.createElement('td');
+        cell.appendChild(document.createTextNode(hint.val()));
         row.appendChild(cell);
         cell = document.createElement('td');
         cell.appendChild(document.createTextNode(fontStyle.val()));
@@ -672,7 +682,7 @@ function dwnloadQues() {
     link.click(); // This will download the data file named "my_data.csv".
 }
 
-function uploadReport() {
+function uploadQuestions() {
     Papa.parse(myfile.files[0], {
         delimiter: "\t",
         complete: function (results) {
@@ -686,7 +696,9 @@ function uploadReport() {
                         switch (i) {
                             case 0: tempQuestion.word = cell;
                                 break;
-                            case 1: tempQuestion.font = cell;
+                            case 1: tempQuestion.hint = cell;
+                                break;
+                            case 2: tempQuestion.font = cell;
                                 break;
                             default: console.log("some error");
                         }

@@ -247,19 +247,22 @@ div.letter {
   }
 
   div.correct {
-    background-color: rgb(135, 255, 55);
+    background-color: hsl(96, 61%, 40%);
   }
 
   div.wrong {
-    background-color: rgb(255, 102, 55);
+    /* background-color: rgb(255, 102, 55); */
+    background-color: hsl(2, 61%, 40%);
   }
 
   div.confused {
-    background-color: rgb(184, 159, 48);
+    /* background-color: rgb(184, 159, 48); */
+    background-color: hsl(39, 61%, 40%);
   }
 
   div.skipped {
-    background-color: rgb(98, 114, 88);
+    /* background-color: rgb(98, 114, 88); */
+    background-color: hsl(96, 6%, 40%);
   }
 
   .report_category {
