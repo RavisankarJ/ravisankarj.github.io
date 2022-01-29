@@ -75,7 +75,7 @@ function createReport(data) {
         return d.letter;
       });
     d3.select('#wrongAnswers')
-      .html("<p class='report_category'>You wrongly identify these letters</p>")
+      .html("<p class='report_category'>You wrongly identified these letters</p>")
       .selectAll('div')
       .data(answerReport.filter(item => item.attempt > 1 && !item.skipped))
       .enter()

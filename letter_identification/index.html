@@ -39,14 +39,15 @@
         <div class="container">
             <section>
                 <div style="text-align: center" class="title">Letter Identification</div>
-                <div class="mb-4 subTitle font-weight-bold text-center">Know your students' knowledge level in alphabets
+                <div class="mb-4 subTitle font-weight-bold text-center">Know your knowledge level in alphabet
                 </div>
                 <div class="row">
                     <div class="col-sm-8 bg-info border border-light rounded-lg">
                         <h5 class="mt-2 mb-2 font-weight-bold">How to use</h5>
                         <p class="text-light">
-                            This web application has 3 tabs. The student / teacher has to go to the play tab and enter
-                            an ID. Then the user has to listen the sound plays and select the correct alphabet. Once
+                            This application is intended to teach alphabet and assess knowledge level in alphabet.
+                            Student has to listen to the sound and click the correct letters.
+                             Once
                             answered all the questions teachers may download the
                             result for analyzing purposes. Teachers can edit words / letters on the '<a
                                 style="cursor: pointer;" onclick="displayTab('divEdit', this)">Edit Questions</a>' tab.
@@ -62,7 +63,7 @@
                 </div>
                 <hr class="my-3">
                 <div class="row">
-                    <div class="col-md-4 bg-success col-sm-12 border border-light rounded-lg mt-2 mb-2 mr-3">
+                    <div class="col-md-4 bg-success col-sm-12 border border-light rounded-lg mt-2 mb-2">
                         <h5 class="mt-2 mb-2 font-weight-bold ">Audience</h5>
                         <p class="text-light">
                             English teachers handling the foundational and preparatory level students (from 1st Standard
@@ -70,7 +71,7 @@
                             5th Standard).
                         </p>
                     </div>
-                    <div class="col-md-4 bg-success col-sm-12 border border-light rounded-lg mt-2 mb-2 mr-3">
+                    <div class="col-md-4 bg-success col-sm-12 border border-light rounded-lg mt-2 mb-2">
                         <h5 class="mt-2 mb-2 font-weight-bold ">Objective</h5>
                         <p class="text-light">
                             Assess the students’ knowledge in alphabets. Assessment For, As and Of learning)
@@ -250,13 +251,13 @@
                         </svg>
                         <div class="d-flex justify-content-between" style="text-align: center; padding-bottom: 1em;">
                             <span id="levelID">Level 1</span>
-                            <button class="btn btn-dark" onclick="submitAns()">Quit</button>
+                            <button class="btn btn-danger" onclick="submitAns()">Quit</button>
                             <div style="text-align: center; padding-bottom: 1em;">
                                 <button class="btn btn-info" onclick="speakWord()">
-                                    <i class="fa fa-play"></i>&nbsp;Play Audio
+                                    <i class="fa fa-play"></i>&nbsp; Audio
                                 </button>
                                 <button onclick="speakWordwithHint()" class="btn btn-info">
-                                    <i class="fa fa-play"></i>&nbsp;Play Hint
+                                    <i class="fa fa-info-circle"></i>&nbsp; Hint
                                 </button>
                             </div>
                         </div>
@@ -264,28 +265,44 @@
                     <div id="divDetails" class="contianer border border-primary rounded"
                         style="border: 2px; max-width: 600px; margin-right: auto; margin-left: auto;">
                         <div id='studentDetailEnquire' style="padding-left: 10px; padding-top: 10px;">
-                            <div class="form-group">
-                                <label for="udise">School ID</label>
-                                <input id="udise" name="udise" type="text" value="0" />
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">School ID</span>
+                                </div>
+                                <input id="udise" type="text" class="form-control" placeholder="000"
+                                    aria-label="Username" aria-describedby="basic-addon1">
                             </div>
-                            <div class="form-group">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Student ID</span>
+                                </div>
+                                <input id="stuid" type="text" class="form-control" placeholder="000"
+                                    aria-label="Username" aria-describedby="basic-addon1">
+                            </div>
+
+                            <!-- <div class="input-group">
                                 <label for="stuid">Student ID:</label>
                                 <input id="stuid" name="stuid" type="text" value="0" />
-                            </div>
-                            <div class="form-group">
-                                <label for="mode">Choose mode:</label>
-                                <input type="radio" id="playMode" name="mode" value="Play Mode" checked>
-                                <label for="playMode">Play Mode</label><br>
-                                <input type="radio" id="assessmentMode" name="mode" value="Test Mode">
-                                <label for="assessmentMode">Test Mode</label><br>
-                                <input type="radio" id="learnMode" name="mode" value="Training Mode" data-toggle="modal"
-                                    data-target="#myModal">
-                                <label for="learnMode">Training Mode</label>
-                                <button type="button" id="show_training_cards" style="display: none; font-size: small;"
-                                    class="btn btn-info btn-lg m-1" data-toggle="modal" data-target="#myModal">Training
-                                    Cards</button>
+                            </div> -->
 
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Choose Mode</span>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" id="playMode" name="mode" value="Play Mode" checked>
+                                    <label for="playMode">Play Mode</label><br>
+                                    <input type="radio" id="assessmentMode" name="mode" value="Test Mode">
+                                    <label for="assessmentMode">Test Mode</label><br>
+                                    <input type="radio" id="learnMode" name="mode" value="Training Mode" data-toggle="modal"
+                                        data-target="#myModal">
+                                    <label for="learnMode">Training Mode</label>
+                                    <button type="button" id="show_training_cards" style="display: none; font-size: small;"
+                                        class="btn btn-info btn-lg m-1" data-toggle="modal" data-target="#myModal">Training
+                                        Cards</button>
+                                </div>
                             </div>
+                            
                             <div id="myModal" class="modal fade" role="dialog">
                                 <div class="modal-dialog">
 
