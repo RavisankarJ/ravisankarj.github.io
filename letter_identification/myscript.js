@@ -8,7 +8,7 @@ let wrongAudio, correctAudio, currentWord;
 let mode;   //mode = 0 indicates play mode, 1 indicates assessment mode, 2 indicates learning mode
 let selectedQuestionSet = [];    //to store currently selected question set from edit question tab
 
-let svgEle, area, timer, timeDifference, stuid, schoolid;
+let svgEle, area, timer, timeDifference, stuid, schoolid, container;
 speech.lang = "en";
 window.speechSynthesis.onvoiceschanged = () => {
     speech.rate = 0.8;
@@ -74,6 +74,11 @@ function randomText() {
     speakWord();
 }
 
+function playText() {
+    speech.text = currentWord.word;
+    speakWord();
+}
+
 function speakWord() {
     window.speechSynthesis.speak(speech);
     console.log(speech.text);
@@ -112,6 +117,7 @@ function clearTransform(ele) {
 
 $(function () {
     svgEle = $('#c svg');
+    container = document.querySelectorAll('.gameContainer')[0];
     mode = 0;
     words = levels[0];
     loadQuestions();
@@ -134,11 +140,15 @@ $(function () {
     };
 
     waitForEl(speech, function () {
-        $('#area').css('display', 'block');
+        if (mode == 0)
+            $('.gameContainer').css('display', 'block');
+        else
+            $('#area').css('display', 'block');
         $('.loader').css('display', 'none');
         $('#startBtn').css('display', 'block');
     }, function () {
         $('#area').css('display', 'none');
+        $('.gameContainer').css('display', 'none');
         $('.loader').css('display', 'block');
         $('#startBtn').css('display', 'none');
     });
@@ -148,12 +158,16 @@ $(function () {
         switch (this.value) {
             case 'Play Mode':
                 mode = 0;
+                $('.gameContainer').css('display', 'block');
+                $('#area').css('display', 'none');
                 $('#levelDiv').css('display', 'flex');
                 $('#levelID').css('display', 'block');
                 $('#show_training_cards').css('display', 'none');
                 words = levels[0];
                 break;
             case 'Test Mode':
+                $('.gameContainer').css('display', 'none');
+                $('#area').css('display', 'block');
                 $('#levelDiv').css('display', 'none');
                 $('#levelID').css('display', 'none');
                 $('#show_training_cards').css('display', 'none');
@@ -164,6 +178,8 @@ $(function () {
                     words = samplewords;
                 break;
             case 'Training Mode': mode = 2;
+                $('.gameContainer').css('display', 'none');
+                $('#area').css('display', 'block');
                 $('#levelDiv').css('display', 'none');
                 $('#levelID').css('display', 'none');
                 $('#show_training_cards').css('display', 'block');
@@ -171,6 +187,8 @@ $(function () {
             default: console.log('you pressed nothing');
         }
     });
+    if (mode == 0)
+        $('#area').css('display', 'none');
 });
 
 let resizeObserver = new ResizeObserver(() => {
@@ -190,27 +208,114 @@ function start() {
     initialiseToStart();
     if (mode == 0) {
         generateLevelsUI();
-
     }
     else {
         $('#levelDiv').css('display', 'none');
         $('#levelID').css('display', 'none');
     }
+}
+function initiate() {
+    wordQueue = Array.from(words);
+    wordQueue = shuffleArray(wordQueue);
+    // createLetters();
+}
 
+function createLetters() {
+    shuffleArray(words).forEach((item, i) => {
+        var div = document.createElement('div');
+        div.innerText = item.word;
+        div.classList.add('letters');
+        div.style.transitionDuration = calculateTransition() + 'ms';
+        container.append(div);
+        // console.log(`container x is ${container.getBoundingClientRect().x} and width is ${container.getBoundingClientRect().width}`);
+        div.style.left = getRandomInt(
+            0,
+            container.getBoundingClientRect().width - div.getBoundingClientRect().width - 40) + 'px';
+        div.style.display = 'none';
+        // console.log(div);
+    });
+}
+
+function calculateTransition() {
+    var t = (8000 - (words.length - wordQueue.length) * 1000);
+    return t >= 3000 ? t : 3000;
+}
+
+function moveLetters() {
+    var elements = document.querySelectorAll('.letters');
+    currentWord = wordQueue.pop();
+    // console.log(`current letter is ${currentWord.word}`);
+    elements.forEach((ele, i) => {
+        setTimeout(
+            function () {
+                ele.style.display = 'flex';
+                ele.style.bottom = container.getBoundingClientRect().height - ele.getBoundingClientRect().height + 'px';
+                // console.log(getComputedStyle(ele).getPropertyValue('transition'));
+                ele.ontransitionend = () => {
+                    // console.log('Transition ended');
+                    if (ele.innerText == currentWord.word)
+                        gameEnd();
+                    else
+                        ele.remove();
+                };
+                ele.onclick = function (ele) { check(ele.target) }
+            }
+            , 1000 * i);
+    });
+}
+function check(ele) {
+    // console.log(ele);
+    if (ele.innerText == currentWord.word) {
+        gameSuccess(ele);
+    }
+    else {
+        console.log('wrong');
+        failure(ele);
+    }
+}
+
+function gameSuccess(ele) {
+    removeLetters();
+    success(ele)
+    console.log('success');
+}
+
+function gameEnd() {
+    console.log('you failed to identify');
+    moves.push('-');
+    storeMoves();
+    stopTimer();
+    removeLetters();
+}
+
+function removeLetters() {
+    document.querySelectorAll('.letters').forEach((ele) => {
+        ele.remove();
+    });
 }
 
 function initialiseToStart() {
     $('#c').css('display', 'block');
-    if (mode == 1) {
-        if (selectedQuestionSet.length > 0)
-            words = selectedQuestionSet;
-        else
-            words = samplewords;
-    } else if (mode == 2) {
-        createTrainingQuestions();
+    if (mode == 0)
+        initiate();
+    else {
+        if (mode == 1) {
+            if (selectedQuestionSet.length > 0)
+                words = selectedQuestionSet;
+            else
+                words = samplewords;
+        } else if (mode == 2) {
+            createTrainingQuestions();
+        }
+        loadQuestions();
+        wordQueue = [];
+        document.querySelectorAll('text.ansText').forEach((ele) => {
+            ele.style.visibility = 'visible';
+        });
+        wordQueue = words.slice();
+        // console.log(words);
+        wordQueue = shuffleArray(wordQueue);
     }
-    loadQuestions();
-    wordQueue = [];
     stuid = $('#stuid').val();
     schoolid = $('#udise').val();
     $('#studentDetailEnquire').css("display", "none");
@@ -218,14 +323,7 @@ function initialiseToStart() {
     $('#studentDetails').children().first().text("Student's ID: " + stuid);
     $('#divStatus').addClass('d-flex');
     $('#divStatus').css('display', 'block');
-    document.querySelectorAll('text.ansText').forEach((ele) => {
-        ele.style.visibility = 'visible';
-        // wordQueue.push(ele.textContent);
-    });
 
-    wordQueue = words.slice();
-    // console.log(words);
-    wordQueue = shuffleArray(wordQueue);
     if (!wordQueue.length)
         alert('no questions are there');
     else {
@@ -341,18 +439,15 @@ function success(eleTag) {      //called by correct selection
     stopTimer();
     moves.push(eleTag.textContent);
     storeMoves();
-    // document.querySelectorAll('text.ansText').forEach((ele) => {
-    //     ele.style.display = 'none';
-    // });
-    $('#ansGroup').css('display', 'none');
-    successElement.style.display = 'block';
-    successElement.animate(scalekeyframes, scaleTiming);
-    successElement.animate(translatekeyframes, scaleTiming);
-
-
-    $('#successText').css('display', 'block');
-    $('#successText').attr('x', (svgEle.width() - document.querySelector('#successText').getBBox().width) / 2);
-    $('#successText').attr('y', (svgEle.height() - 50));
+    if (mode != 0) {
+        $('#ansGroup').css('display', 'none');
+        successElement.style.display = 'block';
+        successElement.animate(scalekeyframes, scaleTiming);
+        successElement.animate(translatekeyframes, scaleTiming);
+        $('#successText').css('display', 'block');
+        $('#successText').attr('x', (svgEle.width() - document.querySelector('#successText').getBBox().width) / 2);
+        $('#successText').attr('y', (svgEle.height() - 50));
+    }
 }
 
 function storeMoves() {
@@ -363,11 +458,7 @@ function storeMoves() {
         answer.push('normal');
     answer.push(timeDifference);
     var texts = [];
-    document.querySelectorAll('text.ansText').forEach((ele) => {
-        texts.push(ele.textContent);
-    });
-    // eleTag.style.display = 'block';
-    answer.push(texts);
+    answer.push(words.map(a => a.word));
     answer.push(moves);
     answers.push(answer);
     answer = [];
@@ -403,12 +494,7 @@ const scaleTiming = {
 }
 
 function nxtQuestion() {
-    $('#successText').css('display', 'none');
-    resetAnimation();
-    // document.querySelectorAll('text.ansText').forEach((ele) => {
-    //     ele.style.display = 'block';
-    // });
-    $('#ansGroup').css('display', 'block');
+
 
     if (mode == 2)
         if (trainingSet.length) {
@@ -424,7 +510,12 @@ function nxtQuestion() {
     else
         if (wordQueue.length) {
             // answer.push(stuid);
-            randomText();
+            if (mode != 0) { randomText(); }
+            else {
+                createLetters();
+                moveLetters();
+                playText();
+            }
             startTimer();
         }
         else {
@@ -433,7 +524,12 @@ function nxtQuestion() {
             else if (mode == 0)
                 nxtLevel();
         }
-    randomizeElements();
+    if (mode != 0) {
+        $('#successText').css('display', 'none');
+        resetAnimation();
+        $('#ansGroup').css('display', 'block');
+        randomizeElements();
+    }
     correctAudio.pause();
     correctAudio.currentTime = 0;
 }
@@ -456,7 +552,12 @@ function skipQuestion() {
     else
         if (wordQueue.length) {
             // answer.push(stuid);
-            randomText();
+            if (mode != 0) { randomText(); }
+            else {
+                createLetters();
+                moveLetters();
+                playText();
+            }
             startTimer();
         }
         else {
@@ -465,7 +566,7 @@ function skipQuestion() {
             else if (mode == 0)
                 nxtLevel();
         }
-    randomizeElements();
+    if (mode != 0) { randomizeElements(); }
     correctAudio.pause();
     correctAudio.currentTime = 0;
 }
@@ -507,7 +608,7 @@ function findFont(item) {
     switch (item.font) {
         case ("cursive"): return "Cookie";
         case ("tamil"): return "Catamaran";
-        default: return "serif";
+        default: return "sans-serif";
     }
 }
 
@@ -520,9 +621,7 @@ function calculateArea() {
 }
 
 function shuffleArray(array) {
-
     return array.sort(() => Math.random() - 0.5);
-
 }
 
 function displayTab(tabid, element) {
