@@ -6,12 +6,13 @@ let level = 0, words, wordQueue = [];
 let speech = new SpeechSynthesisUtterance();
 let wrongAudio, correctAudio, currentWord;
 let mode;   //mode = 0 indicates play mode, 1 indicates assessment mode, 2 indicates learning mode
+let subjectMode;      //learnMode = 0 indicates letters identification, 1 indicates number identification
 let selectedQuestionSet = [];    //to store currently selected question set from edit question tab
 
 let svgEle, area, timer, timeDifference, stuid, schoolid, container;
 speech.lang = "en";
 window.speechSynthesis.onvoiceschanged = () => {
-    speech.rate = 0.8;
+    speech.rate = 0.5;
     speech.volume = 1;
     speech.pitch = 1;
 }
@@ -92,7 +93,7 @@ function addClickEvent_TextElement() {
     document.querySelectorAll('text.ansText').forEach((ele) => {
         ele.addEventListener('click',
             (event) => {
-                if (currentWord.word === event.target.textContent)
+                if (currentWord.word == event.target.textContent)
                     success(ele);
                 else
                     failure(ele);
@@ -119,7 +120,10 @@ $(function () {
     svgEle = $('#c svg');
     container = document.querySelectorAll('.gameContainer')[0];
     mode = 0;
-    words = levels[0];
+    subjectMode = 0;
+    subjectModeChanged();
+    setWordsArray();
+    // words = levels[0];
     loadQuestions();
     svgEle.attr('width', $('#c').outerWidth());
     if ((area * 20 / svgEle.attr('width')) > 260)
@@ -141,7 +145,7 @@ $(function () {
 
     waitForEl(speech, function () {
         if (mode == 0)
-            $('.gameContainer').css('display', 'block');
+            $('.gameContainer').css('display', 'flex');
         else
             $('#area').css('display', 'block');
         $('.loader').css('display', 'none');
@@ -158,12 +162,12 @@ $(function () {
         switch (this.value) {
             case 'Play Mode':
                 mode = 0;
-                $('.gameContainer').css('display', 'block');
+                $('.gameContainer').css('display', 'flex');
                 $('#area').css('display', 'none');
                 $('#levelDiv').css('display', 'flex');
                 $('#levelID').css('display', 'block');
                 $('#show_training_cards').css('display', 'none');
-                words = levels[0];
+                setWordsArray();
                 break;
             case 'Test Mode':
                 $('.gameContainer').css('display', 'none');
@@ -172,10 +176,7 @@ $(function () {
                 $('#levelID').css('display', 'none');
                 $('#show_training_cards').css('display', 'none');
                 mode = 1;
-                if (selectedQuestionSet.length)
-                    words = selectedQuestionSet;
-                else
-                    words = samplewords;
+                setWordsArray();
                 break;
             case 'Training Mode': mode = 2;
                 $('.gameContainer').css('display', 'none');
@@ -187,6 +188,21 @@ $(function () {
             default: console.log('you pressed nothing');
         }
     });
+    $('input[type=radio][name="subjects"]').change(function () {
+        switch (this.value) {
+            case 'Numbers':
+                subjectMode = 1;
+                subjectModeChanged();
+                setWordsArray();
+                break;
+            case 'Alphabet':
+            default:
+                subjectMode = 0;
+                subjectModeChanged();
+                setWordsArray();
+                break;
+        }
+    });
     if (mode == 0)
         $('#area').css('display', 'none');
 });
@@ -195,6 +211,7 @@ let resizeObserver = new ResizeObserver(() => {
     setSvgDimension();
     randomizeElements();
 });
+
 
 function setSvgDimension() {
     svgEle.attr('width', $('#c').outerWidth());
@@ -276,12 +293,13 @@ function check(ele) {
 
 function gameSuccess(ele) {
     removeLetters();
-    success(ele)
+    success(ele);
     console.log('success');
 }
 
 function gameEnd() {
-    console.log('you failed to identify');
+    console.log('Sorry... you missed to identify &#x1F61E;');
+    $('#missedDivGroup').css('display', 'block');
     moves.push('-');
     storeMoves();
     stopTimer();
@@ -300,10 +318,7 @@ function initialiseToStart() {
         initiate();
     else {
         if (mode == 1) {
-            if (selectedQuestionSet.length > 0)
-                words = selectedQuestionSet;
-            else
-                words = samplewords;
+            setWordsArray();
         } else if (mode == 2) {
             createTrainingQuestions();
         }
@@ -336,6 +351,7 @@ function submitAns() {
     stopTimer();
     correctAudio.pause();
     correctAudio.currentTime = 0;
+    removeLetters();
     $('#divStatus').removeClass('d-flex');
     $('#divStatus').css('display', 'none');
     $('#studentDetails').css("display", "none");
@@ -357,6 +373,13 @@ function reload() {
 }
 
 function resetTextsUI() {
+    switch (subjectMode) {
+        case 0: showTrainingMode();
+            break;
+        case 1: hideTrainingMode();
+            break;
+        default: showTrainingMode();
+    }
     $('#divDetails').css("display", "block");
     $('#studentDetailEnquire').css("display", "block");
     $('#studentDetails').css("display", "none");
@@ -367,7 +390,7 @@ function resetTextsUI() {
     $('#divStatus').css("display", "none");
     $('#score').css("display", "none");
     $('#visualReport').css('display', 'block');
-    $('#submitBtn').css("display", "none");
+    // $('#submitBtn').css("display", "none");
     $('#nxtBtn').css("display", "none");
     $('#skipBtn').css("display", "block");
     $('#tbdy').html("");
@@ -381,7 +404,7 @@ function resetData() {
     level = 0;
     answerReport = [];
     if (mode == 0) {
-        words = levels[level];
+        // words = wordSet[level];
         updateLevelsUI(level + 1);
     }
 }
@@ -447,6 +470,8 @@ function success(eleTag) {      //called by correct selection
         $('#successText').css('display', 'block');
         $('#successText').attr('x', (svgEle.width() - document.querySelector('#successText').getBBox().width) / 2);
         $('#successText').attr('y', (svgEle.height() - 50));
+    } else {
+        showSuccessDiv();
     }
 }
 
@@ -529,6 +554,9 @@ function nxtQuestion() {
         resetAnimation();
         $('#ansGroup').css('display', 'block');
         randomizeElements();
+    } else {
+        $('#successDivGroup').css('display', 'none');
+        $('#missedDivGroup').css('display', 'none');
     }
     correctAudio.pause();
     correctAudio.currentTime = 0;
@@ -536,6 +564,7 @@ function nxtQuestion() {
 
 function skipQuestion() {
     stopTimer();
+    window.speechSynthesis.cancel();
     storeMoves();
 
     if (mode == 2)
@@ -554,6 +583,7 @@ function skipQuestion() {
             // answer.push(stuid);
             if (mode != 0) { randomText(); }
             else {
+                removeLetters();
                 createLetters();
                 moveLetters();
                 playText();
@@ -820,10 +850,13 @@ function uploadQuestions() {
 
 function updateQuestionSet() {
     var wordSetElement = document.getElementById('questionSetdiv');
-    if (wordSet.length > 0)
+    var qSet = [];
+    if (subjectMode == 0) qSet = wordSet;
+    else qSet = numberSet;
+    if (qSet.length > 0)
         $(wordSetElement).empty();
 
-    wordSet.forEach((set, i) => {
+    qSet.forEach((set, i) => {
         var cardDiv = $('<div class="col mb-4"></div>')
             .append($('<div class="card h-100 text-center"></div>)')
                 .append($('<div class="card-body"></div>')
@@ -848,16 +881,25 @@ function stringifySet(set) {
 }
 
 function addClickEvent_CardElement() {
+    var selectedSet = [], qSet = [];
+    if (subjectMode == 0) {
+        qSet = wordSet;
+    }
+    else {
+        qSet = numberSet;
+    }
     document.querySelectorAll('#questionSetdiv .card').forEach((ele) => {
         // console.log(ele);
         ele.addEventListener('click',
             (event) => {
                 var k = event.currentTarget.children[0].children[0].children[0].textContent;
-                // console.log(parseInt(k));
+                console.log(parseInt(k));
+                console.table(qSet[parseInt(k) - 1])
                 // words = wordSet[parseInt(k) - 1];
-                selectedQuestionSet = wordSet[parseInt(k) - 1];
-                words = selectedQuestionSet;
-                createQuestionsTable(selectedQuestionSet);
+                selectedSet = qSet[parseInt(k) - 1];
+                words = selectedSet;
+                console.table(words);
+                createQuestionsTable(selectedSet);
                 // document.querySelectorAll('.card.active').forEach((card)=>{
                 //     card.classList.remove('active');
                 // });
@@ -867,6 +909,12 @@ function addClickEvent_CardElement() {
                 $('#assessmentMode').prop('checked', true).trigger('change');
                 var playTab = document.getElementById('divPlay');
                 displayTab('divPlay', $('.nav-item').eq(1).children()[0]);
+                if (subjectMode == 0) {
+                    selectedQuestionSet = selectedSet;
+                }
+                else {
+                    selectedNumberSet = selectedSet;
+                }
             }
         );
     });
@@ -890,7 +938,21 @@ function updateLevelsUI(currentActive) {
     document.getElementsByClassName('car')[0].style.top = progress.style.height;
 }
 
+function findLevelArrary() {
+    var levels;
+    switch (subjectMode) {
+        case 0: levels = wordSet;
+            break;
+        case 1: levels = numberSet;
+            break;
+        default: levels = wordSet;
+    }
+    return levels;
+}
+
+
 function nxtLevel() {
+    var levels = findLevelArrary();
     if (level < levels.length - 1) {
         level += 1;
         words = levels[level];
@@ -906,6 +968,7 @@ function nxtLevel() {
 }
 
 function generateLevelsUI() {
+    var levels = findLevelArrary();
     $('#levelDiv').css('display', 'flex');
     $('#levelID').css('display', 'block');
     var progressContainer = $('.progress-container');
@@ -920,3 +983,61 @@ function generateLevelsUI() {
         }
     }
 }
+
+function hideTrainingMode() {
+    $('#learnMode').css('display', 'none');
+    $('#show_training_cards').css('display', 'none');
+    $('label[for="learnMode"]').css('display', 'none');
+    mode = 0;
+    $('#playMode').prop('checked', true).trigger('change');
+}
+
+function showTrainingMode() {
+    $('#learnMode').css('display', 'inline-block');
+    // $('#show_training_cards').css('display', 'inline-block');
+    $('label[for="learnMode"]').css('display', 'inline-block');
+}
+
+function showSuccessDiv() {
+    $('#successDivGroup').css('display', 'grid');
+}
+
+function setWordsArray() {
+    switch (subjectMode) {
+        case 1:
+            switch (mode) {
+                case 1:
+                    if (selectedNumberSet.length)
+                        words = selectedNumberSet;
+                    else
+                        words = numberSet[0];
+                    break;
+                case 0:
+                default: words = numberSet[0];
+            }
+            break;
+        case 0:
+        default:
+            switch (mode) {
+                case 1:
+                    if (selectedQuestionSet.length)
+                        words = selectedQuestionSet;
+                    else
+                        words = samplewords;
+                    break;
+                case 0:
+                default: words = wordSet[0];
+            }
+    }
+}
+
+function subjectModeChanged() {
+    switch (subjectMode) {
+        case 0: showTrainingMode();
+            break;
+        case 1: hideTrainingMode();
+            break;
+        default: showTrainingMode();
+    }
+}
+

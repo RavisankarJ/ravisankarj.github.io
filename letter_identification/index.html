@@ -47,7 +47,7 @@
                         <p class="text-light">
                             This application is intended to teach alphabet and assess knowledge level in alphabet.
                             Student has to listen to the sound and click the correct letters.
-                             Once
+                            Once
                             answered all the questions teachers may download the
                             result for analyzing purposes. Teachers can edit words / letters on the '<a
                                 style="cursor: pointer;" onclick="displayTab('divEdit', this)">Edit Questions</a>' tab.
@@ -109,10 +109,31 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-8">
+                    <!-- <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups"> -->
+                    <div style="display: flex; justify-content: center;">
+                        
+                    </div>
+                    <!-- <div class="btn-group" role="group" aria-label="Second group">
+                            
+                          </div> -->
+                    <!-- </div> -->
                     <div id="c" class="container" style="max-width: 640px; min-height: 160px;">
                         <div class="loader container"></div>
                         <div style="display: flex; justify-content: center;" class="mb-2">
-                            <div class="gameContainer"></div>
+                            <div class="gameContainer">
+                                <div style="display: none; justify-items: center;" id="successDivGroup">
+                                    <div class="success">
+                                        &#x2714</div>
+                                    <div class="successDivText">Correct!</div>
+                                </div>
+                                <div id="missedDivGroup"
+                                    style="display: none; text-align: center; font-size: 2em; color: white;">
+                                    <p>Sorry... you missed to identify the letter &#x1F61E;</p>
+                                    <p>Click <a class="btn btn-primary" onclick="nxtQuestion()">
+                                            Next
+                                        </a> to proceed</p>
+                                </div>
+                            </div>
                         </div>
                         <svg id="area" class="my-4" style="height: 100%; width: 100%; background-color: #ff006a;"
                             width="640" height="160" xmlns="http://www.w3.org/2000/svg">
@@ -249,7 +270,7 @@
                                 x="200" y="150">Hey!! Success!!!
                             </text>
                         </svg>
-                        <div class="d-flex justify-content-between" style="text-align: center; padding-bottom: 1em;">
+                        <div class="d-flex" style="padding: 0 0.5em 1em; justify-content: space-between;">
                             <span id="levelID">Level 1</span>
                             <button class="btn btn-danger" onclick="submitAns()">Quit</button>
                             <div style="text-align: center; padding-bottom: 1em;">
@@ -265,6 +286,17 @@
                     <div id="divDetails" class="contianer border border-primary rounded"
                         style="border: 2px; max-width: 600px; margin-right: auto; margin-left: auto;">
                         <div id='studentDetailEnquire' style="padding-left: 10px; padding-top: 10px;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <div class="btn-group btn-group-toggle mr-2 my-2" data-toggle="buttons">
+                                    <label class="btn btn-info active">
+                                        <input type="radio" name="subjects" id="subAlphabet" autocomplete="off" checked value="Alphabet"> Alphabet
+                                      </label>
+                                      <label class="btn btn-info">
+                                        <input type="radio" name="subjects" id="subNumbers" autocomplete="off" value="Numbers"> Numbers
+                                      </label>
+                                </div>
+                                <button id="startBtn"
+                                    class="btn btn-primary m-1" onclick="start()">Start</button></div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">School ID</span>
@@ -294,15 +326,16 @@
                                     <label for="playMode">Play Mode</label><br>
                                     <input type="radio" id="assessmentMode" name="mode" value="Test Mode">
                                     <label for="assessmentMode">Test Mode</label><br>
-                                    <input type="radio" id="learnMode" name="mode" value="Training Mode" data-toggle="modal"
-                                        data-target="#myModal">
+                                    <input type="radio" id="learnMode" name="mode" value="Training Mode"
+                                        data-toggle="modal" data-target="#myModal">
                                     <label for="learnMode">Training Mode</label>
-                                    <button type="button" id="show_training_cards" style="display: none; font-size: small;"
-                                        class="btn btn-info btn-lg m-1" data-toggle="modal" data-target="#myModal">Training
+                                    <button type="button" id="show_training_cards"
+                                        style="display: none; font-size: small;" class="btn btn-info btn-lg m-1"
+                                        data-toggle="modal" data-target="#myModal">Training
                                         Cards</button>
                                 </div>
                             </div>
-                            
+
                             <div id="myModal" class="modal fade" role="dialog">
                                 <div class="modal-dialog">
 
@@ -665,7 +698,7 @@
                                 </div>
                             </div>
 
-                            <button id="startBtn" class="btn btn-primary m-1" onclick="start()">Start</button>
+
                         </div>
                         <div id='studentDetails' style="display: none; padding-left: 10px;padding-top: 10px;">
                             <p>The student's id: </p>
@@ -674,9 +707,9 @@
                         <div id="divStatus" class="container justify-content-between d-flex"
                             style="border: 2px; max-width: 640px; margin-right: auto; margin-left: auto; padding: 5px;">
                             <span id="timer"></span>
-                            <button id="submitBtn" style="display: none;" class="btn btn-primary"
+                            <!-- <button id="submitBtn" style="display: none;" class="btn btn-primary"
                                 onclick="submitAns()">Submit
-                            </button>
+                            </button> -->
                             <button id="nxtBtn" style="display: none;" class="btn btn-primary" onclick="nxtQuestion()">
                                 Next
                             </button>
@@ -833,6 +866,7 @@
     <script src="question_words.js"></script>
     <script src="myscript.js"></script>
     <script src="training.js"></script>
+    <script src="numbers.js"></script>
     <script src="submitData.js"></script>
     <script src="report_answer.js"></script>
 
