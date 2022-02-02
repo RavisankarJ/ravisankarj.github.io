@@ -193,12 +193,14 @@ $(function () {
             case 'Numbers':
                 subjectMode = 1;
                 subjectModeChanged();
+                $('#hintBtn').css('display', 'none');
                 setWordsArray();
                 break;
             case 'Alphabet':
             default:
                 subjectMode = 0;
                 subjectModeChanged();
+                $('#hintBtn').css('display', 'inline-block');
                 setWordsArray();
                 break;
         }
