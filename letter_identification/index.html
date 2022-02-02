@@ -38,19 +38,14 @@
     <div class="tabContent" id="divAbt">
         <div class="container">
             <section>
-                <div style="text-align: center" class="title">Letter Identification</div>
+                <div style="text-align: center" class="title">Letter and Number Identification</div>
                 <div class="mb-4 subTitle font-weight-bold text-center">Know your knowledge level in alphabet
                 </div>
                 <div class="row">
                     <div class="col-sm-8 bg-info border border-light rounded-lg">
                         <h5 class="mt-2 mb-2 font-weight-bold">How to use</h5>
                         <p class="text-light">
-                            This application is intended to teach alphabet and assess knowledge level in alphabet.
-                            Student has to listen to the sound and click the correct letters.
-                            Once
-                            answered all the questions teachers may download the
-                            result for analyzing purposes. Teachers can edit words / letters on the '<a
-                                style="cursor: pointer;" onclick="displayTab('divEdit', this)">Edit Questions</a>' tab.
+                            This web application is intended to teach ‘alphabet & numbers’ and for assessment purposes (assessment for learning, assessment as learning, and assessment of learning). Click the play button or play tab then choose desired subject and mode. Click start to proceed. The students have to listen to the sound played and choose the correct alphabet or number. 
                         </p>
                     </div>
                     <div class="col-sm-4">
@@ -66,15 +61,14 @@
                     <div class="col-md-4 bg-success col-sm-12 border border-light rounded-lg mt-2 mb-2">
                         <h5 class="mt-2 mb-2 font-weight-bold ">Audience</h5>
                         <p class="text-light">
-                            English teachers handling the foundational and preparatory level students (from 1st Standard
-                            to
-                            5th Standard).
+                            Teachers / Parents handling the foundational stage students (from KG Standard
+                            to 2nd Standard).
                         </p>
                     </div>
                     <div class="col-md-4 bg-success col-sm-12 border border-light rounded-lg mt-2 mb-2">
                         <h5 class="mt-2 mb-2 font-weight-bold ">Objective</h5>
                         <p class="text-light">
-                            Assess the students’ knowledge in alphabets. Assessment For, As and Of learning)
+                            Assess the students’ knowledge in identifying alphabets and numbers. Assessment For, As and Of learning)
                         </p>
                     </div>
                     <div class="col-md-3 bg-success col-sm-12 border border-light rounded-lg mt-2 mb-2">
@@ -90,13 +84,24 @@
                         <h5 class="mb-2 font-weight-bold ">Features</h5>
                         <p>
                         <ul class="list-group">
+                            <li class="list-group-item">There are three modes available:
+                                <ul class="list-group">
+                                <li class="list-group-item">Play mode gives game like experience</li>
+                                <li class="list-group-item">Test mode is for assessment purposes by teacher or parents</li>
+                                <li class="list-group-item">Training mode is to train for a particular alphabet</li>
+                            </ul>
+                            </li>
+                            <li class="list-group-item">
+                                Teachers can set question letters or numbers on the '<a
+                                style="cursor: pointer;" onclick="displayTab('divEdit', this)">Edit Questions</a>' tab in test mode.
+                            </li>
                             <li class="list-group-item">The teachers may upload the questions using the ‘csv’ data
                                 format file.
                             </li>
                             <li class="list-group-item">The teachers, the head of the institution, the parents and the
                                 higher officials may get the students’ answers in ‘csv’ data format which can be used,
                                 to analyze where a student misunderstands the concept, to identify which students are
-                                behind the expected level etc. This feature makes this as an ‘assessment for learning’.
+                                behind the expected level etc.
                             </li>
                         </ul>
                         </p>
@@ -277,7 +282,7 @@
                                 <button class="btn btn-info" onclick="speakWord()">
                                     <i class="fa fa-play"></i>&nbsp; Audio
                                 </button>
-                                <button onclick="speakWordwithHint()" class="btn btn-info">
+                                <button onclick="speakWordwithHint()" class="btn btn-info" id="hintBtn">
                                     <i class="fa fa-info-circle"></i>&nbsp; Hint
                                 </button>
                             </div>
