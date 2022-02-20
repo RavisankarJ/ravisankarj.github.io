@@ -48,6 +48,8 @@ function trackCurrentPlaybackTime() {
         console.log('got the time...' + player.currentTime);
         player.pause();
         showDiv('#Interaction4');
+        currentYesOrNoQuestion = -1;
+        nxtQuestion();
         resumeTime = 229.5;
     }
 }
@@ -77,42 +79,49 @@ function correctSelection(ele) {
     player.play();
 }
 
+
 // function dragOver() {
 //     this.classList.add('over');
 // }
 
-document.addEventListener('DOMContentLoaded', (event) => {
+// document.addEventListener('DOMContentLoaded', (event) => {
 
-    var stars = document.querySelectorAll('.star');
-    var inboxes = document.querySelectorAll('.inbox');
-    stars.forEach(function (item) {
-        item.addEventListener('dragstart', handleDragStart);
-        item.addEventListener('dragend', handleDragEnd);
-    });
-    inboxes.forEach(function (item) {
-        item.classList.remove('over');
-    });
-    stars.forEach(function (item) {
-        item.addEventListener('dragstart', handleDragStart);
-        item.addEventListener('dragend', handleDragEnd);
-    });
-    inboxes.forEach(function (item) {
-        item.addEventListener('dragover', handleDragOver);
-        item.addEventListener('dragenter', handleDragEnter);
-        item.addEventListener('dragleave', handleDragLeave);
-        item.addEventListener('drop', handleDrop);
-    });
-});
+//     var stars = document.querySelectorAll('.star');
+//     var inboxes = document.querySelectorAll('.inbox');
+//     stars.forEach(function (item) {
+//         item.addEventListener('dragstart', handleDragStart);
+//         item.addEventListener('dragend', handleDragEnd);
+//     });
+//     inboxes.forEach(function (item) {
+//         item.classList.remove('over');
+//     });
+//     stars.forEach(function (item) {
+//         item.addEventListener('dragstart', handleDragStart);
+//         item.addEventListener('touchmove', function (eve) {
+//             handleDragStart(eve)
+//         });
+//         item.addEventListener('dragend', handleDragEnd);
+//         item.addEventListener('touchend', function (eve) {
+//             handleDragStart(eve)
+//         });
+//     });
+//     inboxes.forEach(function (item) {
+//         item.addEventListener('dragover', handleDragOver);
+//         item.addEventListener('dragenter', handleDragEnter);
+//         item.addEventListener('dragleave', handleDragLeave);
+//         item.addEventListener('drop', handleDrop);
+//     });
+// });
 
 function handleDragStart(e) {
-    this.style.opacity = '0.4';
+    e.target.style.opacity = '0.4';
     dragSrcEl = this;
-    e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('text/html', this.innerHTML);
+    // e.dataTransfer.effectAllowed = 'move';
+    // e.dataTransfer.setData('text/html', this.innerHTML);
 }
 
 function handleDragEnd(e) {
-    this.style.opacity = '1';
+    e.target.style.opacity = '1';
 }
 
 function handleDragOver(e) {
@@ -150,14 +159,22 @@ function handleDrop(e) {
     }
 
     if (starCounter >= dividend) {
-        var divisble = (dividend % divisor == 0) ? '' : 'not';
-        $('#resultDiv').html('');
-        $('#resultDiv').append($(`<p style="margin: auto;">See we can ${divisble} evenly distribute the stars.</p>`));
-        $('#resultDiv').append($(`<p style="margin: auto;">So ${divisor} is ${divisble} a factor of ${dividend}. <span onclick="nxtQuestion()" style="cursor: pointer; padding: 5px; margin-left: 20px; background-color: white; color: green;">Next</span></p>`));
-        document.querySelector('#resultDiv').style.display = 'block';
+       showResultDiv();
     }
 }
 
+function showResultDiv() {
+    var dividend = document.getElementById('yesOrNoQuestion').dataset.dividend;
+    var divisor = document.getElementById('yesOrNoQuestion').dataset.divisor;
+
+    var divisble = (dividend % divisor == 0) ? '' : 'not';
+    $('#resultDiv').html('');
+    $('#resultDiv').append($(`<p style="margin: auto;">See we can ${divisble} evenly distribute the stars.</p>`));
+    $('#resultDiv').append($(`<p style="margin: auto;">So ${divisor} is ${divisble} a factor of ${dividend}. <span onclick="nxtQuestion()" style="cursor: pointer; padding: 5px; margin-left: 20px; background-color: green; color: white; border-radius:5px">Next</span></p>`));
+    document.querySelector('#resultDiv').style.display = 'block';
+    document.getElementById('arrangeStarsDiv').firstElementChild.style.display = 'none';
+
+}
 
 function checkFactor(ele, response) {
     var yesOrNoQuestionEle = document.getElementById('yesOrNoQuestion');
@@ -207,13 +224,15 @@ function setArrangeStarsDiv(ele) {
     var arrangeStarEle = document.getElementById('arrangeStarsDiv');
     // console.log(arrangeStarEle.children[2]);
 
-    arrangeStarEle.firstElementChild.innerHTML = `Arrange ${ele.dataset.dividend} stars in ${ele.dataset.divisor} groups by drag and drop`;
+    arrangeStarEle.firstElementChild.innerHTML = `Arrange ${ele.dataset.dividend} stars in ${ele.dataset.divisor} groups by drag and drop or click the Arrange button`;
 
     arrangeStarEle.children[1].innerHTML = "";
     for (var i = 0; i < ele.dataset.dividend; i++) {
-        var starEle = $('<span class="star" draggable="true" style="cursor: move; font-size: 1.5em; color:hsl(36, 100%, 50%)">&#9733;</span>')
+        var starEle = $('<span class="star" draggable="true">&#9733;</span>')
         $(arrangeStarEle.children[1]).append(starEle);
     }
+    $(arrangeStarEle.children[1]).append(
+        $('<span class="arrangeBtn" onclick="moveStar(this)">Arrange</span>'));
     arrangeStarEle.children[2].innerHTML = "";
     for (var i = 0; i < ele.dataset.divisor; i++) {
         var inboxEle = $('<div class="inbox"></div>');
@@ -230,7 +249,9 @@ function setArrangeStarsDiv(ele) {
     });
     stars.forEach(function (item) {
         item.addEventListener('dragstart', handleDragStart);
+        // item.addEventListener('touchstart', fireCustomEvent('dragstart', item, item.innerHTML));
         item.addEventListener('dragend', handleDragEnd);
+        // item.addEventListener('touchend', fireCustomEvent('dragend', item, item.innerHTML));
     });
     inboxes.forEach(function (item) {
         item.addEventListener('dragover', handleDragOver);
@@ -240,7 +261,43 @@ function setArrangeStarsDiv(ele) {
     });
 }
 
+function moveStar(ele) {
+    var stars = document.querySelectorAll('.star');
+    var inboxes = document.querySelectorAll('.inbox');
+    stars.forEach((star, i) => {
+        inboxes[i % inboxes.length].append(star);
+    });
+    ele.remove();
+    showResultDiv();
+}
+
+// function fireCustomEvent(eventName, element, data) {
+//     'use strict';
+//     var event;
+//     data = data || {};
+//     if (document.createEvent) {
+//         event = document.createEvent("HTMLEvents");
+//         event.initEvent(eventName, true, true);
+//         console.log('here at 258');
+//     } else {
+//         event = document.createEventObject();
+//         event.eventType = eventName;
+//     }
+
+//     event.eventName = eventName;
+//     event = $.extend(event, data);
+
+//     if (document.createEvent) {
+//         element.dispatchEvent(event);
+//         console.log('here at 269');
+//     } else {
+//         element.fireEvent("on" + event.eventType, event);
+//     }
+// }
+
+
 function nxtQuestion() {
+    
     currentYesOrNoQuestion++;
     if (yesOrNoQuestion.length > currentYesOrNoQuestion)
         nextYesorNoQuestion();

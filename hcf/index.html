@@ -27,8 +27,8 @@
             <source src="hcf_full.mp4" type="video/mp4">
         </video>
         <div class="onTopVideo interaction" id="Interaction1">
-            <div class="onTopContent" style="padding-left: 20px; padding-top: 20px; font-size: 1.5em;">Can you select
-                highest building?</div>
+            <div class="onTopContent animate" style="margin-left: 20px; margin-top: 20px; font-size: 1.5em; width:83%;">Select
+                highest building</div>
             <div class="onTopContent"
                 style="padding-top: 32px; display: flex; width: 90%; align-items: baseline; justify-content: space-around;">
                 <div class="choices" onclick="wrongSelection(this)" style="font-size: 2em; color: yellow;" data-toggle="popover" data-trigger="manual" data-placement="bottom" data-content="Wrong selection"><i
@@ -45,8 +45,8 @@
             </div>
         </div>
         <div class="onTopVideo interaction" id="Interaction2">
-            <div class="onTopContent" style="padding-left: 20px; padding-top: 20px; font-size: 1.5em;">Can you select
-                highest number?</div>
+            <div class="onTopContent animate" style="margin-left: 20px; margin-top: 20px; font-size: 1.5em; width: 83%;">Select
+                highest number</div>
             <div class="onTopContent"
                 style="padding-top: 32px; display: flex; width: 90%; align-items: baseline; justify-content: space-around;">
                 <div class="choices numbers" onclick="wrongSelection(this)" style="font-size: 2em; color: yellow;">26
@@ -78,9 +78,9 @@
             </div>
         </div>
         <div class="onTopVideo interaction" id="Interaction4">
-            <div class="onTopContent" style="padding-left: 20px; padding-top: 20px;">
+            <div class="onTopContent" style="padding-left: 30px; padding-top: 20px;">
                 <p style="margin: auto;">
-                    <span id="yesOrNoQuestion" data-divisor=2 data-dividend=5>Is 2 a factor of 5?</span>
+                    <span id="yesOrNoQuestion" class="animate" data-divisor=2 data-dividend=5>Is 2 a factor of 5?</span>
                     <span class="yesOrNo" onclick="checkFactor(this,'y')" data-trigger="manual"
                         data-toggle="popover">Yes &#x2714</span>
                     <span class="yesOrNo" onclick="checkFactor(this,'n')" data-trigger="manual" data-toggle="popover">No
@@ -89,7 +89,7 @@
             </div>
             <div id="arrangeStarsDiv" style="display: none;" data-trigger="manual" data-toggle="popover"
                 data-content="kindly drop one star in each box" data-placement="bottom">
-                <div class="onTopContent" style="padding-left: 20px;">
+                <div class="onTopContent">
                     Arrange 10 stars in 4 groups by drag and drop.
                 </div>
                 <div style="display: block; padding-left: 20px;">

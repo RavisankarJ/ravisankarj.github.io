@@ -25,7 +25,10 @@ body {
     padding-left: 20px; */
     color: white;
     font-family: kalam;
+    padding-left: 20px;
     /* font-size: 1.5em; */
+    padding-right: 20px;
+    width: 90%;
 }
 
 .choices{
@@ -76,11 +79,46 @@ body {
     transition: opacity 2s;
 }
 
+.star{
+    cursor: move; 
+    font-size: 1.5em;
+    color:hsl(36, 100%, 50%)
+}
+
+.arrangeBtn{
+    padding:5px; 
+    cursor: pointer;
+    margin-left: 30px;
+    background-color: green;
+    color: white;
+}
 
 
+@keyframes mymove {
+    0% {
+        background-color: hsl(120, 100%, 25%,0.2);
+    }
 
+    50% {
+        background-color: hsl(120, 100%, 25%,1);
+    }
 
+    100% {
+        background-color: hsl(120, 100%, 25%,0.2);
+    }
+}
 
+.animate {
+    animation-name: mymove;
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    animation-delay: 500ms;
+    animation-iteration-count: infinite;
+}
+
+.animate:hover {
+    animation-play-state: paused;
+}
 
 
 /* .slidebox {
