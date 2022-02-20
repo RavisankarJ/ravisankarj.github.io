@@ -665,7 +665,19 @@ function displayTab(tabid, element) {
     }
     element.parentElement.classList.add('active');
     if (element.innerText === 'Edit Questions') {
-        createQuestionsTable(words);
+        var displayQuestions;
+        if (subjectMode == 0) {
+            if (selectedQuestionSet.length>0)
+                displayQuestions = selectedQuestionSet;
+            else
+                displayQuestions = samplewords;
+        } else {
+            if (selectedNumberSet.length>0)
+                displayQuestions = selectedNumberSet;
+            else
+                displayQuestions = numberSet[0];
+        }
+        createQuestionsTable(displayQuestions);
         updateQuestionSet();
     }
     else if (element.innerText.trim() === 'Play')
@@ -748,7 +760,8 @@ function editQuestions() {
 }
 
 function saveQuestions() {
-    selectedQuestionSet = [];
+    var selectedSet = [];
+    // selectedSet = selectedSet.slice(0, selectedSet.length);
     $('.hideColumn').css('display', 'none');
     $('#addBtn').attr('disabled', true);
     $('#saveBtn').attr('disabled', true);
@@ -757,11 +770,18 @@ function saveQuestions() {
     var tableBody = $('#tQbdy');
     for (i = 0; i < tableBody.children().length; i++) {
         var ele = tableBody.children().eq(i);
-        selectedQuestionSet.push({
+        selectedSet.push({
             word: ele.children().first().text(),
             hint: ele.children().eq(1).text(),
             font: ele.children().eq(2).text()
         });
+    }
+    switch (subjectMode) {
+        case 0: selectedQuestionSet = selectedSet;
+            break;
+        case 1: selectedNumberSet = selectedSet;
+            break;
+        default: selectedQuestionSet = selectedSet;
     }
     $('.nav-link').first().attr('onclick', "displayTab('divAbt', this)");
     $('.nav-link').eq(1).attr('onclick', "displayTab('divPlay', this)");
@@ -909,7 +929,6 @@ function addClickEvent_CardElement() {
                 mode = 1;
                 $('#levelDiv').css('display', 'none');
                 $('#assessmentMode').prop('checked', true).trigger('change');
-                var playTab = document.getElementById('divPlay');
                 displayTab('divPlay', $('.nav-item').eq(1).children()[0]);
                 if (subjectMode == 0) {
                     selectedQuestionSet = selectedSet;
