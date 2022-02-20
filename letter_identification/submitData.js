@@ -1,5 +1,5 @@
 const scriptURL = 'https://script.google.com/macros/s/AKfycbyIJkCRWQjfIJuh8dELZDbpxsWyoCz5sJICL9_7dYSLNCcNp3PDnxe6mZYdcbwDzhkv/exec';
-// const scriptURL = 'https://script.google.com/macros/s/AKfycbzd0plwIQXhnKlVY3p2hcwaSNn0End6XebwpGdPbps/dev'
+
 function uploadAns() {
     var uploadAnsBtn = document.querySelector('#uploadAns');
     uploadAnsBtn.innerHTML="Uploading...";
@@ -15,8 +15,8 @@ function uploadAns() {
         formData.append(i++, answer[0]);
         formData.append(i++, answer[1]);
         formData.append(i++, answer[2]);
-        formData.append(i++, answer[3]);
-        formData.append(i++, answer[4]);
+        formData.append(i++, answer[3].join(', '));
+        formData.append(i++, answer[4].join(', '));
         
         // console.log(formData);
     });

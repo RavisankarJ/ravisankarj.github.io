@@ -18,7 +18,7 @@ function uploadAns() {
         formData.append(i++, answer[0].question);
         if (answer.length > 1) {
             formData.append(i++, answer[1]);
-            formData.append(i++, answer[2]);
+            formData.append(i++, answer[2].join(', '));
             formData.append(i++, answer[3]);
         }else i+=3;
         // console.log(formData);

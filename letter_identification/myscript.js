@@ -9,7 +9,7 @@ let mode;   //mode = 0 indicates play mode, 1 indicates assessment mode, 2 indic
 let subjectMode;      //learnMode = 0 indicates letters identification, 1 indicates number identification
 let selectedQuestionSet = [];    //to store currently selected question set from edit question tab
 
-let svgEle, area, timer, timeDifference, stuid, schoolid, container;
+let svgEle, area, timer, timeDifference, stuid, schoolid, container, baloonStartTime, baloonTimeDifference;
 speech.lang = "en";
 window.speechSynthesis.onvoiceschanged = () => {
     speech.rate = 0.5;
@@ -226,6 +226,7 @@ function setSvgDimension() {
 function start() {
     initialiseToStart();
     if (mode == 0) {
+        baloonStartTime = new Date().getTime();
         generateLevelsUI();
     }
     else {
@@ -265,8 +266,20 @@ function moveLetters() {
     currentWord = wordQueue.pop();
     // console.log(`current letter is ${currentWord.word}`);
     elements.forEach((ele, i) => {
+
         setTimeout(
             function () {
+                if (subjectMode == 0) {
+                    if (currentWord.word == ele.innerText) {
+                        console.log('got the time...');
+                        baloonStartTime = new Date().getTime();
+                        console.log(baloonStartTime);
+                    }
+                } else if (currentWord.word == parseInt(ele.innerText)) {
+                    console.log('got the time...');
+                    baloonStartTime = new Date().getTime();
+                    console.log(baloonStartTime);
+                }
                 ele.style.display = 'flex';
                 ele.style.bottom = container.getBoundingClientRect().height - ele.getBoundingClientRect().height + 'px';
                 // console.log(getComputedStyle(ele).getPropertyValue('transition'));
@@ -294,17 +307,19 @@ function check(ele) {
 }
 
 function gameSuccess(ele) {
+    baloonTimeDifference = new Date().getTime() - baloonStartTime;
     removeLetters();
     success(ele);
     console.log('success');
 }
 
 function gameEnd() {
+    baloonTimeDifference = new Date().getTime() - baloonStartTime;
     console.log('Sorry... you missed to identify &#x1F61E;');
     $('#missedDivGroup').css('display', 'block');
     moves.push('-');
-    storeMoves();
     stopTimer();
+    storeMoves();
     removeLetters();
 }
 
@@ -483,7 +498,10 @@ function storeMoves() {
         answer.push(currentWord.font);
     else
         answer.push('normal');
-    answer.push(timeDifference);
+    if (mode != 0)
+        answer.push(timeDifference);
+    else
+        answer.push(baloonTimeDifference)
     var texts = [];
     answer.push(words.map(a => a.word));
     answer.push(moves);
@@ -665,7 +683,19 @@ function displayTab(tabid, element) {
     }
     element.parentElement.classList.add('active');
     if (element.innerText === 'Edit Questions') {
-        createQuestionsTable(words);
+        var displayQuestions;
+        if (subjectMode == 0) {
+            if (selectedQuestionSet.length > 0)
+                displayQuestions = selectedQuestionSet;
+            else
+                displayQuestions = samplewords;
+        } else {
+            if (selectedNumberSet.length > 0)
+                displayQuestions = selectedNumberSet;
+            else
+                displayQuestions = numberSet[0];
+        }
+        createQuestionsTable(displayQuestions);
         updateQuestionSet();
     }
     else if (element.innerText.trim() === 'Play')
@@ -748,7 +778,8 @@ function editQuestions() {
 }
 
 function saveQuestions() {
-    selectedQuestionSet = [];
+    var selectedSet = [];
+    // selectedSet = selectedSet.slice(0, selectedSet.length);
     $('.hideColumn').css('display', 'none');
     $('#addBtn').attr('disabled', true);
     $('#saveBtn').attr('disabled', true);
@@ -757,11 +788,18 @@ function saveQuestions() {
     var tableBody = $('#tQbdy');
     for (i = 0; i < tableBody.children().length; i++) {
         var ele = tableBody.children().eq(i);
-        selectedQuestionSet.push({
+        selectedSet.push({
             word: ele.children().first().text(),
             hint: ele.children().eq(1).text(),
             font: ele.children().eq(2).text()
         });
+    }
+    switch (subjectMode) {
+        case 0: selectedQuestionSet = selectedSet;
+            break;
+        case 1: selectedNumberSet = selectedSet;
+            break;
+        default: selectedQuestionSet = selectedSet;
     }
     $('.nav-link').first().attr('onclick', "displayTab('divAbt', this)");
     $('.nav-link').eq(1).attr('onclick', "displayTab('divPlay', this)");
@@ -909,7 +947,6 @@ function addClickEvent_CardElement() {
                 mode = 1;
                 $('#levelDiv').css('display', 'none');
                 $('#assessmentMode').prop('checked', true).trigger('change');
-                var playTab = document.getElementById('divPlay');
                 displayTab('divPlay', $('.nav-item').eq(1).children()[0]);
                 if (subjectMode == 0) {
                     selectedQuestionSet = selectedSet;
