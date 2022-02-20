@@ -1,5 +1,7 @@
 let trackPlayerTimer, dragSrcEl, starCounter = 0, lastDroppedInbox, currentYesOrNoQuestion = 0, resumeTime;
 let yesOrNoQuestion = [
+    [2, 8],
+    [3, 9],
     [2, 5],
     [4, 10],
     [3, 15]
@@ -29,7 +31,7 @@ player.on('ended', function () {
     clearInterval(trackPlayerTimer);
 });
 function trackCurrentPlaybackTime() {
-    console.log(player.currentTime());
+    // console.log(player.currentTime());
     if (player.currentTime() <= 39 && player.currentTime() >= 38) {
         console.log('got the time...');
         player.pause();
@@ -203,7 +205,7 @@ function nextYesorNoQuestion() {
 function setArrangeStarsDiv(ele) {
     starCounter = 0;
     var arrangeStarEle = document.getElementById('arrangeStarsDiv');
-    console.log(arrangeStarEle.children[2]);
+    // console.log(arrangeStarEle.children[2]);
 
     arrangeStarEle.firstElementChild.innerHTML = `Arrange ${ele.dataset.dividend} stars in ${ele.dataset.divisor} groups by drag and drop`;
 
