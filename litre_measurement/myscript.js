@@ -554,6 +554,9 @@ function reload() {
     $('#studentDetailEnquire').css("display", "block");
     $('#studentDetails').css("display", "none");
     $('#questionTable').css("display", "none");
+    document.getElementById('uploadAns').disabled = 'false';
+    document.getElementById('uploadAns').removeAttribute('disabled');
+    document.getElementById('uploadAns').innerHTML = "Upload";
     $('#divStatus').removeClass('d-flex');
     $('#divStatus').css("display", "none");
     $('#score').css("display", "none");

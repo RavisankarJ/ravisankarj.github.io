@@ -4,21 +4,20 @@ function categoriseAnswer(data) {
   data.forEach((item) => {
     answerReport.push({
       letter: item[0],
-      attempt: item[item.length - 1].length,
-      skipped: item[0] != item[item.length - 1].at(-1),
+      attempt: item[item.length - 2].length,
+      skipped: item[0] != item[item.length - 2].at(-1),
       duration: item[2],
       confused: findConfused(item[0], data)
     });
-
   });
-  console.log(answerReport);
+  // console.log(answerReport);
 }
 
 function findConfused(l, data) {
   var confused = false;
   data.forEach((item) => {
     if (l != item[0])
-      if (item.at(-1).find(a => a == l))
+      if (item.at(-2).find(a => a == l))
         confused = true;
   });
   return confused;
