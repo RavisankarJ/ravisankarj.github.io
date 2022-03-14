@@ -2,7 +2,7 @@ let textPos = [];
 let answers = [];
 let answer = [];
 let moves = [];
-let level = 0, words, wordQueue = [];
+let level = 0, words, wordQueue = [], selectedLevel;
 let speech = new SpeechSynthesisUtterance();
 let wrongAudio, correctAudio, currentWord;
 let mode;   //mode = 0 indicates play mode, 1 indicates assessment mode, 2 indicates learning mode
@@ -276,9 +276,9 @@ function moveLetters() {
                         console.log(baloonStartTime);
                     }
                 } else if (currentWord.word == parseInt(ele.innerText)) {
-                    console.log('got the time...');
+                    // console.log('got the time...');
                     baloonStartTime = new Date().getTime();
-                    console.log(baloonStartTime);
+                    // console.log(baloonStartTime);
                 }
                 ele.style.display = 'flex';
                 ele.style.bottom = container.getBoundingClientRect().height - ele.getBoundingClientRect().height + 'px';
@@ -310,7 +310,7 @@ function gameSuccess(ele) {
     baloonTimeDifference = new Date().getTime() - baloonStartTime;
     removeLetters();
     success(ele);
-    console.log('success');
+    // console.log('success');
 }
 
 function gameEnd() {
@@ -378,6 +378,10 @@ function submitAns() {
     createReport(answers);
     if (mode == 2)
         $('#visualReport').css('display', 'none');
+    answers.forEach((answer, i) => {
+        if (answer[0] == answerReport[i].letter)
+            answer.push(answerReport[i].confused);
+    });
     createAnsTable(answers);
     $('.nav-link')[2].setAttribute("onclick", "displayTab('divEdit', this)");
     correctAudio.pause();
@@ -435,13 +439,16 @@ function createAnsTable(tableData) {       //creating answer table
         for (i = 0; i < rowData.length; i++) {
             var cell = document.createElement('td');
             switch (i) {
-                case 4:
-                case 5: var text = "";
+                case 3:
+                case 4: var text = "";
                     rowData[i].forEach(function (cellData) {
                         text += cellData + " ";
                     });
                     cell.appendChild(document.createElement('b'));
                     cell.appendChild(document.createTextNode(text));
+                    break;
+                case 5:
+                case 6:
                     break;
                 default: cell.appendChild(document.createElement('b'));
                     cell.appendChild(document.createTextNode(rowData[i]));
@@ -502,10 +509,19 @@ function storeMoves() {
         answer.push(timeDifference);
     else
         answer.push(baloonTimeDifference)
-    var texts = [];
-    answer.push(words.map(a => a.word));
+    if (subjectMode == 1)
+        answer.push((words.map(a => a.word)).sort(function (a, b) { return a - b }));
+    else
+        answer.push(words.map(a => a.word));
     answer.push(moves);
     answers.push(answer);
+    if (mode == 0)
+        answer.push(level);
+    else if (mode == 2)
+        answer.push(-1);
+    else if (mode == 1)
+        answer.push(selectedLevel);
+
     answer = [];
     moves = [];
     // console.table(answers);
@@ -707,7 +723,7 @@ function displayTab(tabid, element) {
 
 function dwnloadAns() {
     let csvContent = "data:text/csv;charset=utf-8,";
-    var dataString = "School ID\tStudent ID\tQuestion\tFont Type\tTime (in milli second)\tWords\tMoves\n";
+    var dataString = "School ID\tStudent ID\tQuestion\tFont Type\tTime (in milli second)\tWords\tMoves\tLevel\tConfused\tSubject\tMode\n";
     answers.forEach(function (row) {
         dataString += "" + schoolid + "\t";
         dataString += "" + stuid + "\t";
@@ -723,6 +739,8 @@ function dwnloadAns() {
                 dataString += "" + cell + "\t";
             }
         });
+        dataString += "" + subjectMode + "\t";
+        dataString += "" + mode;
         dataString += "\n";
     });
     // var encodedUri = encodeURI(csvContent);
@@ -794,6 +812,7 @@ function saveQuestions() {
             font: ele.children().eq(2).text()
         });
     }
+    selectedLevel = -2;
     switch (subjectMode) {
         case 0: selectedQuestionSet = selectedSet;
             break;
@@ -933,12 +952,13 @@ function addClickEvent_CardElement() {
         ele.addEventListener('click',
             (event) => {
                 var k = event.currentTarget.children[0].children[0].children[0].textContent;
-                console.log(parseInt(k));
-                console.table(qSet[parseInt(k) - 1])
+                // console.log(parseInt(k));
+                // console.table(qSet[parseInt(k) - 1])
                 // words = wordSet[parseInt(k) - 1];
                 selectedSet = qSet[parseInt(k) - 1];
+                selectedLevel = parseInt(k) - 1;
                 words = selectedSet;
-                console.table(words);
+                // console.table(words);
                 createQuestionsTable(selectedSet);
                 // document.querySelectorAll('.card.active').forEach((card)=>{
                 //     card.classList.remove('active');
