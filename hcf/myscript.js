@@ -20,6 +20,9 @@ player.ready(function () {
 
 player.on('play', function () {
     console.log('it is playing...');
+    if (trackPlayerTimer) {
+        clearInterval(trackPlayerTimer);
+    }
     trackPlayerTimer = setInterval(function () { trackCurrentPlaybackTime(); }, 500);
 });
 player.on('pause', function () {
@@ -39,14 +42,14 @@ function trackCurrentPlaybackTime() {
         resumeTime = 39.5;
     }
     if (player.currentTime() <= 72 && player.currentTime() >= 71) {
-        console.log('got the time...' + player.currentTime);
+        console.log('got the time...' + player.currentTime());
         player.pause();
         showDiv('#Interaction2');
         resumeTime = 72.5;
     }
     if (player.currentTime() <= 229 && player.currentTime() >= 228) {
-        console.log('got the time...' + player.currentTime);
         player.pause();
+        console.log('got the time...' + player.currentTime());
         showDiv('#Interaction4');
         currentYesOrNoQuestion = -1;
         nxtQuestion();
