@@ -244,6 +244,10 @@ function createLetters() {
     shuffleArray(words).forEach((item, i) => {
         var div = document.createElement('div');
         div.innerText = item.word;
+        if(item.font){
+            console.log(findFont(item));
+            div.style.fontFamily=findFont(item);
+        }
         div.classList.add('letters');
         div.style.transitionDuration = calculateTransition() + 'ms';
         container.append(div);
