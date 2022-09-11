@@ -603,6 +603,7 @@ function uploadReport() {
             });
             // console.table(tempQuestions);
             questions = tempQuestions;
+            selectedQuestions = questions;
             createQuestionsTable(questions);
             $('#myfile').value = "";
         },
@@ -699,7 +700,7 @@ function createQuestionsTable(tableData) {
 
 function saveQuestions() {
     // console.table(questions);
-    questions = [];
+    selectedQuestions = [];
     $('.hideColumn').css('display', 'none');
 
     $('#addBtn').attr('disabled', true);
@@ -709,13 +710,14 @@ function saveQuestions() {
     var tableBody = $('#tQbdy');
     for (i = 0; i < tableBody.children().length; i++) {
         var ele = tableBody.children().eq(i);
-        questions.push({
+        selectedQuestions.push({
             target: parseInt(ele.children().first().text()),
             maxMov: parseInt(ele.children().eq(1).text()),
             exactMove: trueOrfalse(ele.children().eq(2).text()),
             question: ele.children().eq(3).text()
         });
     }
+    questions = selectedQuestions;
     $('.nav-link').first().attr('onclick', "displayTab('divAbt', this)");
     $('.nav-link').eq(1).attr('onclick', "displayTab('divPlay', this)");
     // console.table(questions);
