@@ -6,6 +6,9 @@ let yesOrNoQuestion = [
     [4, 10],
     [3, 15]
 ];
+
+
+
 var player = videojs(document.querySelector('#my-video'), {
     controls: true,
     autoplay: false,
@@ -82,39 +85,6 @@ function correctSelection(ele) {
     player.play();
 }
 
-
-// function dragOver() {
-//     this.classList.add('over');
-// }
-
-// document.addEventListener('DOMContentLoaded', (event) => {
-
-//     var stars = document.querySelectorAll('.star');
-//     var inboxes = document.querySelectorAll('.inbox');
-//     stars.forEach(function (item) {
-//         item.addEventListener('dragstart', handleDragStart);
-//         item.addEventListener('dragend', handleDragEnd);
-//     });
-//     inboxes.forEach(function (item) {
-//         item.classList.remove('over');
-//     });
-//     stars.forEach(function (item) {
-//         item.addEventListener('dragstart', handleDragStart);
-//         item.addEventListener('touchmove', function (eve) {
-//             handleDragStart(eve)
-//         });
-//         item.addEventListener('dragend', handleDragEnd);
-//         item.addEventListener('touchend', function (eve) {
-//             handleDragStart(eve)
-//         });
-//     });
-//     inboxes.forEach(function (item) {
-//         item.addEventListener('dragover', handleDragOver);
-//         item.addEventListener('dragenter', handleDragEnter);
-//         item.addEventListener('dragleave', handleDragLeave);
-//         item.addEventListener('drop', handleDrop);
-//     });
-// });
 
 function handleDragStart(e) {
     e.target.style.opacity = '0.4';
@@ -273,31 +243,6 @@ function moveStar(ele) {
     ele.remove();
     showResultDiv();
 }
-
-// function fireCustomEvent(eventName, element, data) {
-//     'use strict';
-//     var event;
-//     data = data || {};
-//     if (document.createEvent) {
-//         event = document.createEvent("HTMLEvents");
-//         event.initEvent(eventName, true, true);
-//         console.log('here at 258');
-//     } else {
-//         event = document.createEventObject();
-//         event.eventType = eventName;
-//     }
-
-//     event.eventName = eventName;
-//     event = $.extend(event, data);
-
-//     if (document.createEvent) {
-//         element.dispatchEvent(event);
-//         console.log('here at 269');
-//     } else {
-//         element.fireEvent("on" + event.eventType, event);
-//     }
-// }
-
 
 function nxtQuestion() {
     
