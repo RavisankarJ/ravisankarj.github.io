@@ -4,6 +4,7 @@ import { Background } from './background.js';
 import { Bacteria, Virus, Bacteria2 } from './pathogens.js';
 import { UI } from './UI.js';
 import { MusicIcon } from './buttons.js';
+import {Level1, Level2, Level3} from './levels.js';
 
 let lastTime = 0;
 
@@ -41,6 +42,11 @@ window.addEventListener('load', function () {
             // this.music.play();
             this.music.volume = 0.2;
             this.musicButton = new MusicIcon(this);
+            this.levelIndex = 0;
+            this.maxLevel = 3;
+            this.levels = [new Level1(this), new Level2(this), new Level3(this)];
+            this.currentLevel = this.levels[this.levelIndex];
+            this.currentLevel.enter();
         }
         update(deltaTime) {
             this.time += deltaTime;
@@ -98,8 +104,12 @@ window.addEventListener('load', function () {
             this.score = 0;
             this.time = 0;
             this.maxTime = 1 * 10 * 1000;
+            if(this.gameOver) this.levelIndex++;
             this.gameOver = false;
             this.gameStart = false;
+            if(this.levelIndex>this.maxLevel-1) this.levelIndex = 0;
+            this.currentLevel = this.levels[this.levelIndex];
+            this.currentLevel.enter();
             this.player.restart();
             lastTime = performance.now();
             animate(0);

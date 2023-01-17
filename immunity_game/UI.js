@@ -13,6 +13,8 @@ export class UI {
         context.font = this.fontSize + 'px ' + this.fontFamily;
         context.textAlign = 'left';
         context.fillStyle = this.game.fontColor;
+        //level
+        context.fillText('Level: '+(this.game.levelIndex+1), 200, 50);
         //score
         context.fillText('Score: ' + this.game.score, 20, 50);
         //game time
