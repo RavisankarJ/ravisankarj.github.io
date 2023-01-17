@@ -13,6 +13,7 @@ export class Player {
         this.image = document.getElementById('player');
         this.speed = 0;
         this.maxSpeed = 15;
+        this.jumpingCapacity = 23;
         this.vy = 0;
         this.weight = 1;
         this.frameX = 0;
@@ -72,13 +73,14 @@ export class Player {
                 this.game.score++;
             } else {
 
-            }
+            }0
         });
     }
     restart() {
+        this.width = 1845 / (16 * this.sizeModifier);
+        this.height = 139 / this.sizeModifier;
         this.x = 0;
         this.y = this.game.height - this.height;
-        this.sizeModifier = 1.5;
         this.frameX = 0;
         this.frameY = 0;
         this.speed = 0;
