@@ -53,6 +53,7 @@ export class Jumping extends State{
         this.player = player;
     }
     enter(){
+        console.log(this.player.game);
         this.frameX =0;
         this.player.maxFrame = 15;
         if(this.player.onGround()) this.player.vy -= this.player.jumpingCapacity;

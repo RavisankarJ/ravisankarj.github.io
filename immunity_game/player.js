@@ -71,9 +71,19 @@ export class Player {
                 pathogen.markedForDeletion = true;
                 this.game.collisions.push(new CollisionAnimation(this.game, pathogen.x + pathogen.width * 0.5, pathogen.y + pathogen.height * 0.5));;
                 this.game.score++;
-            } else {
-
-            }0
+            }
+        });
+        this.game.healthyFoods.forEach(healthyFood => {
+            if (
+                healthyFood.x < this.x + this.width &&
+                healthyFood.x + healthyFood.width > this.x &&
+                healthyFood.y < this.y + this.height &&
+                healthyFood.y + healthyFood.height > this.y
+            ) {
+                healthyFood.markedForDeletion = true;
+                // this.game.collisions.push(new CollisionAnimation(this.game, healthyFood.x + healthyFood.width * 0.5, healthyFood.y + healthyFood.height * 0.5));;
+                healthyFood.nutrient.points++;
+            }
         });
     }
     restart() {
