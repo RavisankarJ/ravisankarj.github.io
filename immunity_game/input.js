@@ -5,7 +5,7 @@ export class InputHandler {
         this.mousePos = [];
         this.touchY = '';
         this.touchX = '';
-        this.touchThreshold = this.game.height/4;
+        this.touchThreshold = this.game.height / 4;
         this.xTouchThreshold = 10;
         this.canvas1 = document.getElementById('canvas1');
         window.addEventListener('keydown', e => {
@@ -19,8 +19,10 @@ export class InputHandler {
                 this.game.debug = !this.game.debug;
             } else if (e.key === 'Enter' && (game.gameOver || game.gameStart)) {
                 this.game.restart();
-            }
-
+            } else if (e.key === 'z') this.game.nutrientButtons[3].usePower();
+            else if (e.key === 'c') this.game.nutrientButtons[0].usePower();
+            else if (e.key === 'e') this.game.nutrientButtons[1].usePower();
+            else if (e.key === 'b') this.game.nutrientButtons[2].usePower();
         });
         window.addEventListener('keyup', e => {
             if (e.key === 'ArrowDown' ||
@@ -29,19 +31,11 @@ export class InputHandler {
                 e.key === 'ArrowRight'
             ) {
                 this.keys.splice(this.keys.indexOf(e.key, 1));
-
             }
         });
-        this.canvas1.addEventListener('click', evt => {
-            var rect = canvas1.getBoundingClientRect();
-            var mbutton = {
-                width: rect.width * 45 / this.game.width,
-                height: rect.height * 45 / this.game.height,
-                x: rect.width - rect.width * 45 / this.game.width - 5 * 45 / this.game.width,
-                y: 5 * 45 / this.game.height,
-            }
 
-            if (evt.offsetX > mbutton.x && evt.offsetX < mbutton.x + mbutton.width && evt.offsetY < mbutton.y + mbutton.height && evt.offsetY > mbutton.y) {
+        this.canvas1.addEventListener('click', evt => {
+            if (this.isClicked(this.game.musicButton, evt)) {
                 if (this.game.music.muted) {
                     this.game.music.muted = false;
                     this.game.musicButton.frameX = 0;
@@ -50,8 +44,22 @@ export class InputHandler {
                     this.game.music.muted = true;
                     this.game.musicButton.frameX = 1;
                 }
-
             }
+            this.game.nutrientButtons.forEach((button, i) => {
+                if (this.isClicked(button, evt)) {
+                    // switch (button.nutrientType) {
+                    //     case 0: button.points -= 10;
+                    //         break;
+                    //     case 1: button.points -= 5;
+                    //         break;
+                    //     case 2: button.points -= 15;
+                    //         break;
+                    //     case 3: button.points -= 25;
+                    //         break;
+                    // }
+                    button.usePower();
+                }
+            });
         }, false);
 
         this.canvas1.addEventListener('touchstart', e => {
@@ -63,11 +71,14 @@ export class InputHandler {
             const swipeDistanceY = e.changedTouches[0].pageY - this.touchY;
             const swipeDistanceX = e.changedTouches[0].pageX - this.touchX;
             if (swipeDistanceY < -this.touchThreshold && this.keys.indexOf('swipe up') === -1) this.keys.push('swipe up');
-            else if (swipeDistanceY > this.touchThreshold && this.keys.indexOf('swipe down') === -1) {
-                this.keys.push('swipe down');
-                if(this.game.gameOver || this.game.gameStart) this.game.restart();
+            // else if (swipeDistanceY > this.touchThreshold && this.keys.indexOf('swipe down') === -1) {
+            //     this.keys.push('swipe down');
+            //     if (this.game.gameOver || this.game.gameStart) this.game.restart();
+            // }
+            if (swipeDistanceX < -this.xTouchThreshold && this.keys.indexOf('swipe left') === -1) {
+                if (this.game.gameOver || this.game.gameStart) this.game.restart();
+                else this.keys.push('swipe left');
             }
-            if (swipeDistanceX < -this.xTouchThreshold && this.keys.indexOf('swipe left') === -1) this.keys.push('swipe left');
             else if (swipeDistanceX > this.xTouchThreshold && this.keys.indexOf('swipe right') === -1) {
                 this.keys.push('swipe right');
             }
@@ -77,5 +88,17 @@ export class InputHandler {
             this.keys.splice(this.keys.indexOf('swipe down'), 1);
             this.keys.splice(this.keys.indexOf('swipe up'), 1);
         });
+    }
+    isClicked(button, evt) {
+        var rect = canvas1.getBoundingClientRect();
+        var mbutton = {
+            width: button.width * rect.width / this.game.width,
+            height: button.height * rect.height / this.game.height,
+            x: button.x * rect.width / this.game.width,
+            y: button.y * rect.width / this.game.width
+        }
+        if (evt.offsetX > mbutton.x && evt.offsetX < mbutton.x + mbutton.width && evt.offsetY < mbutton.y + mbutton.height && evt.offsetY > mbutton.y)
+            return true;
+        else false;
     }
 }
