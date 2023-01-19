@@ -16,7 +16,7 @@ export class CollisionAnimation {
         this.frameInterval = 1000 / this.fps;
         this.frameTimer = 0;
         this.punchAudio = new Audio('punch.ogg');
-        this.punchAudio.volume = 0.05;
+        this.punchAudio.volume = 0.1;
         
     }
     draw(context) {

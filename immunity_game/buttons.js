@@ -12,7 +12,10 @@ export class MusicIcon {
         context.drawImage(this.icon, this.width * this.frameX, 0, this.width, this.height, this.x, this.y, this.width, this.height);
     }
 }
-
+//Vitamin C makes bigger
+//vitamin E makes jump higher
+//vitamin b6 makes antibody bomb
+//zinc improves health
 class Nutrients {
     constructor(game) {
         this.game = game;
@@ -22,6 +25,7 @@ class Nutrients {
         this.frameX = 0;
         this.points = 0;
         this.padding = 5;
+        this.fontFamily = 'Arial';
     }
     draw(context) {
         context.drawImage(this.icon, this.x, this.y, this.width, this.height);

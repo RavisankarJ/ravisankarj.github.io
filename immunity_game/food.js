@@ -1,4 +1,4 @@
-import { VitaminC, VitaminE, VitaminB6, Zinc } from "./buttons.js";
+
 class Healthy{
     constructor(game, bloodCell){
         this.game = game;
@@ -22,7 +22,13 @@ export class Lemon extends Fruit{
         this.image = document.getElementById('lemon');
         this.width = 91;
         this.height = 70;
-        this.nutrient = game.nutrientButtons[0];
+        // this.nutrient = game.nutrientButtons[nutrients.VITAMINC];
+        this.nutrients = {
+            vitaminC: 5, 
+            vitaminE: 2,
+            vitaminB6: 0,
+            zinc: 0
+        };
     }
     update(){
         this.x = this.bloodCell.x;
@@ -39,7 +45,13 @@ export class Orange extends Fruit{
         this.image = document.getElementById('orange');
         this.width = 90;
         this.height = 88;
-        this.nutrient = game.nutrientButtons[0];
+        // this.nutrient = game.nutrientButtons[nutrients.VITAMINE];
+        this.nutrients = {
+            vitaminC: 2, 
+            vitaminE: 5,
+            vitaminB6: 0,
+            zinc: 0
+        };
     }
     update(){
         this.x = this.bloodCell.x;
@@ -56,7 +68,13 @@ export class Grapes extends Fruit{
         this.image = document.getElementById('grapes');
         this.width = 90;
         this.height = 128;
-        this.nutrient = game.nutrientButtons[0];
+        // this.nutrient = game.nutrientButtons[nutrients.VITAMINB6];
+        this.nutrients = {
+            vitaminC: 2, 
+            vitaminE: 0,
+            vitaminB6: 5,
+            zinc: 0
+        };
     }
     update(){
         this.x = this.bloodCell.x;
@@ -73,7 +91,13 @@ export class Banana extends Fruit{
         this.image = document.getElementById('banana');
         this.width = 90;
         this.height = 60;
-        this.nutrient = game.nutrientButtons[3];
+        // this.nutrient = game.nutrientButtons[nutrients.ZINC];
+        this.nutrients = {
+            vitaminC: 2, 
+            vitaminE: 2,
+            vitaminB6: 0,
+            zinc: 5
+        };
     }
     update(){
         this.x = this.bloodCell.x;
