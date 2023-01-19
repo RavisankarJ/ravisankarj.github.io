@@ -29,7 +29,7 @@ export class Level3 extends Level2{
     }
     enter(){
         super.enter();
-        this.game.speed = 10;
+        this.game.speed = 8;
         this.game.maxTime = 1 * 60 * 1000;
         this.game.pathogenInterval = 500;
     }
@@ -41,8 +41,8 @@ export class Level4 extends Level3{
     }
     enter(){
         super.enter();
-        this.game.speed = 10;
+        this.game.speed = 8;
         this.game.maxTime = 1 * 60 * 1000;
-        this.game.pathogenInterval = 100;
+        this.game.pathogenInterval = 300;
     }
 }

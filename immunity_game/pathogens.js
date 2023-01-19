@@ -19,9 +19,16 @@ class Pathogen {
         this.maxFrame = 3;
     }
     update(deltaTime) {
-        //movement
-        this.x -= this.speedX;
-        this.y -= this.speedY;
+        //wall blocks pathogens
+        // if (this.game.walls.length > 0)
+        //     this.game.walls.forEach(wall => {
+
+        //     });
+        // else {
+            //movement
+            this.x -= this.speedX;
+            this.y -= this.speedY;
+        // }
         if (this.frameTimer > this.frameInterval) {
             this.frameTimer = 0;
             if (this.frameX < this.maxFrame) this.frameX++;
@@ -34,9 +41,7 @@ class Pathogen {
             this.markedForDeletion = true;
             this.game.player.health -= this.impactPoint;
             this.game.floatingPoints.push(new FloatingMessage('-' + this.impactPoint, this.x, this.y, 20, 50));
-            this.game.player.sizeModifier += this.impactPoint / 100;
-            // this.game.player.width = 1845 / (16 * this.sizeModifier);
-            // this.game.player.height = 139 / this.sizeModifier;
+            // this.game.player.sizeModifier += this.impactPoint / 100;
         }
     }
     draw(context) {

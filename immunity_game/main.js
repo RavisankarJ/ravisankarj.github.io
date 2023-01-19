@@ -29,11 +29,13 @@ window.addEventListener('load', function () {
             this.UI = new UI(this);
             this.pathogens = [];
             this.collisions = [];
+            this.blasts = [];
             this.pathogenTimer = 0;
             this.pathogenInterval = 1000;
             this.bloodCells = [];
             this.healthyFoods = [];
             this.floatingPoints = [];
+            this.walls = [];
             this.bloodCellTimer = 0;
             this.bloodCellInterval = 5000;
             this.debug = false;
@@ -70,18 +72,20 @@ window.addEventListener('load', function () {
                 this.addBloodCells();
                 this.bloodCellTimer = 0;
             } else this.bloodCellTimer += deltaTime;
-            [...this.pathogens, ...this.collisions].forEach(obj => obj.update(deltaTime));
+            [...this.blasts, ...this.pathogens, ...this.collisions, ...this.walls].forEach(obj => obj.update(deltaTime));
             [...this.bloodCells, ...this.healthyFoods, ...this.floatingPoints].forEach(obj => {
                 obj.update();
             });
+            this.blasts = this.blasts.filter(blast => !blast.markedForDeletion);
             this.pathogens = this.pathogens.filter(pathogen => !pathogen.markedForDeletion);
             this.collisions = this.collisions.filter(collision => !collision.markedForDeletion);
             this.bloodCells = this.bloodCells.filter(bloodCell => !bloodCell.markedForDeletion);
             this.healthyFoods = this.healthyFoods.filter(healthyFood => !healthyFood.markedForDeletion);
             this.floatingPoints = this.floatingPoints.filter(floatingPoint => !floatingPoint.markedForDeletion);
+            this.walls = this.walls.filter(wall => !wall.markedForDeletion);
         }
         draw(context) {
-            [this.background, ...this.pathogens, ...this.collisions, ...this.bloodCells,
+            [this.background, ...this.pathogens, ...this.collisions, ...this.walls, ...this.blasts, ...this.bloodCells,
             ...this.healthyFoods, ...this.nutrientButtons, this.musicButton,
             this.player, ...this.floatingPoints, this.UI].forEach(obj => obj.draw(context));
         }

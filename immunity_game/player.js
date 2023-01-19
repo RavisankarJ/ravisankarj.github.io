@@ -8,6 +8,7 @@ export class Player {
     constructor(game) {
         this.game = game;
         this.sizeModifier = 1.5;    //higher the value smaller the player
+        this.powerSize = 1;
         this.width = 1845 / (16 * this.sizeModifier);
         this.height = 139 / this.sizeModifier;
         this.x = 0;
@@ -28,8 +29,14 @@ export class Player {
         this.currentState = this.states[0];
         this.currentState.enter();
         this.health = 100;
+        this.powerSizeTimer = 0;
+        this.jumpingCapacityTimer = 0;
     }
     update(input, deltaTime) {
+        if(this.powerSizeTimer > 0) this.powerSizeTimer-=deltaTime;
+        else this.powerSize = 1;
+        this.sizeModifier = ((100 / this.health) * 1.5) / this.powerSize;
+        this.jumpingCapacity = 23 * this.health / 100;
         this.width = 1845 / (16 * this.sizeModifier);
         this.height = 139 / this.sizeModifier;
         this.checkCollision();
@@ -45,20 +52,23 @@ export class Player {
         // if(input.includes('ArrowUp') && this.onGround()) this.vy -= 20;
         this.y += this.vy;
         if (!this.onGround()) this.vy += this.weight;
-        else this.vy = 0;
+        else {
+            this.vy = 0;
+            this.y = this.game.height - this.height;
+        }
         //sprite animation
         if (this.frameTimer > this.frameInterval) {
             this.frameTimer = 0;
             if (this.frameX < this.maxFrame) this.frameX++;
             else this.frameX = 0;
         } else this.frameTimer += deltaTime;
-
     }
     draw(context) {
         if (this.game.debug) context.strokeRect(this.x, this.y, this.width, this.height);
         context.drawImage(this.image, this.frameX * this.width * this.sizeModifier, 0, this.width * this.sizeModifier, this.height * this.sizeModifier, this.x, this.y, this.width, this.height);
     }
     onGround() {
+        // console.log('yes it is on ground');
         return this.y >= this.game.height - this.height;
     }
     setState(state) {
@@ -74,9 +84,9 @@ export class Player {
                 pathogen.y + pathogen.height > this.y
             ) {
                 pathogen.markedForDeletion = true;
-                this.game.collisions.push(new CollisionAnimation(this.game, pathogen.x + pathogen.width * 0.5, pathogen.y + pathogen.height * 0.5));;
-                this.game.floatingPoints.push(new FloatingMessage('+'+pathogen.impactPoint, pathogen.x, pathogen.y, 230, 80));
-                this.game.score+=pathogen.impactPoint;
+                this.game.collisions.push(new CollisionAnimation(this.game, pathogen));;
+                this.game.floatingPoints.push(new FloatingMessage('+' + pathogen.impactPoint, pathogen.x, pathogen.y, 230, 80));
+                this.game.score += pathogen.impactPoint;
             }
         });
         this.game.healthyFoods.forEach(healthyFood => {
@@ -111,6 +121,7 @@ export class Player {
         });
     }
     restart() {
+        this.sizeModifier = 1.5;
         this.width = 1845 / (16 * this.sizeModifier);
         this.height = 139 / this.sizeModifier;
         this.x = 0;

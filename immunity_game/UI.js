@@ -26,7 +26,7 @@ export class UI {
         if (this.game.gameStart) {
             context.textAlign = 'center';
             context.font = this.fontSize * 0.8 + 'px ' + this.fontFamily;
-            context.fillText('ENTER / Swipe down to start', this.game.width * 0.5, (this.game.height * 0.5) + 30);
+            context.fillText('ENTER / Swipe left to start', this.game.width * 0.5, (this.game.height * 0.5) + 30);
         }
         //game over message
         if (this.game.gameOver) {
@@ -36,13 +36,13 @@ export class UI {
                 context.fillText('You win!', this.game.width * 0.5, this.game.height * 0.5);
                 context.font = this.fontSize * 0.8 + 'px ' + this.fontFamily;
                 context.fillText('Your score is ' + this.game.score, this.game.width * 0.5, this.game.height * 0.6);
-                context.fillText('ENTER / Swipe down to next Level', this.game.width * 0.5, (this.game.height * 0.65) + 30);
+                context.fillText('ENTER / Swipe left to next Level', this.game.width * 0.5, (this.game.height * 0.65) + 30);
             }
             else {
                 context.fillText('You lose :-(', this.game.width * 0.5, this.game.height * 0.5);
                 context.font = this.fontSize * 0.8 + 'px ' + this.fontFamily;
                 context.fillText('Do not let gems cross you', this.game.width * 0.5, this.game.height * 0.6);
-                context.fillText('ENTER / Swipe down to restart', this.game.width * 0.5, (this.game.height * 0.65) + 30);
+                context.fillText('ENTER / Swipe left to restart', this.game.width * 0.5, (this.game.height * 0.65) + 30);
             }
 
             
