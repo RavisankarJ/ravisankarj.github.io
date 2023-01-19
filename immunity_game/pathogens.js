@@ -1,3 +1,5 @@
+import { FloatingMessage } from "./floatingPoints.js";
+
 class Pathogen {
     constructor(game) {
         this.game = game;
@@ -13,6 +15,8 @@ class Pathogen {
         this.angle = 0;
         this.va = Math.random() * 0.1 + 0.1;
         this.swingValue = Math.floor(Math.random() * 10 + 1);
+        this.x = this.game.width;
+        this.maxFrame = 3;
     }
     update(deltaTime) {
         //movement
@@ -26,7 +30,14 @@ class Pathogen {
             this.frameTimer += deltaTime;
         }
         //check if off screen
-        if (this.x + this.width < 0) this.markedForDeletion = true;
+        if (this.x + this.width < 0) {
+            this.markedForDeletion = true;
+            this.game.player.health -= this.impactPoint;
+            this.game.floatingPoints.push(new FloatingMessage('-' + this.impactPoint, this.x, this.y, 20, 50));
+            this.game.player.sizeModifier += this.impactPoint / 100;
+            // this.game.player.width = 1845 / (16 * this.sizeModifier);
+            // this.game.player.height = 139 / this.sizeModifier;
+        }
     }
     draw(context) {
         if (this.game.debug) context.strokeRect(this.x, this.y, this.width, this.height);
@@ -39,14 +50,11 @@ class Pathogen {
 export class Bacteria extends Pathogen {
     constructor(game) {
         super(game);
-        this.width = 96.5 * this.sizeModifier;
-        this.height = 90 * this.sizeModifier;
-        this.maxFrame = 3
-        this.x = this.game.width;
+        this.width = 77 * this.sizeModifier;
+        this.height = 103 * this.sizeModifier;
         this.y = Math.random() * (this.game.height - this.height);
         this.image = document.getElementById('bacteria');
-
-        // console.log('width ' + this.width + ' height '+ this.height);
+        this.impactPoint = Math.floor((this.width / 50) + 0.5) * 5;
     }
     update(deltaTime) {
         super.update(deltaTime);
@@ -59,12 +67,11 @@ export class Bacteria extends Pathogen {
 export class Virus extends Pathogen {
     constructor(game) {
         super(game);
-        this.width = 77 * this.sizeModifier;
-        this.height = 103 * this.sizeModifier;
-        this.maxFrame = 3
-        this.x = this.game.width;
+        this.width = 96.5 * this.sizeModifier;
+        this.height = 90 * this.sizeModifier;
         this.y = Math.random() * (this.game.height - this.height);
         this.image = document.getElementById('virus');
+        this.impactPoint = Math.floor((this.width / 50) + 0.5) * 10;
     }
     update(deltaTime) {
         super.update(deltaTime);
@@ -73,15 +80,14 @@ export class Virus extends Pathogen {
     }
 }
 
-export class Bacteria2 extends Pathogen {
+export class Fungi extends Pathogen {
     constructor(game) {
         super(game);
         this.width = 244 * this.sizeModifier;
         this.height = 100 * this.sizeModifier;
-        this.maxFrame = 3
-        this.x = this.game.width;
         this.y = Math.random() * (this.game.height - this.height);
-        this.image = document.getElementById('bac');
+        this.image = document.getElementById('fungi');
+        this.impactPoint = Math.floor((this.width / 50) + 0.5) * 3;
     }
     update(deltaTime) {
         super.update(deltaTime);

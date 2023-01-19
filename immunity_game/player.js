@@ -1,11 +1,13 @@
 import { Sitting, Running, Jumping, Falling } from "./playerState.js";
 import { CollisionAnimation } from "./collisionAnimation.js";
+import { FloatingPoint, FloatingMessage } from "./floatingPoints.js";
+
 
 //width: 415, height: 415 for player
 export class Player {
     constructor(game) {
         this.game = game;
-        this.sizeModifier = 1.5;
+        this.sizeModifier = 1.5;    //higher the value smaller the player
         this.width = 1845 / (16 * this.sizeModifier);
         this.height = 139 / this.sizeModifier;
         this.x = 0;
@@ -25,8 +27,11 @@ export class Player {
         this.states = [new Sitting(this), new Running(this), new Jumping(this), new Falling(this)];
         this.currentState = this.states[0];
         this.currentState.enter();
+        this.health = 100;
     }
     update(input, deltaTime) {
+        this.width = 1845 / (16 * this.sizeModifier);
+        this.height = 139 / this.sizeModifier;
         this.checkCollision();
         this.currentState.handleInput(input);
         //horizontal movement
@@ -70,7 +75,8 @@ export class Player {
             ) {
                 pathogen.markedForDeletion = true;
                 this.game.collisions.push(new CollisionAnimation(this.game, pathogen.x + pathogen.width * 0.5, pathogen.y + pathogen.height * 0.5));;
-                this.game.score++;
+                this.game.floatingPoints.push(new FloatingMessage('+'+pathogen.impactPoint, pathogen.x, pathogen.y, 230, 80));
+                this.game.score+=pathogen.impactPoint;
             }
         });
         this.game.healthyFoods.forEach(healthyFood => {
@@ -81,8 +87,26 @@ export class Player {
                 healthyFood.y + healthyFood.height > this.y
             ) {
                 healthyFood.markedForDeletion = true;
-                // this.game.collisions.push(new CollisionAnimation(this.game, healthyFood.x + healthyFood.width * 0.5, healthyFood.y + healthyFood.height * 0.5));;
-                healthyFood.nutrient.points++;
+                for (var nutrient in healthyFood.nutrients) {
+                    var nutrientButton = null;
+                    switch (nutrient) {
+                        case 'vitaminC': nutrientButton = this.game.nutrientButtons[0];
+                            break;
+                        case 'vitaminE': nutrientButton = this.game.nutrientButtons[1];
+                            break;
+                        case 'vitaminB6': nutrientButton = this.game.nutrientButtons[2];
+                            break;
+                        case 'zinc': nutrientButton = this.game.nutrientButtons[3];
+                            break;
+                    }
+                    for (var i = 1; healthyFood.nutrients[nutrient] > 0; i++) {
+                        this.game.floatingPoints.push(new FloatingPoint(healthyFood, nutrientButton, i));
+                        nutrientButton.points++;
+                        healthyFood.nutrients[nutrient]--;
+                    }
+                }
+                // this.game.floatingPoints.push(new FloatingPoint(healthyFood, healthyFood.x, healthyFood.y));
+                // healthyFood.nutrient.points++;
             }
         });
     }
@@ -94,6 +118,7 @@ export class Player {
         this.frameX = 0;
         this.frameY = 0;
         this.speed = 0;
+        this.health = 100;
         this.currentState = this.states[0];
         this.currentState.enter();
     }
