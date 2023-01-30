@@ -7,7 +7,7 @@ export class InputHandler {
         this.touchX = '';
         this.touchThreshold = this.game.height / 4;
         this.xTouchThreshold = 10;
-        this.canvas1 = document.getElementById('canvas1');
+        // this.canvas1 = document.getElementById('canvas1');
         window.addEventListener('keydown', e => {
             if ((e.key === 'ArrowDown' ||
                 e.key === 'ArrowUp' ||
@@ -23,6 +23,10 @@ export class InputHandler {
             else if (e.key === 'c') this.game.nutrientButtons[0].usePower();
             else if (e.key === 'e') this.game.nutrientButtons[1].usePower();
             else if (e.key === 'b') this.game.nutrientButtons[2].usePower();
+            else if (e.key === "Escape") {
+                console.log('captured escape key');
+                if (document.fullscreenElement) this.exitfullScreen();
+            }
         });
         window.addEventListener('keyup', e => {
             if (e.key === 'ArrowDown' ||
@@ -34,7 +38,7 @@ export class InputHandler {
             }
         });
 
-        this.canvas1.addEventListener('click', evt => {
+        this.game.canvas.addEventListener('click', evt => {
             if (this.isClicked(this.game.musicButton, evt)) {
                 if (this.game.music.muted) {
                     this.game.music.muted = false;
@@ -45,29 +49,21 @@ export class InputHandler {
                     this.game.musicButton.frameX = 1;
                 }
             }
+            if (this.isClicked(this.game.fullscreenButton, evt)) {
+                if (!document.fullscreenElement) this.enterfullScreen();
+                else this.exitfullScreen();
+            }
             this.game.nutrientButtons.forEach((button, i) => {
-                if (this.isClicked(button, evt)) {
-                    // switch (button.nutrientType) {
-                    //     case 0: button.points -= 10;
-                    //         break;
-                    //     case 1: button.points -= 5;
-                    //         break;
-                    //     case 2: button.points -= 15;
-                    //         break;
-                    //     case 3: button.points -= 25;
-                    //         break;
-                    // }
-                    button.usePower();
-                }
+                if (this.isClicked(button, evt)) button.usePower();
             });
         }, false);
 
-        this.canvas1.addEventListener('touchstart', e => {
+        this.game.canvas.addEventListener('touchstart', e => {
             this.touchY = e.changedTouches[0].pageY;
             this.touchX = e.changedTouches[0].pageX;
         });
 
-        this.canvas1.addEventListener('touchmove', e => {
+        this.game.canvas.addEventListener('touchmove', e => {
             const swipeDistanceY = e.changedTouches[0].pageY - this.touchY;
             const swipeDistanceX = e.changedTouches[0].pageX - this.touchX;
             if (swipeDistanceY < -this.touchThreshold && this.keys.indexOf('swipe up') === -1) this.keys.push('swipe up');
@@ -76,29 +72,63 @@ export class InputHandler {
             //     if (this.game.gameOver || this.game.gameStart) this.game.restart();
             // }
             if (swipeDistanceX < -this.xTouchThreshold && this.keys.indexOf('swipe left') === -1) {
-                if (this.game.gameOver || this.game.gameStart) this.game.restart();
-                else this.keys.push('swipe left');
+                this.keys.push('swipe left');
             }
             else if (swipeDistanceX > this.xTouchThreshold && this.keys.indexOf('swipe right') === -1) {
-                this.keys.push('swipe right');
+                if (this.game.gameOver || this.game.gameStart) this.game.restart();
+                else this.keys.push('swipe right')
             }
         });
 
-        this.canvas1.addEventListener('touchend', e => {
+        this.game.canvas.addEventListener('touchend', e => {
             this.keys.splice(this.keys.indexOf('swipe down'), 1);
             this.keys.splice(this.keys.indexOf('swipe up'), 1);
+            this.keys.splice(this.keys.indexOf('swipe right'), 1);
+            this.keys.splice(this.keys.indexOf('swipe left'), 1);
         });
     }
     isClicked(button, evt) {
-        var rect = canvas1.getBoundingClientRect();
+        var rect = this.game.canvas.getBoundingClientRect();
+        // console.log([rect.width, rect.height], [evt.pageX, evt.pageY, evt.clientX, evt.clientY, evt.x, evt.y, evt.offsetX, evt.offsetY], this.game.height);
         var mbutton = {
             width: button.width * rect.width / this.game.width,
-            height: button.height * rect.height / this.game.height,
+            height: button.width * rect.width / this.game.width,
+            // height: button.height * rect.height / this.game.height,
             x: button.x * rect.width / this.game.width,
             y: button.y * rect.width / this.game.width
+            // y: button.y * rect.height / this.game.height
         }
-        if (evt.offsetX > mbutton.x && evt.offsetX < mbutton.x + mbutton.width && evt.offsetY < mbutton.y + mbutton.height && evt.offsetY > mbutton.y)
-            return true;
-        else false;
+        // console.log(mbutton);
+        if (!document.fullscreenElement) {
+            if (evt.offsetX > mbutton.x && evt.offsetX < mbutton.x + mbutton.width && evt.offsetY < mbutton.y + mbutton.height && evt.offsetY > mbutton.y)
+                return true;
+            else false;
+        }
+        else {
+            var offsetheight = (rect.height - (rect.width/2.6))/2
+            if (evt.offsetX > mbutton.x && evt.offsetX < mbutton.x + mbutton.width && evt.offsetY - offsetheight < mbutton.y + mbutton.height && evt.offsetY - offsetheight > mbutton.y)
+                return true;
+            else false;
+        }
+    }
+    enterfullScreen() {
+        this.game.canvas.requestFullscreen().catch(err => {
+            alert(`Can't enable fullscreen mode. The error message is ${err.message}`)
+        });
+        // this.game.fullscreenButton.y = this.game.height - this.game.fullscreenButton.height - 5;
+        this.game.fullscreenButton.frameX = 1;
+        this.game.background.update();
+        // this.game.fullscreenButton.update();
+        this.game.draw(this.game.ctx);
+        console.log(this.game.fullscreenButton.frameX);
+    }
+    exitfullScreen() {
+        document.exitFullscreen();
+        // this.game.fullscreenButton.y = this.game.height - this.game.fullscreenButton.height - 5;
+        this.game.fullscreenButton.frameX = 0;
+        this.game.background.update();
+        // this.game.fullscreenButton.update();
+        this.game.draw(this.game.ctx);
+        console.log(this.game.fullscreenButton.frameX);
     }
 }

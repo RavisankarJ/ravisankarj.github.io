@@ -16,17 +16,20 @@ export class UI {
         //level
         context.fillText('Level: ' + (this.game.levelIndex + 1), 200, 50);
         //score
-        context.fillText('Score: ' + this.game.score, 200, 80);
+        context.drawImage(document.getElementById('star'), 200, 70, 30, 30);
+        context.fillText(': ' + this.game.score, 255, 95);
         //game time
         // context.font = this.fontSize * 0.8 + 'px ' + this.fontFamily;
-        context.fillText('Time: ' + Math.floor(this.game.time / 1000), 20, 80);
+        context.drawImage(document.getElementById('clock'), 20, 70, 30, 30);
+        context.fillText(': ' + (Math.floor((this.game.maxTime - this.game.time) / 1000)+1), 70, 95);
         //player health
-        context.fillText('Health: ' + this.game.player.health, 20, 50);
+        context.drawImage(document.getElementById('heart'), 20, 30, 30, 30);
+        context.fillText(': '+this.game.player.health, 70, 50);
         //game start message
         if (this.game.gameStart) {
             context.textAlign = 'center';
-            context.font = this.fontSize * 0.8 + 'px ' + this.fontFamily;
-            context.fillText('ENTER / Swipe left to start', this.game.width * 0.5, (this.game.height * 0.5) + 30);
+            // context.font = this.fontSize * 0.8 + 'px ' + this.fontFamily;
+            context.fillText('ENTER / Swipe right to start', this.game.width * 0.5, (this.game.height * 0.5) + 30);
         }
         //game over message
         if (this.game.gameOver) {
