@@ -16,7 +16,8 @@ export class Player {
         this.image = document.getElementById('player');
         this.speed = 0;
         this.maxSpeed = 15;
-        this.jumpingCapacity = 23;
+        this.maxJumpingCapacity =  24 + (((this.game.height - 360)*10)/360)     //23 for 720 / 2 height; 28 for 720 / 1.5 height; 34 for 720; 
+        this.jumpingCapacity = this.maxJumpingCapacity;
         this.vy = 0;
         this.weight = 1;
         this.frameX = 0;
@@ -36,7 +37,7 @@ export class Player {
         if(this.powerSizeTimer > 0) this.powerSizeTimer-=deltaTime;
         else this.powerSize = 1;
         this.sizeModifier = ((100 / this.health) * 1.5) / this.powerSize;
-        this.jumpingCapacity = 23 * this.health / 100;
+        this.jumpingCapacity = this.maxJumpingCapacity * this.health / 100;
         this.width = 1845 / (16 * this.sizeModifier);
         this.height = 139 / this.sizeModifier;
         this.checkCollision();
@@ -96,7 +97,6 @@ export class Player {
                 healthyFood.y < this.y + this.height &&
                 healthyFood.y + healthyFood.height > this.y
             ) {
-                healthyFood.markedForDeletion = true;
                 for (var nutrient in healthyFood.nutrients) {
                     var nutrientButton = null;
                     switch (nutrient) {
@@ -115,8 +115,9 @@ export class Player {
                         healthyFood.nutrients[nutrient]--;
                     }
                 }
-                // this.game.floatingPoints.push(new FloatingPoint(healthyFood, healthyFood.x, healthyFood.y));
-                // healthyFood.nutrient.points++;
+                healthyFood.bloodCell.width /= 2;
+                healthyFood.bloodCell.height /= 2;
+                healthyFood.markedForDeletion = true;
             }
         });
     }

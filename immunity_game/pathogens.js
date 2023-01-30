@@ -11,7 +11,7 @@ class Pathogen {
         this.markedForDeletion = false;
         this.speedX = (Math.random()) * this.game.speed + 0.5;
         this.speedY = 0;
-        this.sizeModifier = Math.random() * 0.2 + 0.5;
+        this.sizeModifier = Math.random() * 0.3 + 0.5;
         this.angle = 0;
         this.va = Math.random() * 0.1 + 0.1;
         this.swingValue = Math.floor(Math.random() * 10 + 1);

@@ -18,7 +18,7 @@ export class Level2 extends Level1{
     enter(){
         super.enter();
         this.game.speed = 6;
-        this.game.maxTime = 1 * 30 * 1000;
+        this.game.maxTime = 1 * 10 * 1000;
         // this.game.player.sizeModifier = 1;
     }
 }
@@ -30,7 +30,7 @@ export class Level3 extends Level2{
     enter(){
         super.enter();
         this.game.speed = 8;
-        this.game.maxTime = 1 * 60 * 1000;
+        this.game.maxTime = 1 * 10 * 1000;
         this.game.pathogenInterval = 500;
     }
 }
@@ -42,7 +42,7 @@ export class Level4 extends Level3{
     enter(){
         super.enter();
         this.game.speed = 8;
-        this.game.maxTime = 1 * 60 * 1000;
+        this.game.maxTime = 1 * 10 * 1000;
         this.game.pathogenInterval = 300;
     }
 }

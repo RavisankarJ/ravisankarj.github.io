@@ -3,24 +3,28 @@ import { InputHandler } from './input.js';
 import { Background } from './background.js';
 import { Bacteria, Virus, Fungi } from './pathogens.js';
 import { UI } from './UI.js';
-import { MusicIcon, VitaminC, VitaminB6, VitaminE, Zinc } from './buttons.js';
+import { MusicIcon, VitaminC, VitaminB6, VitaminE, Zinc, FullscreenIcon } from './buttons.js';
 import { Level1, Level2, Level3, Level4 } from './levels.js';
 import { BloodCell } from './bloodCell.js';
-import { Lemon, Orange, Grapes, Banana } from './food.js';
+import { Lemon, Orange, Grapes, Banana, Almond, Amla, Greenpeas, Groundnut, Beans, Cashew, Egg, Milk, Tomato } from './food.js';
 let lastTime = 0;
 
 window.addEventListener('load', function () {
     const canvas = document.getElementById('canvas1');
-    const canvas2 = document.getElementById('canvas2');
+    // const canvas2 = document.getElementById('canvas2');
     const ctx = canvas.getContext('2d');
-    const ctx2 = canvas.getContext('2d');
-    canvas.width = 1280 / 2;
-    canvas.height = 720 / 2;
-
+    // const ctx2 = canvas.getContext('2d');
+    // canvas.width = window.innerWidth;
+    // canvas.height = window.innerHeight;
+    // canvas.height = canvas.width / 2.6;
+    canvas.width = 1280;
+    canvas.height = 480;
     class Game {
-        constructor(width, height) {
-            this.width = width;
-            this.height = height;
+        constructor(canvas, ctx) {
+            this.canvas = canvas;
+            this.ctx = ctx;
+            this.width = this.canvas.width;
+            this.height = this.canvas.height;
             // this.groundMargin = 50;
             this.speed = 3;
             this.background = new Background(this);
@@ -50,6 +54,7 @@ window.addEventListener('load', function () {
             // this.music.play();
             this.music.volume = 0.2;
             this.musicButton = new MusicIcon(this);
+            this.fullscreenButton = new FullscreenIcon(this);
             this.nutrientButtons = [new VitaminC(this), new VitaminE(this), new VitaminB6(this), new Zinc(this)];
             this.levelIndex = 0;
             this.maxLevel = 4;
@@ -59,6 +64,8 @@ window.addEventListener('load', function () {
         }
         update(deltaTime) {
             this.time += deltaTime;
+            // if (document.fullscreenElement) this.height = document.getElementById('canvas1').height = window.innerHeight;
+            // else this.height = document.getElementById('canvas1').height = document.getElementById('canvas1').width / 2.6;
             if (this.time > this.maxTime || this.player.health < 1) this.gameOver = true;
             this.background.update();
             if (!this.gameOver && !this.gameStart) this.music.play();
@@ -73,7 +80,7 @@ window.addEventListener('load', function () {
                 this.bloodCellTimer = 0;
             } else this.bloodCellTimer += deltaTime;
             [...this.blasts, ...this.pathogens, ...this.collisions, ...this.walls].forEach(obj => obj.update(deltaTime));
-            [...this.bloodCells, ...this.healthyFoods, ...this.floatingPoints].forEach(obj => {
+            [...this.bloodCells, ...this.healthyFoods, ...this.floatingPoints, this.fullscreenButton].forEach(obj => {
                 obj.update();
             });
             this.blasts = this.blasts.filter(blast => !blast.markedForDeletion);
@@ -86,7 +93,7 @@ window.addEventListener('load', function () {
         }
         draw(context) {
             [this.background, ...this.pathogens, ...this.collisions, ...this.walls, ...this.blasts, ...this.bloodCells,
-            ...this.healthyFoods, ...this.nutrientButtons, this.musicButton,
+            ...this.healthyFoods, ...this.nutrientButtons, this.musicButton, this.fullscreenButton,
             this.player, ...this.floatingPoints, this.UI].forEach(obj => obj.draw(context));
         }
         addPathogen() {
@@ -108,7 +115,8 @@ window.addEventListener('load', function () {
             this.addHealthyFood(bloodCell);
         }
         addHealthyFood(bloodCell) {
-            switch (Math.floor((Math.random() * 5) + 0.5)) {
+            var foodChoice = Math.floor((Math.random() * 13) + 1);
+            switch (foodChoice) {
                 case 1:
                     this.healthyFoods.push(new Lemon(this, bloodCell));
                     break;
@@ -121,8 +129,35 @@ window.addEventListener('load', function () {
                 case 4:
                     this.healthyFoods.push(new Banana(this, bloodCell));
                     break;
+                case 5:
+                    this.healthyFoods.push(new Amla(this, bloodCell));
+                    break;
+                case 6:
+                    this.healthyFoods.push(new Almond(this, bloodCell));
+                    break;
+                case 7:
+                    this.healthyFoods.push(new Beans(this, bloodCell));
+                    break;
+                case 8:
+                    this.healthyFoods.push(new Cashew(this, bloodCell));
+                    break;
+                case 9:
+                    this.healthyFoods.push(new Greenpeas(this, bloodCell));
+                    break;
+                case 10:
+                    this.healthyFoods.push(new Groundnut(this, bloodCell));
+                    break;
+                case 11:
+                    this.healthyFoods.push(new Tomato(this, bloodCell));
+                    break;
+                case 12:
+                    this.healthyFoods.push(new Egg(this, bloodCell));
+                    break;
+                case 13:
+                    this.healthyFoods.push(new Milk(this, bloodCell));
+                    break;
+                default: console.log('without food');
             }
-
         }
         restart() {
             this.speed = 3;
@@ -146,9 +181,16 @@ window.addEventListener('load', function () {
             animate(0);
         }
     }
-    const game = new Game(canvas.width, canvas.height);
-
-
+    const game = new Game(canvas, ctx);
+    const fullscreenButton = document.getElementById('fullscreenButton');
+    function toggleFullScreen() {
+        if (!document.fullscreenElement)
+            canvas.requestFullscreen().catch(err => {
+                alert(`Can't enable fullscreen mode. The error message is ${err.message}`)
+            });
+        else document.exitFullscreen();
+    }
+    // fullscreenButton.addEventListener('click', toggleFullScreen);
     function animate(timeStamp) {
         var deltaTime = timeStamp - lastTime;
         lastTime = timeStamp;
@@ -160,6 +202,7 @@ window.addEventListener('load', function () {
             game.music.pause();
         }
     }
+    
     animate(0);
 });
 

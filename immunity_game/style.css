@@ -14,10 +14,10 @@
     max-height: 100%;
 }
 
-.enemy, .background, .fruits, .blood, .powers{
+.enemy, .background, .healthy, .blood, .powers, .icons{
     display: none;
 }
 
-#player, #boom, #musicButton{
+#player, #boom{
     display: none;
 }

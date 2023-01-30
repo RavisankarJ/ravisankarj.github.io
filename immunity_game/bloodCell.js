@@ -2,8 +2,8 @@ export class BloodCell{
     constructor(game){
         this.game = game;
         this.image = document.getElementById('redBlood');
-        this.width = 150/1.5;
-        this.height = 100/1.5;
+        this.width = 150/2;
+        this.height = 100/2;
         this.x = this.game.width;
         this.y = Math.random() * (this.game.height - this.height);
         this.markedForDeletion = false;
