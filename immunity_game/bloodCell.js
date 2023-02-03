@@ -10,7 +10,7 @@ export class BloodCell{
     }
     update(){
         this.x--;
-        if(this.x + this.width< 0) this.markedForDeletion = true;
+        // if(this.x + this.width< 0) this.markedForDeletion = true;
     }
     draw(context){
         context.drawImage(this.image, this.x, this.y, this.width, this.height);

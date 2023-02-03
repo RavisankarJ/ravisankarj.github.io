@@ -14,9 +14,10 @@ export class Player {
         this.x = 0;
         this.y = this.game.height - this.height;
         this.image = document.getElementById('player');
+        this.shadow = document.getElementById('playerShadow');
         this.speed = 0;
         this.maxSpeed = 15;
-        this.maxJumpingCapacity =  24 + (((this.game.height - 360)*10)/360)     //23 for 720 / 2 height; 28 for 720 / 1.5 height; 34 for 720; 
+        this.maxJumpingCapacity = 24 + (((this.game.height - 360) * 10) / 360)     //23 for 720 / 2 height; 28 for 720 / 1.5 height; 34 for 720; 
         this.jumpingCapacity = this.maxJumpingCapacity;
         this.vy = 0;
         this.weight = 1;
@@ -31,10 +32,10 @@ export class Player {
         this.currentState.enter();
         this.health = 100;
         this.powerSizeTimer = 0;
-        this.jumpingCapacityTimer = 0;
+        // this.jumpingCapacityTimer = 0;
     }
     update(input, deltaTime) {
-        if(this.powerSizeTimer > 0) this.powerSizeTimer-=deltaTime;
+        if (this.powerSizeTimer > 0) this.powerSizeTimer -= deltaTime;
         else this.powerSize = 1;
         this.sizeModifier = ((100 / this.health) * 1.5) / this.powerSize;
         this.jumpingCapacity = this.maxJumpingCapacity * this.health / 100;
@@ -65,8 +66,15 @@ export class Player {
         } else this.frameTimer += deltaTime;
     }
     draw(context) {
+        // context.save();
+        // context.shadowOffsetX = 2;
+        // context.shadowOffsetY = 2;
+        // context.shadowColor = 'black';
+        // context.shadowBlur = 1;
         if (this.game.debug) context.strokeRect(this.x, this.y, this.width, this.height);
+        context.drawImage(this.shadow, this.frameX * this.width * this.sizeModifier, 0, this.width * this.sizeModifier, this.height * this.sizeModifier, this.x - 2, this.y - 2, this.width + 4, this.height + 4);
         context.drawImage(this.image, this.frameX * this.width * this.sizeModifier, 0, this.width * this.sizeModifier, this.height * this.sizeModifier, this.x, this.y, this.width, this.height);
+        // context.restore();
     }
     onGround() {
         // console.log('yes it is on ground');
@@ -118,6 +126,21 @@ export class Player {
                 healthyFood.bloodCell.width /= 2;
                 healthyFood.bloodCell.height /= 2;
                 healthyFood.markedForDeletion = true;
+            }
+        });
+        this.game.unHealthyFoods.forEach(food => {
+            if (
+                food.x < this.x + this.width &&
+                food.x + food.width > this.x &&
+                food.y < this.y + this.height &&
+                food.y + food.height > this.y
+            ) {
+                food.audio.play();
+                this.game.player.health -= food.healthImpact;
+                this.game.floatingPoints.push(new FloatingMessage('-' + food.healthImpact, this.x, this.y, 20, 50));
+                food.bloodCell.width /= 2;
+                food.bloodCell.height /= 2;
+                food.markedForDeletion = true;
             }
         });
     }

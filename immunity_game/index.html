@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Immunity game</title>
-    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-    
+
     <canvas id="canvas1">
-        
+
     </canvas>
     <!-- <canvas id="canvas2"></canvas> -->
     <img src="assets/bacteriaSprite.png" id="bacteria" class="enemy">
+    <img src="assets/bacteriaSpriteS.png" id="bacteriaShadow" class="enemy">
     <img src="assets/virusSprite.png" id="virus" class="enemy">
+    <img src="assets/virusSpriteS.png" id="virusShadow" class="enemy">
     <img src="assets/fungi.png" id="fungi" class="enemy">
-    <img src="assets/background.png" id="layer1" class="background">
+    <img src="assets/fungiS.png" id="fungiShadow" class="enemy">
+    <img src="assets/backgroundN.png" id="layer1" class="background">
     <img src="assets/bloodcells1.png" id="layer2" class="background">
     <img src="assets/bloodcells3.png" id="layer3" class="background">
     <img src="assets/bloodcells2_2.png" id="layer4" class="background">
     <img src="assets/playerM.png" id="player">
+    <img src="assets/playerB.png" id="playerShadow">
     <img src="assets/boom.png" id="boom">
     <img src="assets/musicIcon.png" id="musicButton" class="icons">
     <img src="assets/lemon.png" id="lemon" class="healthy">
@@ -36,6 +42,13 @@
     <img src="assets/egg.png" id="egg" class="healthy">
     <img src="assets/tomato.png" id="tomato" class="healthy">
     <img src="assets/cashew.png" id="cashew" class="healthy">
+    <img src="assets/greenLeaf.png" id="greenleaf" class="healthy">
+    <img src="assets/chips.png" id="chips" class="unhealthy">
+    <img src="assets/fingerchips.png" id="fingerchips" class="unhealthy">
+    <img src="assets/chipsroll.png" id="chipsroll" class="unhealthy">
+    <img src="assets/donut.png" id="donut" class="unhealthy">
+    <img src="assets/pizza.png" id="pizza" class="unhealthy">
+    <img src="assets/cooldrinks.png" id="cooldrinks" class="unhealthy">
     <img src="assets/redBlood.png" id="redBlood" class="blood">
     <img src="assets/vitaminc.png" id="vitaminc" class="powers">
     <img src="assets/vitamine.png" id="vitamine" class="powers">
@@ -46,6 +59,23 @@
     <img src="assets/clock.png" id="clock" class="icons">
     <img src="assets/star.png" id="star" class="icons">
     <img src="assets/fullscreen.png" id="fullscreen" class="icons">
+    <!-- <div id="useChrome">Kindly use latest chrome browser</div> -->
+    <div id="useChrome" class="card">
+        <div>
+            <h3 class="card__title">Use Chrome
+            </h3>
+            <p class="card__content">Use latest chrome browser for better experience.</p>
+        </div>
+        <div class="card__close" onclick="getElementById('useChrome').style.display='none'">X</div>
+    </div>
+    <div id="useLandscape" class="card">
+        <div>
+            <h3 class="card__title">Use Landscape Mode
+            </h3>
+            <p class="card__content">Use landscape mode for better view.</p>
+        </div>
+        <div class="card__close" onclick="getElementById('useLandscape').style.display='none'">X</div>
+    </div>
     <!-- <button id="fullscreenButton">Toggle Fullscreen</button> -->
     <!-- Sound Effect by <a href="https://pixabay.com/users/universfield-28281460/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=122253">Universfield</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=122253">Pixabay</a>
     Music by <a href="https://pixabay.com/users/redproductions-970568/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=57026">REDproductions</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=57026">Pixabay</a>
@@ -54,4 +84,5 @@
     <!-- <a href="https://www.flaticon.com/free-icons/fullscreen" title="fullscreen icons">Fullscreen icons created by Freepik - Flaticon</a> -->
     <script type="module" src="main.js"></script>
 </body>
+
 </html>

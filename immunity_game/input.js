@@ -6,7 +6,7 @@ export class InputHandler {
         this.touchY = '';
         this.touchX = '';
         this.touchThreshold = this.game.height / 4;
-        this.xTouchThreshold = 10;
+        this.xTouchThreshold = 5;
         // this.canvas1 = document.getElementById('canvas1');
         window.addEventListener('keydown', e => {
             if ((e.key === 'ArrowDown' ||
@@ -120,7 +120,7 @@ export class InputHandler {
         this.game.background.update();
         // this.game.fullscreenButton.update();
         this.game.draw(this.game.ctx);
-        console.log(this.game.fullscreenButton.frameX);
+        // console.log(this.game.fullscreenButton.frameX);
     }
     exitfullScreen() {
         document.exitFullscreen();
@@ -128,7 +128,7 @@ export class InputHandler {
         this.game.fullscreenButton.frameX = 0;
         this.game.background.update();
         // this.game.fullscreenButton.update();
-        this.game.draw(this.game.ctx);
-        console.log(this.game.fullscreenButton.frameX);
+        this.game.draw(this.gIame.ctx);
+        // console.log(this.game.fullscreenButton.frameX);
     }
 }

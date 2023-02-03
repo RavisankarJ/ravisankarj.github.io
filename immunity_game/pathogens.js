@@ -45,8 +45,15 @@ class Pathogen {
         }
     }
     draw(context) {
+        // context.save();
+        // context.shadowOffsetX = 2;
+        // context.shadowOffsetY = 2;
+        // context.shadowColor = 'black';
+        // context.shadowBlur = 1;
         if (this.game.debug) context.strokeRect(this.x, this.y, this.width, this.height);
+        // context.drawImage(this.shadow, this.frameX * this.width / this.sizeModifier, 0, this.width / this.sizeModifier, this.height / this.sizeModifier, this.x+1, this.y+1, this.width+2, this.height+2);
         context.drawImage(this.image, this.frameX * this.width / this.sizeModifier, 0, this.width / this.sizeModifier, this.height / this.sizeModifier, this.x, this.y, this.width, this.height);
+        // context.restore();
     }
 }
 //width: 244, height: 100 for bac
@@ -59,6 +66,7 @@ export class Bacteria extends Pathogen {
         this.height = 103 * this.sizeModifier;
         this.y = Math.random() * (this.game.height - this.height);
         this.image = document.getElementById('bacteria');
+        this.shadow = document.getElementById('bacteriaShadow');
         this.impactPoint = Math.floor((this.width / 50) + 0.5) * 5;
     }
     update(deltaTime) {
@@ -76,6 +84,7 @@ export class Virus extends Pathogen {
         this.height = 90 * this.sizeModifier;
         this.y = Math.random() * (this.game.height - this.height);
         this.image = document.getElementById('virus');
+        this.shadow = document.getElementById('virusShadow');
         this.impactPoint = Math.floor((this.width / 50) + 0.5) * 10;
     }
     update(deltaTime) {
@@ -92,6 +101,7 @@ export class Fungi extends Pathogen {
         this.height = 100 * this.sizeModifier;
         this.y = Math.random() * (this.game.height - this.height);
         this.image = document.getElementById('fungi');
+        this.shadow = document.getElementById('fungiShadow');
         this.impactPoint = Math.floor((this.width / 50) + 0.5) * 3;
     }
     update(deltaTime) {
