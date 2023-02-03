@@ -21,8 +21,8 @@ class Layer{
 export class Background{
     constructor(game){
         this.game = game;
-        this.width = 1280;
-        this.height = 480;
+        this.width = this.game.width;
+        this.height = this.game.height;
         this.layer1image = document.getElementById('layer1');
         this.layer2image = document.getElementById('layer2');
         this.layer3image = document.getElementById('layer3');
@@ -33,7 +33,7 @@ export class Background{
         this.layer3 = new Layer(this.game, this.width, this.height, 0.17, this.layer3image);
         this.layer4 = new Layer(this.game, this.width, this.height, 0.2, this.layer4image);
         this.backgroundLayers = [this.layer1, this.layer2, this.layer3, this.layer4];
-        // this.backgroundLayers = [this.layer1, this.layer2, this.layer3];
+        // this.backgroundLayers = [this.layer1];
 1    }
     update(){
         this.backgroundLayers.forEach(layer =>{

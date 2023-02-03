@@ -83,6 +83,17 @@ export class BlastAnimation extends CollisionAnimation{
                 this.game.score += pathogen.impactPoint;
             }
         });
+        this.game.unHealthyFoods.forEach(food => {
+            if (
+                food.x < this.x + this.width &&
+                food.x + food.width > this.x &&
+                food.y < this.y + this.height &&
+                food.y + food.height > this.y
+            ) {
+                food.markedForDeletion = true;
+                this.game.collisions.push(new CollisionAnimation(this.game, food));;
+            }
+        });
     }
 }
 

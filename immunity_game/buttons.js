@@ -5,8 +5,8 @@ export class MusicIcon {
     constructor(game) {
         this.game = game;
         this.icon = document.getElementById('musicButton');
-        this.width = 45;
-        this.height = 45;
+        this.width = 50;
+        this.height = 50;
         this.x = game.width - this.width - 5;
         this.y = 5;
         this.frameX = 0;
@@ -42,8 +42,8 @@ export class FullscreenIcon {
 class Nutrients {
     constructor(game) {
         this.game = game;
-        this.width = 45;
-        this.height = 45;
+        this.width = 50;
+        this.height = 50;
         this.y = 5;
         this.frameX = 0;
         this.points = 0;
