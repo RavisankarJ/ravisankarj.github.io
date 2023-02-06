@@ -5,15 +5,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Immunity game</title>
+    <title>Immune Warrior</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
-    <canvas id="canvas1">
 
-    </canvas>
     <!-- <canvas id="canvas2"></canvas> -->
     <img src="assets/bacteriaSprite.png" id="bacteria" class="enemy">
     <img src="assets/bacteriaSpriteS.png" id="bacteriaShadow" class="enemy">
@@ -59,22 +60,173 @@
     <img src="assets/clock.png" id="clock" class="icons">
     <img src="assets/star.png" id="star" class="icons">
     <img src="assets/fullscreen.png" id="fullscreen" class="icons">
+    <img src="assets/info.png" id="infoButton" class="icons">
     <!-- <div id="useChrome">Kindly use latest chrome browser</div> -->
-    <div id="useChrome" class="card">
-        <div>
-            <h3 class="card__title">Use Chrome
-            </h3>
-            <p class="card__content">Use latest chrome browser for better experience.</p>
+    <div id="gameDiv">
+        <canvas id="canvas1"></canvas>
+        <div id="useChrome" class="card">
+            <div>
+                <h3 class="card__title">Use Chrome
+                </h3>
+                <p class="card__content">Use latest chrome browser for better experience.</p>
+            </div>
+            <div class="card__close" onclick="getElementById('useChrome').style.display='none'">X</div>
         </div>
-        <div class="card__close" onclick="getElementById('useChrome').style.display='none'">X</div>
-    </div>
-    <div id="useLandscape" class="card">
-        <div>
-            <h3 class="card__title">Use Landscape Mode
-            </h3>
-            <p class="card__content">Use landscape mode for better view.</p>
+        <div id="useLandscape" class="card">
+            <div>
+                <h3 class="card__title">Use Landscape Mode
+                </h3>
+                <p class="card__content">Use landscape mode for better view.</p>
+            </div>
+            <div class="card__close" onclick="getElementById('useLandscape').style.display='none'">X</div>
         </div>
-        <div class="card__close" onclick="getElementById('useLandscape').style.display='none'">X</div>
+        <div id="infoContainers">
+            <div class="info fade">
+                <div class="imgContainer"><img src="assets/info1.png" /></div>
+                <div class="textContainer">
+                    <div class="card">
+                        <div>
+                            <h3 class="info__title">Immune Warrior</h3>
+                            <div class="info__content">Surrvive against the pathogens. <p style="margin-top: 1rem;">The goal of this game is the immune warrior (player) has to survive from pathogens in the stipulated time.</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="info fade">
+                <div class="imgContainer"><img src="assets/info2.png" /></div>
+                <div class="textContainer">
+                    <div class="card">
+                        <div>
+                            <h3 class="info__title">Warrior Moves
+                            </h3>
+                            <div class="info__content">
+                                <ul>
+                                    <li><i class="fa-regular fa-keyboard"></i> : 'Left Arrow' or Swipe left to move left
+                                    </li>
+                                    <li><i class="fa-regular fa-keyboard"></i> : 'Right Arrow' or Swipe right to move
+                                        right</li>
+                                    <li><i class="fa-regular fa-keyboard"></i> : 'Up Arrow' or Swipe up to jump</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="info fade">
+                <div class="imgContainer"><img src="assets/info3.png" /></div>
+                <div class="textContainer">
+                    <div class="card">
+                        <div>
+                            <h3 class="info__title">Warrior Health
+                            </h3>
+                            <div class="info__content">
+                                <ul>
+                                    <li>You can view the warrior's health on top left corner</li>
+                                    <li>Warrior's health will decrease if pathogens escape from you</li>
+                                    <li>Warrior's health will decide its size and jumping capapcity</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="info fade">
+                <div class="imgContainer"><img src="assets/info4.png" /></div>
+                <div class="textContainer">
+                    <div class="card">
+                        <div>
+                            <h3 class="info__title">Time, Level and Score
+                            </h3>
+                            <div class="info__content">
+                                <ul>
+                                    <li>You win if you survive upto the time specified in top left.</li>
+                                    <li>Each level will increase the difficulty</li>
+                                    <li>The more you kill pathogens the more you score.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="info fade">
+                <div class="imgContainer"><img src="assets/info5.png" /></div>
+                <div class="textContainer">
+                    <div class="card">
+                        <div>
+                            <h3 class="info__title">Warrior Powers
+                            </h3>
+                            <div class="info__content">
+                                <ul>
+                                    <li>Vitmain C will increase warrior's size. <i class="fa-regular fa-keyboard"></i> :
+                                        C</li>
+                                    <li>Vitmain E will create explosion and kills pathogens. <i
+                                            class="fa-regular fa-keyboard"></i> : E</li>
+                                    <li>Vitamin B6 will create a wall which stops pathogens to escape. <i
+                                            class="fa-regular fa-keyboard"></i> : B</li>
+                                    <li>Zinc will increase warrior's health. <i class="fa-regular fa-keyboard"></i> : Z
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="info fade">
+                <div class="imgContainer"><img src="assets/info6.png" /></div>
+                <div class="textContainer">
+                    <div class="card">
+                        <div>
+                            <h3 class="info__title">Healthy Foods and unhealthy Foods
+                            </h3>
+                            <div class="info__content">
+                                <ul>
+                                    <li>Healthy foods like fruits, vegetables, nuts, milk and egg give powers as Vitamin
+                                        C, E, B6 and Zinc.</li>
+                                    <li>Unhealthy foods like oil foods (chips, finger chips), frozen foods (pizza,
+                                        donut) and cool drinks decrease warrior's health.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <i id="prev" class="fa-solid fa-arrow-left"></i>
+            <i id="next" class="fa-solid fa-arrow-right"></i>
+            <div class="dots">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+            <!-- <i id="close" onclick="getElementById('infoContainers').style.display='none'"
+            class="fa-solid fa-circle-xmark"></i> -->
+            <i id="close" class="fa-solid fa-circle-xmark"></i>
+        </div>
+        <div id="start" class="gameInfo card">
+            <button>START</button>
+        </div>
+        <div id="restart" class="gameInfo card">
+            <div>
+                <h3 class="card__title">You Lose :-)
+                </h3>
+                <p class="card__content">You did not survive from pathogens. Do not let gems cross you and avoid junk
+                    foods.</p>
+                <p style="text-align: center; margin-top: 1px;"><button>RESTART</button></p>
+            </div>
+        </div>
+        <div id="nxtLevel" class="gameInfo card">
+            <div>
+                <h3 class="card__title">You Win!!
+                </h3>
+                <p class="card__content">Great, you survived from pathogens.</p>
+                <p style="text-align: center; margin-top: 5px;"><button>NEXT LEVEL</button></p>
+            </div>
+
+        </div>
     </div>
     <!-- <button id="fullscreenButton">Toggle Fullscreen</button> -->
     <!-- Sound Effect by <a href="https://pixabay.com/users/universfield-28281460/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=122253">Universfield</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=122253">Pixabay</a>

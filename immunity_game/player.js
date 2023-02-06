@@ -77,7 +77,6 @@ export class Player {
         // context.restore();
     }
     onGround() {
-        // console.log('yes it is on ground');
         return this.y >= this.game.height - this.height;
     }
     setState(state) {

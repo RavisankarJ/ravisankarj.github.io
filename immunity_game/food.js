@@ -10,7 +10,6 @@ class Food {
     update() {
         this.x = this.bloodCell.x;
         this.y = this.bloodCell.y;
-        // console.log(this.x+this.width);
         if (this.x + this.width < 0) {
             this.bloodCell.markedForDeletion = true;
             this.markedForDeletion = true;

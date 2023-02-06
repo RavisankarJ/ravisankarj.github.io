@@ -39,7 +39,6 @@ export class Wall {
     releasePathogens() {
         this.blockedPathogens.forEach(pathogen => {
             pathogen.speedX = Math.random() * this.game.speed + 0.5;
-            // console.log(pathogen.speedX);
         });
     }
 }

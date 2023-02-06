@@ -16,6 +16,22 @@ export class MusicIcon {
     }
 }
 
+export class InfoButton {
+    constructor(game) {
+        this.game = game;
+        this.icon = document.getElementById('infoButton');
+        this.width = 50;
+        this.height = 50;
+        // this.x = game.width - (this.width * 6 * 1.5);
+        this.x = game.width - this.width - 5;
+        this.y = 65;
+        this.frameX = 0;
+    }
+    draw(context) {
+        context.drawImage(this.icon, this.width * this.frameX, 0, this.width, this.height, this.x, this.y, this.width, this.height);
+    }
+}
+
 export class FullscreenIcon {
     constructor(game) {
         this.game = game;

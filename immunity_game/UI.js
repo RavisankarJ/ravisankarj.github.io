@@ -27,27 +27,29 @@ export class UI {
         context.fillText(': '+this.game.player.health, 70, 50);
         //game start message
         if (this.game.gameStart) {
-            context.textAlign = 'center';
+            // context.textAlign = 'center';
             // context.font = this.fontSize * 0.8 + 'px ' + this.fontFamily;
-            context.fillText('ENTER / Swipe right to start', this.game.width * 0.5, (this.game.height * 0.5) + 30);
+            // context.fillText('ENTER / Swipe right to start', this.game.width * 0.5, (this.game.height * 0.5) + 30);
+            document.getElementById('start').style.display = "block";
         }
         //game over message
         if (this.game.gameOver) {
-            context.textAlign = 'center';
-            context.font = this.fontSize * 2 + 'px ' + this.fontFamily;
+            // context.textAlign = 'center';
+            // context.font = this.fontSize * 2 + 'px ' + this.fontFamily;
             if (this.game.player.health > 1) {
-                context.fillText('You win!', this.game.width * 0.5, this.game.height * 0.5);
-                context.font = this.fontSize * 0.8 + 'px ' + this.fontFamily;
-                context.fillText('Your score is ' + this.game.score, this.game.width * 0.5, this.game.height * 0.6);
-                context.fillText('ENTER / Swipe left to next Level', this.game.width * 0.5, (this.game.height * 0.65) + 30);
+                // context.fillText('You win!', this.game.width * 0.5, this.game.height * 0.5);
+                // context.font = this.fontSize * 0.8 + 'px ' + this.fontFamily;
+                // context.fillText('Your score is ' + this.game.score, this.game.width * 0.5, this.game.height * 0.6);
+                // context.fillText('ENTER / Swipe left to next Level', this.game.width * 0.5, (this.game.height * 0.65) + 30);
+                document.getElementById('nxtLevel').style.display = "block";
             }
             else {
-                context.fillText('You lose :-(', this.game.width * 0.5, this.game.height * 0.5);
-                context.font = this.fontSize * 0.8 + 'px ' + this.fontFamily;
-                context.fillText('Do not let gems cross you', this.game.width * 0.5, this.game.height * 0.6);
-                context.fillText('ENTER / Swipe left to restart', this.game.width * 0.5, (this.game.height * 0.65) + 30);
+                // context.fillText('You lose :-(', this.game.width * 0.5, this.game.height * 0.5);
+                // context.font = this.fontSize * 0.8 + 'px ' + this.fontFamily;
+                // context.fillText('Do not let gems cross you', this.game.width * 0.5, this.game.height * 0.6);
+                // context.fillText('ENTER / Swipe left to restart', this.game.width * 0.5, (this.game.height * 0.65) + 30);
+                document.getElementById('restart').style.display = "block";
             }
-
             
         }
         context.restore();
