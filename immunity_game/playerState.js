@@ -56,7 +56,6 @@ export class Jumping extends State {
         this.frameX = 0;
         this.player.maxFrame = 15;
         if (this.player.onGround()) {
-            // console.log('checking onGround function');
             this.player.vy -= this.player.jumpingCapacity
         };
         this.player.frameY = 0;

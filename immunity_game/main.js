@@ -3,11 +3,9 @@ import { InputHandler } from './input.js';
 import { Background } from './background.js';
 import { Bacteria, Virus, Fungi } from './pathogens.js';
 import { UI } from './UI.js';
-import { MusicIcon, VitaminC, VitaminB6, VitaminE, Zinc, FullscreenIcon } from './buttons.js';
+import { MusicIcon, VitaminC, VitaminB6, VitaminE, Zinc, FullscreenIcon, InfoButton } from './buttons.js';
 import { Level1, Level2, Level3, Level4, Level5 } from './levels.js';
-import { BloodCell } from './bloodCell.js';
-import { Lemon, Orange, Grapes, Banana, Almond, Amla, Greenpeas, Groundnut, Beans, Cashew, Egg, Milk, Tomato, GreenLeaf, Chips, FingerChips, ChipsRoll, Donut, Pizza, CoolDrinks } from './food.js';
-let lastTime = 0;
+let lastTime = 0, infoDivIndex = 0;
 
 window.addEventListener('load', function () {
     const canvas = document.getElementById('canvas1');
@@ -46,11 +44,13 @@ window.addEventListener('load', function () {
             this.maxTime = 1 * 60 * 1000;
             this.gameStart = true;
             this.gameOver = false;
+            this.gamePause = false;
             this.music = new Audio('background_music.mp3');
             this.music.muted = false;
             this.music.volume = 0.2;
             this.musicButton = new MusicIcon(this);
             this.fullscreenButton = new FullscreenIcon(this);
+            this.infoButton = new InfoButton(this);
             this.nutrientButtons = [new VitaminC(this), new VitaminE(this), new VitaminB6(this), new Zinc(this)];
             this.levelIndex = 0;
             // this.maxLevel = 4;
@@ -70,11 +70,11 @@ window.addEventListener('load', function () {
                 this.pathogenTimer = 0;
             } else this.pathogenTimer += deltaTime;
             if (this.healthyFoodTimer > this.healthyFoodInterval) {
-                this.addHealthyFood();
+                this.currentLevel.addHealthyFood();
                 this.healthyFoodTimer = 0;
             } else this.healthyFoodTimer += deltaTime;
             if (this.unHealthyFoodTimer > this.unHealthyFoodInterval) {
-                this.addUnHealthyFood();
+                this.currentLevel.addUnHealthyFood();
                 this.unHealthyFoodTimer = 0;
             } else this.unHealthyFoodTimer += deltaTime;
             [...this.blasts, ...this.pathogens, ...this.collisions, ...this.walls].forEach(obj => obj.update(deltaTime));
@@ -92,7 +92,7 @@ window.addEventListener('load', function () {
         }
         draw(context) {
             [this.background, ...this.pathogens, ...this.collisions, ...this.walls, ...this.blasts, ...this.bloodCells,
-            ...this.healthyFoods, ...this.unHealthyFoods, ...this.nutrientButtons, this.musicButton, this.fullscreenButton,
+            ...this.healthyFoods, ...this.unHealthyFoods, ...this.nutrientButtons, this.musicButton, this.infoButton, this.fullscreenButton,
             this.player, ...this.floatingPoints, this.UI].forEach(obj => obj.draw(context));
         }
         addPathogen() {
@@ -108,90 +108,11 @@ window.addEventListener('load', function () {
                     break;
             }
         }
-        // addBloodCells() {
-        //     var bloodCell = new BloodCell(this);
-        //     this.bloodCells.push(bloodCell);
-        //     this.addHealthyFood(bloodCell);
-        // }
-        addHealthyFood() {
-            // var bloodCell = new BloodCell(this);
-            // this.bloodCells.push(bloodCell);
-            // var foodChoice = Math.floor((Math.random() * 14)) + 1;
-            // switch (foodChoice) {
-            //     case 1:
-            //         this.healthyFoods.push(new Lemon(this, bloodCell));
-            //         break;
-            //     case 2:
-            //         this.healthyFoods.push(new Orange(this, bloodCell));
-            //         break;
-            //     case 3:
-            //         this.healthyFoods.push(new Grapes(this, bloodCell));
-            //         break;
-            //     case 4:
-            //         this.healthyFoods.push(new Banana(this, bloodCell));
-            //         break;
-            //     case 5:
-            //         this.healthyFoods.push(new Amla(this, bloodCell));
-            //         break;
-            //     case 6:
-            //         this.healthyFoods.push(new Almond(this, bloodCell));
-            //         break;
-            //     case 7:
-            //         this.healthyFoods.push(new Beans(this, bloodCell));
-            //         break;
-            //     case 8:
-            //         this.healthyFoods.push(new Cashew(this, bloodCell));
-            //         break;
-            //     case 9:
-            //         this.healthyFoods.push(new Greenpeas(this, bloodCell));
-            //         break;
-            //     case 10:
-            //         this.healthyFoods.push(new Groundnut(this, bloodCell));
-            //         break;
-            //     case 11:
-            //         this.healthyFoods.push(new Tomato(this, bloodCell));
-            //         break;
-            //     case 12:
-            //         this.healthyFoods.push(new Egg(this, bloodCell));
-            //         break;
-            //     case 13:
-            //         this.healthyFoods.push(new Milk(this, bloodCell));
-            //         break;
-            //     case 14:
-            //         this.healthyFoods.push(new GreenLeaf(this, bloodCell));
-            //         break;
-            //     default: console.log('without food');
-            // }
-            console.log('going to call current leve addhealthyfood method');
-            this.currentLevel.addHealthyFood();
-        }
-        addUnHealthyFood() {
-            var bloodCell = new BloodCell(this);
-            this.bloodCells.push(bloodCell);
-            var foodChoice = Math.floor((Math.random() * 6)) + 1;
-            switch (foodChoice) {
-                case 1:
-                    this.unHealthyFoods.push(new Chips(this, bloodCell));
-                    break;
-                case 2:
-                    this.unHealthyFoods.push(new FingerChips(this, bloodCell));
-                    break;
-                case 3:
-                    this.unHealthyFoods.push(new ChipsRoll(this, bloodCell));
-                    break;
-                case 4:
-                    this.unHealthyFoods.push(new Donut(this, bloodCell));
-                    break;
-                case 5:
-                    this.unHealthyFoods.push(new Pizza(this, bloodCell));
-                    break;
-                case 6:
-                    this.unHealthyFoods.push(new CoolDrinks(this, bloodCell));
-                    break;
-                default: console.log('without food');
-            }
-        }
         restart() {
+            var gameInfos = document.getElementsByClassName('gameInfo');
+            for(var i = 0; i< gameInfos.length; i++){
+                gameInfos[i].style.display = "none";
+            }
             this.pathogens = [];
             this.collisions = [];
             this.floatingPoints = [];
@@ -216,26 +137,24 @@ window.addEventListener('load', function () {
     const game = new Game(canvas, ctx);
     const useChromeElement = document.getElementById('useChrome');
     const useLandscapeElement = document.getElementById('useLandscape');
-    function toggleFullScreen() {
-        if (!document.fullscreenElement)
-            canvas.requestFullscreen().catch(err => {
-                alert(`Can't enable fullscreen mode. The error message is ${err.message}`)
-            });
-        else document.exitFullscreen();
-    }
-    // fullscreenButton.addEventListener('click', toggleFullScreen);
+
     function animate(timeStamp) {
         var deltaTime = timeStamp - lastTime;
         lastTime = timeStamp;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         game.update(deltaTime);
         game.draw(ctx);
-        if (!game.gameOver && !game.gameStart) requestAnimationFrame(animate);
+        if (!game.gameOver && !game.gameStart && !game.gamePause) requestAnimationFrame(animate);
         else {
             game.music.pause();
         }
     }
-
+    function resumeGame(){
+        console.log('resuming game');
+        game.gamePause = false;
+        lastTime = performance.now();
+        animate(0);
+    }
     animate(0);
     if (navigator.userAgent.indexOf("Chrome") < 0) {
         var rect = canvas.getBoundingClientRect();
@@ -243,7 +162,7 @@ window.addEventListener('load', function () {
         useChromeElement.style.height = rect.height * 0.7;
         useChromeElement.style.display = 'flex';
     }
-
+    showInfoContainer(0);
     let portrait = window.matchMedia("(orientation: portrait)");
     portrait.onchange = function (e) {
         if (e.matches) {
@@ -264,4 +183,42 @@ window.addEventListener('load', function () {
         useLandscapeElement.style.height = rect.height * 0.7;
         useLandscapeElement.style.display = 'flex';
     }
+    const startButton = document.getElementById('start');
+    const restartButton = document.getElementById('restart');
+    const nxtButton = document.getElementById('nxtLevel');
+    startButton.addEventListener('click', function(){
+        startButton.style.display = "none";
+        game.restart();
+    });
+    restartButton.addEventListener('click', function(){
+        restartButton.style.display = "none";
+        game.restart();
+    });
+    nxtButton.addEventListener('click', function(){
+        nxtButton.style.display = "none";
+        game.restart();
+    });
+
+    function showInfoContainer(idx) {
+        var infoContainerElement = document.getElementById('infoContainers');
+        infoContainerElement.style.display = "flex";
+        infoDivIndex += idx;
+        var infos = document.getElementsByClassName('info');
+        var dots = document.getElementsByClassName('dot');
+        for (var i = 0; i < infos.length; i++)
+            infos[i].style.display = "none";
+        for (var i = 0; i < dots.length; i++)
+            dots[i].className = dots[i].className.replace(" active", "");
+        if (infoDivIndex > infos.length - 1) infoDivIndex = 0;
+        if (infoDivIndex < 0) infoDivIndex = infos.length - 1;
+        infos[infoDivIndex].style.display = "table";
+        dots[infoDivIndex].className += " active";
+    }
+    document.getElementById('prev').addEventListener('click', evt => showInfoContainer(-1));
+    document.getElementById('next').addEventListener('click', evt => showInfoContainer(1));
+    document.getElementById('close').addEventListener('click', function(){
+        document.getElementById('infoContainers').style.display = 'none';
+        // document.getElementById('start').style.display = "block";
+        if(game.gamePause) resumeGame();
+    });
 });

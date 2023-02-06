@@ -24,7 +24,6 @@ export class InputHandler {
             else if (e.key === 'e') this.game.nutrientButtons[1].usePower();
             else if (e.key === 'b') this.game.nutrientButtons[2].usePower();
             else if (e.key === "Escape") {
-                console.log('captured escape key');
                 if (document.fullscreenElement) this.exitfullScreen();
             }
         });
@@ -52,6 +51,10 @@ export class InputHandler {
             if (this.isClicked(this.game.fullscreenButton, evt)) {
                 if (!document.fullscreenElement) this.enterfullScreen();
                 else this.exitfullScreen();
+            }
+            if (this.isClicked(this.game.infoButton, evt)) {
+                this.game.gamePause = true;
+                document.getElementById('infoContainers').style.display = "flex";
             }
             this.game.nutrientButtons.forEach((button, i) => {
                 if (this.isClicked(button, evt)) button.usePower();
@@ -89,7 +92,6 @@ export class InputHandler {
     }
     isClicked(button, evt) {
         var rect = this.game.canvas.getBoundingClientRect();
-        // console.log([rect.width, rect.height], [evt.pageX, evt.pageY, evt.clientX, evt.clientY, evt.x, evt.y, evt.offsetX, evt.offsetY], this.game.height);
         var mbutton = {
             width: button.width * rect.width / this.game.width,
             height: button.width * rect.width / this.game.width,
@@ -98,7 +100,6 @@ export class InputHandler {
             y: button.y * rect.width / this.game.width
             // y: button.y * rect.height / this.game.height
         }
-        // console.log(mbutton);
         if (!document.fullscreenElement) {
             if (evt.offsetX > mbutton.x && evt.offsetX < mbutton.x + mbutton.width && evt.offsetY < mbutton.y + mbutton.height && evt.offsetY > mbutton.y)
                 return true;
@@ -112,15 +113,17 @@ export class InputHandler {
         }
     }
     enterfullScreen() {
-        this.game.canvas.requestFullscreen().catch(err => {
-            alert(`Can't enable fullscreen mode. The error message is ${err.message}`)
+        // this.game.canvas.requestFullscreen().catch(err => {
+        //     alert(`Can't enable fullscreen mode. The error message is ${err.message}`)
+        // });
+        document.getElementById('gameDiv').requestFullscreen().catch(err => {
+            alert(`Can't enable fullscreen mode. The error message is ${err.message}`);
         });
         // this.game.fullscreenButton.y = this.game.height - this.game.fullscreenButton.height - 5;
         this.game.fullscreenButton.frameX = 1;
         this.game.background.update();
         // this.game.fullscreenButton.update();
         this.game.draw(this.game.ctx);
-        // console.log(this.game.fullscreenButton.frameX);
     }
     exitfullScreen() {
         document.exitFullscreen();
@@ -129,6 +132,5 @@ export class InputHandler {
         this.game.background.update();
         // this.game.fullscreenButton.update();
         this.game.draw(this.gIame.ctx);
-        // console.log(this.game.fullscreenButton.frameX);
     }
 }

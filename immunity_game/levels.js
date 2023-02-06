@@ -1,5 +1,5 @@
 import { BloodCell } from "./bloodCell.js";
-import { Almond, Amla, Banana, Beans, Cashew, Egg, Grapes, GreenLeaf, Greenpeas, Groundnut, Lemon, Milk, Orange, Tomato } from "./food.js";
+import { Almond, Amla, Banana, Beans, Cashew, Chips, Egg, FingerChips, ChipsRoll, Donut, Pizza, CoolDrinks, Grapes, GreenLeaf, Greenpeas, Groundnut, Lemon, Milk, Orange, Tomato } from "./food.js";
 
 export class Level1 {
     constructor(game) {
@@ -13,7 +13,6 @@ export class Level1 {
         this.game.maxTime = 1 * 15 * 1000;
     }
     addHealthyFood() {
-        console.log('called current level add healthy food method');
         var bloodCell = new BloodCell(this.game);
         this.game.bloodCells.push(bloodCell);
         var foodChoice = Math.floor((Math.random() * 3)) + 1;
@@ -26,6 +25,32 @@ export class Level1 {
                 break;
             case 3:
                 this.game.healthyFoods.push(new GreenLeaf(this.game, bloodCell));
+                break;
+            default: console.log('without food');
+        }
+    }
+    addUnHealthyFood() {
+        var bloodCell = new BloodCell(this.game);
+        this.game.bloodCells.push(bloodCell);
+        var foodChoice = Math.floor((Math.random() * 6)) + 1;
+        switch (foodChoice) {
+            case 1:
+                this.game.unHealthyFoods.push(new Chips(this, bloodCell));
+                break;
+            case 2:
+                this.game.unHealthyFoods.push(new FingerChips(this, bloodCell));
+                break;
+            case 3:
+                this.game.unHealthyFoods.push(new ChipsRoll(this, bloodCell));
+                break;
+            case 4:
+                this.game.unHealthyFoods.push(new Donut(this, bloodCell));
+                break;
+            case 5:
+                this.game.unHealthyFoods.push(new Pizza(this, bloodCell));
+                break;
+            case 6:
+                this.game.unHealthyFoods.push(new CoolDrinks(this, bloodCell));
                 break;
             default: console.log('without food');
         }
