@@ -121,7 +121,7 @@ window.addEventListener('load', function () {
             this.unHealthyFoodTimer = 0;
             this.pathogenInterval = 1000;
             this.debug = false;
-            this.score = 0;
+            // this.score = 0;
             this.time = 0;
             if (this.gameOver && this.player.health > 0) this.levelIndex++;
             this.gameOver = false;
@@ -203,8 +203,9 @@ window.addEventListener('load', function () {
         var infoContainerElement = document.getElementById('infoContainers');
         infoContainerElement.style.display = "flex";
         infoDivIndex += idx;
-        var infos = document.getElementsByClassName('info');
-        var dots = document.getElementsByClassName('dot');
+        // var infos = document.getElementsByClassName('info');
+        var infos = document.querySelectorAll('#infoContainers .info');
+        var dots = document.querySelectorAll('.dot');
         for (var i = 0; i < infos.length; i++)
             infos[i].style.display = "none";
         for (var i = 0; i < dots.length; i++)
@@ -220,5 +221,19 @@ window.addEventListener('load', function () {
         document.getElementById('infoContainers').style.display = 'none';
         // document.getElementById('start').style.display = "block";
         if(game.gamePause) resumeGame();
+    });
+    document.getElementById('ready').addEventListener('click', function(){
+        document.getElementById('levelInfoContainers').style.display = 'none';
+        // document.getElementById('start').style.display = "block";
+        game.restart();
+    });
+    document.getElementById('playAgain').addEventListener('click', function(){
+        document.getElementById('creditInfo').style.display = 'none';
+        // document.getElementById('start').style.display = "block";
+        game.score = 0;
+        game.healthyFoods = [];
+        game.player.powerSize = 1;
+        game.walls = [];
+        game.restart();
     });
 });
