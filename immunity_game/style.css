@@ -104,7 +104,7 @@
 
 
 /*info container styles*/
-#infoContainers {
+#infoContainers, #levelInfoContainers, #creditInfo {
   /* border: 1px solid black; */
   width: 95%;
   max-width: 800px;
@@ -154,7 +154,14 @@
   display: table-cell;
   float: left;
   border-radius: .5rem 0 0 .5rem;
-  font-size: calc(10px + 1.5vw);
+  font-size: max(10px, 1.5vw);
+}
+
+#creditInfo .imgContainer{
+  width: 20%;
+}
+#creditInfo .textContainer{
+  width: 78%;
 }
 
 .textContainer .card{
@@ -162,7 +169,7 @@
 }
 
 @media screen and (max-width: 600px) {
-  .imgContainer, .textContainer {
+  .imgContainer, .textContainer, #creditInfo .imgContainer, #creditInfo .textContainer {
     width: 100%;
   }
 }
@@ -197,10 +204,10 @@
 }
 
 #prev,
-#next {
+#next, #creditprev, #creditnext {
   position: absolute;
   color: white;
-  background-color: rgb(0, 0, 0, 0.2);
+  background-color: rgb(0, 0, 0, 0.5);
   top: 40%;
   cursor: pointer;
   padding: 16px;
@@ -209,23 +216,25 @@
   transition: 0.6s ease;
 }
 
-#prev {
+#prev, #creditprev {
   left: 0;
   border-radius: 0 5px 5px 0;
 }
 
-#next {
+#next, #creditnext {
   right: 0;
   border-radius: 5px 0 0 5px;
 }
 #prev:hover,
-#next:hover {
-  background-color: rgba(0, 0, 0, 0.5);
+#next:hover, #creditprev:hover,
+#creditnext:hover  {
+  background-color: rgba(0, 0, 0, 0.8);
 }
-#close{
+#close, #closeLevelInfo{
   position: absolute;
   right: 0;
   top: 0;
+  font-size: max(2rem, 16px);
 }
 
 .card .info__content {
@@ -237,20 +246,40 @@
 .card .info__title {
   /* display: block; */
   padding-bottom: 0.5rem;
-  font-size: calc(10px + 1vw);
+  font-size: max(12px, 2.5vw);
   font-weight: bold;
 }
 
 .info__content ul{
   padding-left: 1vw;
-  font-size: calc(8px + 1vw);
+  font-size: max(10px, 1.5vw);
 }
 
 .info__content li{
   margin-bottom: 0.5vh;
 }
 
+#ready{
+  position: relative;
+  bottom: 10vh;
+  right: -40%;
+}
 
+#playAgain{
+  position: relative;
+  bottom: 5vh;
+  right: -40%;
+}
+
+#creditTitle{
+  position: relative;
+  top: 2vh;
+  background-color: #ffffff;
+  border-radius: 5px;
+  color: #0400ff;
+  font-size: 2rem;
+  padding: 10px;
+}
 
 /*start button style*/
 .gameInfo {
@@ -298,3 +327,6 @@ button {
    box-shadow: 0 0 0 0 rgb(218 103 68 / 0%);
   }
  }
+
+
+ 

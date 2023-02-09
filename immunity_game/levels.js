@@ -102,26 +102,27 @@ export class Level3 extends Level2{
         super.enter();
         this.game.speed = 8;
         this.game.maxTime = 1 * 60 * 1000;
-        this.game.pathogenInterval = 500;
+        this.game.pathogenInterval = 800;
+        
     }
     addHealthyFood() {
         var bloodCell = new BloodCell(this.game);
         this.game.bloodCells.push(bloodCell);
-        var foodChoice = Math.floor((Math.random() * 14)) + 1;
+        var foodChoice = Math.floor((Math.random() * 5)) + 1;
         switch (foodChoice) {
-            case 2:
+            case 1:
                 this.game.healthyFoods.push(new Orange(this.game, bloodCell));
                 break;
-            case 4:
+            case 2:
                 this.game.healthyFoods.push(new Banana(this.game, bloodCell));
                 break;
-            case 5:
+            case 3:
                 this.game.healthyFoods.push(new Amla(this.game, bloodCell));
                 break;
-            case 6:
+            case 4:
                 this.game.healthyFoods.push(new Almond(this.game, bloodCell));
                 break;
-            case 8:
+            case 5:
                 this.game.healthyFoods.push(new Cashew(this.game, bloodCell));
                 break;
             default: console.log('without food');
@@ -137,7 +138,7 @@ export class Level4 extends Level3{
         super.enter();
         this.game.speed = 10;
         this.game.maxTime = 1 * 60 * 1000;
-        this.game.pathogenInterval = 300;
+        this.game.pathogenInterval = 500;
         this.game.healthyFoodInterval = 4*1000;
     }
     addHealthyFood() {

@@ -85,6 +85,7 @@ export class VitaminC extends Nutrients {
     constructor(game) {
         super(game);
         this.icon = document.getElementById('vitaminc');
+        // this.icon.className += " greyscale";
         this.x = game.width - (this.width * 2 * this.padding);
         // this.nutrientType = NutrientTypes.VITAMINC;
         this.powerPoint = 20;

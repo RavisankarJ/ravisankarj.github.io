@@ -117,7 +117,7 @@ export class Player {
                             break;
                     }
                     for (var i = 1; healthyFood.nutrients[nutrient] > 0; i++) {
-                        this.game.floatingPoints.push(new FloatingPoint(healthyFood, nutrientButton, i));
+                        if(i%2==0)this.game.floatingPoints.push(new FloatingPoint(healthyFood, nutrientButton, i));
                         nutrientButton.points++;
                         healthyFood.nutrients[nutrient]--;
                     }
