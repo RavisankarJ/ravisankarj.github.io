@@ -3,7 +3,7 @@ class WaterObjects {
         this.game = game;
         this.frameX = 0;
         this.frameY = 0;
-        this.fps = 3;
+        this.fps = 2;
         this.frameInterval = 1000 / this.fps;
         this.frameTimer = 0;
         this.modifySize = modifySize;
@@ -48,10 +48,10 @@ class WaterObjects {
 
 export class Plant1 extends WaterObjects {
     constructor(game) {
-        super(game, false, false, 2);
-        this.width = 260 * this.sizeModifier;
-        this.height = 81 * this.sizeModifier;
-        this.x = this.game.width - 200;
+        super(game, false, false, 1);
+        this.width = 270 * this.sizeModifier;
+        this.height = 73 * this.sizeModifier;
+        this.x = 0;
         this.y = this.game.height - this.height;
         this.image = document.getElementById('plant1');
     }
