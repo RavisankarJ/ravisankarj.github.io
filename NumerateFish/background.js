@@ -39,7 +39,6 @@ export class Background{
         // this.layer4 = new Layer(this.game, this.width, this.height, 0.2, this.layer4image);
         // this.backgroundLayers = [this.layer1, this.layer2, this.layer3, this.layer4];
         this.backgroundLayers = [this.fixLayer, this.layer1];
-        console.log(this);
 1    }
     update(){
         this.backgroundLayers.forEach(layer =>{

@@ -34,6 +34,6 @@ body{
     background: linear-gradient(180deg, rgba(0,160,199,1) 0%, rgba(0,160,199,1) 26%, rgba(0,160,199,1) 65%, rgba(0,90,139,1) 100%);
 }
 
-.player, .bubble, .layer{
+.player, .bubble, .layer, .icon{
     display: none;
 }

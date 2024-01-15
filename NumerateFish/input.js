@@ -1,4 +1,5 @@
 import { CollisionAnimation } from "./CollisionAnimation.js";
+import { Bubble } from "./bubbles.js";
 
 export class InputHandler{
     constructor(game){
@@ -19,15 +20,14 @@ export class InputHandler{
             this.mouse.y = (evt.clientY - rect.top)*scaleY;
             if(this.isClicked(this.game.player, evt))
             {
-                console.log('clicked on player');
+                // console.log('clicked on player');
                 if(this.game.player.bubbles.length>0)
                 {
                     var lastBubble = this.game.player.bubbles.pop();
-                    lastBubble.color = 'blue';
-                    lastBubble.inFish = false;
+                    this.game.bubbleSingle.play();
                     this.game.collisions.push(new CollisionAnimation(this.game, lastBubble));
                     lastBubble.markedForDeletion = true;
-                    // lastBubble.counted = false;
+                    Bubble.resetBubbles(this.game);
                 }
                 // this.game.bubbles.push(lastBubble);
             }

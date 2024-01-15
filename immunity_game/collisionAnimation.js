@@ -18,7 +18,6 @@ export class CollisionAnimation {
         this.frameTimer = 0;
         this.punchAudio = new Audio('punch.ogg');
         this.punchAudio.volume = 0.1;
-        
     }
     draw(context) {
         context.drawImage(this.image, this.frameX * this.spriteWidth, 0, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
