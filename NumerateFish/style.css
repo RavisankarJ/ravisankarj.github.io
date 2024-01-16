@@ -33,7 +33,307 @@ body{
     background: rgb(0,160,199);
     background: linear-gradient(180deg, rgba(0,160,199,1) 0%, rgba(0,160,199,1) 26%, rgba(0,160,199,1) 65%, rgba(0,90,139,1) 100%);
 }
+/* #canvas2{
+    border: 3px solid black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 100%;
+    max-height: 100%;
+} */
 
 .player, .bubble, .layer, .icon{
     display: none;
 }
+
+#useChrome{
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* min-width: 60%;
+    min-height: 30%; */
+    justify-content: center;
+    align-items: center;
+    z-index: 998;
+}
+
+/* this card is inspired form this - https://georgefrancis.dev/ */
+
+.card {
+    --border-radius: 0.75rem;
+    --primary-color: #7257fa;
+    --secondary-color: #3c3852;
+    /* width: 210px; */
+    font-family: "Arial";
+    padding: 1rem;
+    
+    border-radius: var(--border-radius);
+    background: #f1f1f3;
+    box-shadow: 0px 8px 16px 0px rgb(0 0 0 / 3%);
+    /* position: relative; */
+  }
+
+  .card .card__content {
+    /* display: block; */
+    color: var(--secondary-color);
+    font-size: 1em;
+  }
+  
+  .card .card__title {
+    /* display: block; */
+    padding-bottom: 0.5rem;
+    font-size: 1.4em;
+    font-weight: bold;
+  }
+  
+  .card .card__close {
+    position: absolute;
+    background: var(--primary-color);
+    padding: 0.4rem;
+    border-top-right-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
+    top: 0;
+    right: 0;
+    transition: 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  /* hover */
+  .card:hover .card__close {
+    background: #2b00ff;
+    color: white;
+  }
+
+
+
+
+/*info container styles*/
+#infoContainers, #levelInfoContainers, #creditInfo {
+  /* border: 1px solid black; */
+  width: 50%;
+  max-width: 720px;
+  /* height: 25%; */
+    margin: auto;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: absolute;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+}
+
+.info {
+  background: rgb(255, 227, 227);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  padding: 5px;
+  width: 100%;
+  height: 100%;
+  border-radius: 1rem;
+}
+
+.imgContainer img {
+  width: 100%;
+  max-height: 40vh;
+  object-fit: contain;
+}
+.imgContainer{
+  /* border: 1px solid black; */
+  display: table-cell;
+  float: left;
+  /* display: flex; */
+  width: 100%;
+  border-radius: 0 1rem 1rem 0;
+  overflow: hidden;
+  margin-right: 2px;
+  justify-content: center;
+}
+.textContainer{
+  margin-left: 2px;
+  width: 100%;
+  height: 100px;
+  display: table-cell;
+  float: left;
+  border-radius: .5rem 0 0 .5rem;
+  font-size: max(10px, 1.5vw);
+}
+
+#creditInfo .imgContainer{
+  width: 20%;
+}
+#creditInfo .textContainer{
+  width: 78%;
+}
+
+.textContainer .card{
+  background: hsl(321, 100%, 88%);
+}
+
+@media screen and (max-width: 600px) {
+  .imgContainer, .textContainer, #creditInfo .imgContainer, #creditInfo .textContainer {
+    width: 100%;
+  }
+}
+.dots {
+  margin-top: 8px;
+}
+
+.dot {
+  width: 16px;
+  height: 16px;
+  background-color: rgb(158, 158, 158);
+  display: inline-block;
+  border-radius: 50%;
+  margin: 0 2px;
+  transition: background-color 0.6s ease;
+}
+
+.active {
+  background-color: rgb(105, 105, 105);
+}
+.fade{
+  animation: fade 1.5s;
+}
+
+@keyframes fade {
+  from{
+      opacity: 0.4;
+  }
+  to{
+      opacity: 1;
+  }
+}
+
+#prev,
+#next, #creditprev, #creditnext {
+  position: absolute;
+  color: white;
+  background-color: rgb(0, 0, 0, 0.5);
+  top: 40%;
+  cursor: pointer;
+  padding: 16px;
+  font-weight: bold;
+  user-select: none;
+  transition: 0.6s ease;
+}
+
+#prev, #creditprev {
+  left: 0;
+  border-radius: 0 5px 5px 0;
+}
+
+#next, #creditnext {
+  right: 0;
+  border-radius: 5px 0 0 5px;
+}
+#prev:hover,
+#next:hover, #creditprev:hover,
+#creditnext:hover  {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+#close, #closeLevelInfo{
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: max(2rem, 16px);
+}
+
+.card .info__content {
+  /* display: block; */
+  color: var(--secondary-color);
+  font-size: calc(10px + 0.4vw);
+}
+
+.card .info__title {
+  /* display: block; */
+  padding-bottom: 0.5rem;
+  font-size: max(12px, 2.5vw);
+  font-weight: bold;
+}
+
+.info__content ul{
+  padding-left: 1vw;
+  font-size: max(10px, 1.5vw);
+}
+
+.info__content li{
+  margin-bottom: 0.5vh;
+}
+
+#ready{
+  position: relative;
+  bottom: 10vh;
+  right: -40%;
+}
+
+#playAgain{
+  position: relative;
+  bottom: 5vh;
+  right: -40%;
+}
+
+#creditTitle{
+  position: relative;
+  top: 2vh;
+  background-color: #ffffff;
+  border-radius: 5px;
+  color: #0400ff;
+  font-size: 2rem;
+  padding: 10px;
+}
+
+/*start button style*/
+.gameInfo {
+  margin: auto;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: absolute;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 996;
+}
+
+button {
+  border: none;
+  color: #fff;
+  background-image: linear-gradient(30deg, #0400ff, #4ce3f7);
+  border-radius: 20px;
+  background-size: 100% auto;
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.6em 1.5em;
+ }
+ 
+ button:hover {
+  background-position: right center;
+  background-size: 200% auto;
+  -webkit-animation: pulse 2s infinite;
+  animation: pulse512 1.5s infinite;
+ }
+ 
+ @keyframes pulse512 {
+  0% {
+   box-shadow: 0 0 0 0 #05bada66;
+  }
+ 
+  70% {
+   box-shadow: 0 0 0 10px rgb(218 103 68 / 0%);
+  }
+ 
+  100% {
+   box-shadow: 0 0 0 0 rgb(218 103 68 / 0%);
+  }
+ }

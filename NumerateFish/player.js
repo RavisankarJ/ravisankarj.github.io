@@ -74,7 +74,7 @@ export class Player{
             // this.bubbles[i].y = this.y+Math.sin(this.angle*180/Math.PI)*this.radius*(i+1);
             this.bubbles[i].x = this.x+Math.cos(this.angle*180/Math.PI)*this.radius*(i+1);
             this.bubbles[i].y = this.y+Math.sin(this.angle*180/Math.PI)*this.radius*(i+1);
-            console.log(Math.sin(this.angle*180/Math.PI)*this.radius*(i+1));
+            
             // this.game.ctx.fillStyle = this.bubbles[i].color;
             // this.game.ctx.beginPath();
             // this.game.ctx.arc(0-((i+1)*this.bubbles[i].radius), 0, this.bubbles[i].radius, 0, Math.PI * 2);

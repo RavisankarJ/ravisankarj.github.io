@@ -20,15 +20,18 @@ export class UI {
         //score
         context.drawImage(document.getElementById('star'), 10, 30, 30, 30);
         context.fillText(': ' + this.game.score + ' / '+this.game.winningScore, 50, 50);
-        context.fillText('Health : ', 2, 100);
+        // context.fillText('Health : ', 2, 100);
+        
         this.game.levels[this.game.currentLevel].drawQuestion();
         context.restore();
         context.save();
+        
         context.fillStyle = 'red';
-        context.fillRect(150, 90, this.game.player.health*10, 10);
+        context.fillRect(35, 91, this.game.player.health*10, 10);
         context.fillStyle = 'black';
-        context.lineWidth = 4;
-        context.strokeRect(150, 90, 100, 13);
+        context.lineWidth = 2;
+        context.strokeRect(35, 90, 100, 13);
+        context.drawImage(document.getElementById('heart'), 10, 80, 30, 30);
         context.restore();
     }
     showCreditInfo(idx) {

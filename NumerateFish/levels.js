@@ -159,7 +159,7 @@ export class Level1_4 extends AdditionTwoOperands{
     }
     createBubbleValues(){
         var arr = [];
-        for(var i =0; i<=Math.round(this.game.questionNumber/10)*2; i++) arr.push(i*5);
+        for(var i =0; i<=Math.round(this.game.questionNumber/10); i++) arr.push(i*10);
         return arr;
     }
 }
@@ -428,7 +428,7 @@ export class Level5_3 extends Factors{
         super(game);       
     }
     enter(){
-        this.game.questionNumber = Math.round(Math.random()*6+4) * Math.round(Math.random()*9+1);
+        this.game.questionNumber = Math.round(Math.random()*6+6) * Math.round(Math.random()*6+4);
         this.game.winningScore = 6;
         super.enter();
     }
