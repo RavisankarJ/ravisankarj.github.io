@@ -14,3 +14,6 @@ https://opengameart.org/content/bubble-sound-effects
 
 background music
 https://opengameart.org/content/4-chiptunes-adventure
+
+levels box
+Image by <a href="https://www.freepik.com/free-vector/level-up-label-collection_37574797.htm#fromView=image_search&track=&regularType=vector&page=1&position=0&uuid=d3d659ca-0ad9-4876-aed9-041b453f7eb6">Freepik</a>

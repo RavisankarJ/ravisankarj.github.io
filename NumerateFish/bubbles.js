@@ -14,7 +14,7 @@ export class Bubble{
         this.distance;
         this.counted = false;
         this.inFish = false;
-        // this.color = 'blue';
+        this.textColor = 'yellow';
         this.value = this.game.bubbleValues[Math.round(Math.random() * (this.game.bubbleValues.length-1))];
         this.blueBubble = document.getElementById('bubble');
         this.redBubble = document.getElementById('bubbleRed');
@@ -62,11 +62,13 @@ export class Bubble{
             // this.game.ctx.drawImage(this.image, this.frameX * this.width, this.frameY * this.height, this.width, this.height, this.x, this.y, this.width / 3, this.height / 3);
             this.game.ctx.drawImage(this.image, this.x-50, this.y-50, this.radius*2.2, this.radius*2.2);
             // this.game.ctx.drawImage(this.image, this.frameX * this.width, this.frameY * this.height, this.width, this.height, this.x, this.y, this.width / 3, this.height / 3);
-            this.game.ctx.fillStyle = 'yellow';
+            this.game.ctx.save();
+            this.game.ctx.fillStyle = this.textColor;
             this.game.ctx.font = "bold 32px Arial Black";
             this.game.ctx.textAlign = 'center';
             this.game.ctx.textBaseline = 'middle';
             this.game.ctx.fillText(this.value,this.x, this.y);
+            this.game.ctx.restore();
         }
     }
     handleCorrectMatch(){
@@ -90,6 +92,7 @@ export class Bubble{
         if(this.game.levels[this.game.currentLevel].checkCorrectness(this)){this.handleCorrectMatch()} 
         else {
             this.image = this.redBubble;
+            this.textColor = 'red';
             this.game.player.health--;
         }
     }
@@ -103,6 +106,7 @@ export class Bubble{
         game.bubbles.filter(bubble => bubble.counted & !bubble.inFish).forEach(bub => {
             bub.counted = false;
             bub.image = bub.blueBubble;
+            bub.textColor = 'yellow';
         });
         for(var i = game.player.bubbles.length; i<game.boxNumbers.length; i++){
             game.boxNumbers[i] = '?';
