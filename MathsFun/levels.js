@@ -6,7 +6,7 @@ export class OneOperand{
     enter(){
         this.game.boxNumbers = [];
         this.questionBoxes = [];
-        this.game.bubbleValues = this.createBubbleValues();
+        this.game.fishValues = this.createFishValues();
     }
     
 }
@@ -53,7 +53,7 @@ export class TwoOperands{
             new QuestionBox(this.game, this.game.width - 300, 70, 70, 40),
             new QuestionBox(this.game, this.game.width - 190, 70, 70, 40),
         ];
-        this.game.bubbleValues = this.createBubbleValues();
+        this.game.fishValues = this.createFishValues();
     }
     drawQuestion(){
         this.questionBoxes.forEach(box => {
@@ -80,7 +80,7 @@ export class ThreeOperands{
             new QuestionBox(this.game, this.game.width - 250, 70, 60, 40),
             new QuestionBox(this.game, this.game.width - 160, 70, 60, 40)
         ];
-        this.game.bubbleValues = this.createBubbleValues();
+        this.game.fishValues = this.createFishValues();
     }
     drawQuestion(){
         this.questionBoxes.forEach(box => {
@@ -106,13 +106,13 @@ export class AdditionTwoOperands extends TwoOperands{
         super.enter();
         this.game.operationChar = '+';
     }
-    createBubbleValues(){
+    createFishValues(){
         var arr = [];
         for(var i =0; i<=this.game.questionNumber; i++) arr.push(i);
         return arr;
     }
     checkCorrectness(bbl2){
-        if(this.game.player.bubbles[0].value + bbl2.value==this.game.questionNumber) return true;
+        if(this.game.hook.fishes[0].value + bbl2.value==this.game.questionNumber) return true;
         else return false;
     } 
 }
@@ -146,7 +146,7 @@ export class Level1_3 extends AdditionTwoOperands{
         this.game.winningScore = 2;   
         super.enter();
     }
-    createBubbleValues(){
+    createFishValues(){
         var arr = [];
         for(var i = 2; i<=this.game.questionNumber-2; i++) arr.push(i);
         return arr;
@@ -162,7 +162,7 @@ export class Level1_4 extends AdditionTwoOperands{
         this.game.winningScore = 2;   
         super.enter();
     }
-    createBubbleValues(){
+    createFishValues(){
         var arr = [];
         for(var i =0; i<=Math.round(this.game.questionNumber/10); i++) arr.push(i*10);
         return arr;
@@ -177,7 +177,7 @@ export class Level1_5 extends AdditionTwoOperands{
         this.game.winningScore = 2;   
         super.enter();
     }
-    createBubbleValues(){
+    createFishValues(){
         var arr = [];
         for(var i =0; i<=Math.round(this.game.questionNumber/50); i++) arr.push(i*50);
         return arr;
@@ -192,7 +192,7 @@ export class Level1_6 extends AdditionTwoOperands{
         this.game.winningScore = 2;   
         super.enter();
     }
-    createBubbleValues(){
+    createFishValues(){
         var arr = [];
         for(var i =0; i<=Math.round(this.game.questionNumber/25); i++) arr.push(i*25);
         return arr;
@@ -206,10 +206,9 @@ export class Level2_1 extends TwoOperands{
         super.enter();
         this.game.questionNumber = Math.round(Math.random()*4+1);
         this.game.winningScore = 3;
-        // this.game.bubbleValues = this.createBubbleValues();
         this.game.operationChar = '-';
     }
-    createBubbleValues(){
+    createFishValues(){
         var arr = [];
         for(var i =0; i<=9; i++){
             arr.push(i);
@@ -217,7 +216,7 @@ export class Level2_1 extends TwoOperands{
         return arr;
     }
     checkCorrectness(bbl2){
-        if(this.game.player.bubbles[0].value - bbl2.value==this.game.questionNumber) return true;
+        if(this.game.hook.fishes[0].value - bbl2.value==this.game.questionNumber) return true;
         else return false;
     }
 }
@@ -229,10 +228,10 @@ export class Level2_2 extends TwoOperands{
         super.enter();
         this.game.questionNumber = Math.round(Math.random()*5+5);
         this.game.winningScore = 3;
-        this.game.bubbleValues = this.createBubbleValues();
+        this.game.fishValues = this.createFishValues();
         this.game.operationChar = '-';
     }
-    createBubbleValues(){
+    createFishValues(){
         var arr = [];
         for(var i =0; i<=20; i++){
             arr.push(i);
@@ -240,7 +239,7 @@ export class Level2_2 extends TwoOperands{
         return arr;
     }
     checkCorrectness(bbl2){
-        if(this.game.player.bubbles[0].value - bbl2.value==this.game.questionNumber) return true;
+        if(this.game.hook.fishes[0].value - bbl2.value==this.game.questionNumber) return true;
         else return false;
     }
 }
@@ -252,10 +251,10 @@ export class Level2_3 extends TwoOperands{
         super.enter();
         this.game.questionNumber = Math.round(Math.random()*3+7)*10;
         this.game.winningScore = 3;
-        this.game.bubbleValues = this.createBubbleValues();
+        this.game.fishValues = this.createFishValues();
         this.game.operationChar = '-';
     }
-    createBubbleValues(){
+    createFishValues(){
         var arr = [];
         for(var i =0; i<=20; i++){
             arr.push(i*10);
@@ -263,7 +262,7 @@ export class Level2_3 extends TwoOperands{
         return arr;
     }
     checkCorrectness(bbl2){
-        if(this.game.player.bubbles[0].value - bbl2.value==this.game.questionNumber) return true;
+        if(this.game.hook.fishes[0].value - bbl2.value==this.game.questionNumber) return true;
         else return false;
     }
 }
@@ -275,10 +274,10 @@ export class Level2_4 extends TwoOperands{
         super.enter();
         this.game.questionNumber = Math.round(Math.random()*3+7)*50;
         this.game.winningScore = 2;
-        this.game.bubbleValues = this.createBubbleValues();
+        this.game.fishValues = this.createFishValues();
         this.game.operationChar = '-';
     }
-    createBubbleValues(){
+    createFishValues(){
         var arr = [];
         for(var i =0; i<=20; i++){
             arr.push(i*50);
@@ -286,7 +285,7 @@ export class Level2_4 extends TwoOperands{
         return arr;
     }
     checkCorrectness(bbl2){
-        if(this.game.player.bubbles[0].value - bbl2.value==this.game.questionNumber) return true;
+        if(this.game.hook.fishes[0].value - bbl2.value==this.game.questionNumber) return true;
         else return false;
     }
 }
@@ -300,7 +299,7 @@ export class AdditionThreeOperands extends ThreeOperands{
         super.enter();
         this.game.operationChar = '+';
     }
-    createBubbleValues(){
+    createFishValues(){
         var arr = [];
         for(var i =0; i<=this.game.questionNumber; i++){
             arr.push(i);
@@ -308,7 +307,7 @@ export class AdditionThreeOperands extends ThreeOperands{
         return arr;
     }
     checkCorrectness(bbl3){
-        if(this.game.player.bubbles[0].value + this.game.player.bubbles[1].value + bbl3.value ==this.game.questionNumber) return true;
+        if(this.game.hook.fishes[0].value + this.game.hook.fishes[1].value + bbl3.value ==this.game.questionNumber) return true;
         else return false;
     }
 }
@@ -342,7 +341,7 @@ export class Level3_3 extends AdditionThreeOperands{
         this.game.winningScore = 2;
         super.enter();
     }
-    createBubbleValues(){
+    createFishValues(){
         var arr = [];
         for(var i =0; i<=Math.round(this.game.questionNumber/10)*2; i++) arr.push(i*5);
         return arr;
@@ -357,7 +356,7 @@ export class Level4_1 extends Multiples{
         this.game.winningScore = 5;
         super.enter();
     }
-    createBubbleValues(){
+    createFishValues(){
         var arr = [];
         for(var i = 1; i<=this.game.questionNumber+10; i++) {
             arr.push((i+this.game.questionNumber)*Math.round(Math.random()*this.game.questionNumber+1));
@@ -378,7 +377,7 @@ export class Level4_2 extends Multiples{
         this.game.winningScore = 3;
         super.enter();
     }
-    createBubbleValues(){
+    createFishValues(){
         var arr = [];
         for(var i = 1; i<=this.game.questionNumber+10; i++) {
             arr.push((i+this.game.questionNumber)*Math.round(Math.random()*this.game.questionNumber+1));
@@ -397,7 +396,7 @@ export class Level5_1 extends Factors{
         this.game.winningScore = 3;
         super.enter();
     }
-    createBubbleValues(){
+    createFishValues(){
         var arr = [];
         for(var i = 2; i<=this.game.questionNumber+1; i++) {
             arr.push(i);
@@ -415,7 +414,7 @@ export class Level5_2 extends Factors{
         this.game.winningScore = 3;
         super.enter();
     }
-    createBubbleValues(){
+    createFishValues(){
         var arr = [];
         for(var i = 2; i<=this.game.questionNumber+1; i++) {
             arr.push(i);
@@ -433,7 +432,7 @@ export class Level5_3 extends Factors{
         this.game.winningScore = 3;
         super.enter();
     }
-    createBubbleValues(){
+    createFishValues(){
         var arr = [];
         for(var i = 2; i<=this.game.questionNumber/2; i++) {
             arr.push(i);
