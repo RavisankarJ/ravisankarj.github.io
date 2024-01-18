@@ -36,10 +36,7 @@ export class Hook{
         const dy = this.y - mouse.y;
         const Pdx = this.x - this.boat.x;
         const Pdy = this.y - this.boat.y;
-        if(mouse.click) {
-            this.isGoingToFish = true;
-            this.hookHasFish = false;
-        }
+        
         if(!this.hookHasFish && this.isGoingToFish){
             if (mouse.x != this.x) {
                 this.x -= dx / 10;
@@ -64,7 +61,7 @@ export class Hook{
         }
         this.distanceToBoat = Math.sqrt(Pdx*Pdx+Pdy*Pdy);
         if(this.distanceToBoat<this.radius && this.fishes.length>0){
-            // console.log('line 67');
+            if(this.fishes.length>0)
             this.fishes.forEach(bub => {
                 this.game.collisions.push(new CollisionAnimation(this.game, bub));
                 bub.markedForDeletion = true;   

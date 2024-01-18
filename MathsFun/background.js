@@ -25,7 +25,7 @@ class FisherMan extends Layer{
         super(game, w, h, sM, i, x, y);
     }
     draw(context){
-        console.log(this);
+        
         context.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
 }

@@ -24,19 +24,22 @@ export class InputHandler{
                 this.mouse.x = mouseOldPos.x;
                 this.mouse.y = mouseOldPos.y;
             }
-            if(this.isClicked(this.game.hook, evt))
-            {
-                // console.log('clicked on hook');
-                if(this.game.hook.fishes.length>0)
-                {
-                    var lastFish = this.game.hook.fishes.pop();
-                    this.game.fishSingle.play();
-                    this.game.collisions.push(new CollisionAnimation(this.game, lastFish));
-                    lastFish.markedForDeletion = true;
-                    Fish.resetFishes(this.game);
-                }
+
+            this.game.hook.isGoingToFish = true;
+            this.game.hook.hookHasFish = false;
+            // if(this.isClicked(this.game.hook, evt))
+            // {
+            //     // console.log('clicked on hook');
+            //     if(this.game.hook.fishes.length>0)
+            //     {
+            //         var lastFish = this.game.hook.fishes.pop();
+            //         this.game.fishSingle.play();
+            //         this.game.collisions.push(new CollisionAnimation(this.game, lastFish));
+            //         lastFish.markedForDeletion = true;
+            //         Fish.resetFishes(this.game);
+            //     }
                 
-            }
+            // }
             if(this.isClickedButton(this.game.musicButton, evt)){
 
                 if (this.game.music.muted) {
@@ -71,21 +74,17 @@ export class InputHandler{
                 this.game.gamePause = true;
                 document.getElementById('infoContainers').style.display = "flex";
             }
-            // if (this.isClickedButton(this.game.homeButton, evt)) {
-            //     this.game.gameOver = true;
-            //     this.game.currentLevel = 0;
-            //     this.game.gameStart = true;
-            //     this.game.restart(); 
-            // }
+
             this.game.fishes.forEach(fish => {
             if(this.isClicked(fish, evt))
             {
-                // console.log('clicked on fish '+bbl.value);
+                console.log('clicked on fish '+fish.value);
                 fish.selected = true;
             }});
         });
         this.game.canvas.addEventListener('mouseup', evt => {
             this.mouse.click = false;
+            console.log('input file clicking mouse '+this.mouse.click);
         });
     }
     isClicked(button, evt) {
