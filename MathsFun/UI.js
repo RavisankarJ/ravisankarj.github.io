@@ -29,7 +29,7 @@ export class UI {
         context.save();
         
         context.fillStyle = 'red';
-        context.fillRect(35, 91, this.game.player.health*10, 10);
+        context.fillRect(35, 91, this.game.hook.health*10, 10);
         context.fillStyle = 'black';
         context.lineWidth = 2;
         context.strokeRect(35, 90, 100, 13);
@@ -37,7 +37,7 @@ export class UI {
         context.restore();
         //game over message
         if (this.game.gameOver) {
-            if (this.game.player.health > 1) {
+            if (this.game.hook.health > 1) {
                 if (this.game.currentLevel + 1 < this.game.levels.length) document.getElementById('nxtLevel').style.display = "block";
                 else if (this.game.currentLevel + 1 < this.game.levels.length) {
                     document.getElementById('levelInfoContainers').style.display = "flex";

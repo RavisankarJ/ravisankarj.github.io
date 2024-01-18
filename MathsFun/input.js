@@ -1,12 +1,12 @@
 import { CollisionAnimation } from "./CollisionAnimation.js";
-import { Bubble } from "./bubbles.js";
+import { Fish } from "./fishes.js";
 
 export class InputHandler{
     constructor(game){
         this.game = game;
         this.mouse = {
-            x: this.game.canvas.width / 2,
-            y: this.game.canvas.height / 2,
+            x: 300,
+            y: 200,
             click: false
         }
         this.game.canvas.addEventListener('mousedown', evt => {
@@ -24,18 +24,18 @@ export class InputHandler{
                 this.mouse.x = mouseOldPos.x;
                 this.mouse.y = mouseOldPos.y;
             }
-            if(this.isClicked(this.game.player, evt))
+            if(this.isClicked(this.game.hook, evt))
             {
-                // console.log('clicked on player');
-                if(this.game.player.bubbles.length>0)
+                // console.log('clicked on hook');
+                if(this.game.hook.fishes.length>0)
                 {
-                    var lastBubble = this.game.player.bubbles.pop();
-                    this.game.bubbleSingle.play();
-                    this.game.collisions.push(new CollisionAnimation(this.game, lastBubble));
-                    lastBubble.markedForDeletion = true;
-                    Bubble.resetBubbles(this.game);
+                    var lastFish = this.game.hook.fishes.pop();
+                    this.game.fishSingle.play();
+                    this.game.collisions.push(new CollisionAnimation(this.game, lastFish));
+                    lastFish.markedForDeletion = true;
+                    Fish.resetFishes(this.game);
                 }
-                // this.game.bubbles.push(lastBubble);
+                
             }
             if(this.isClickedButton(this.game.musicButton, evt)){
 
@@ -63,6 +63,8 @@ export class InputHandler{
                     
                     this.game.levels[this.game.currentLevel].enter();
                     this.game.gameStart = false;
+                    this.mouse.x = mouseOldPos.x;
+                    this.mouse.y = mouseOldPos.y;
                 }
             });
             if (this.isClickedButton(this.game.infoButton, evt)) {
@@ -75,6 +77,12 @@ export class InputHandler{
             //     this.game.gameStart = true;
             //     this.game.restart(); 
             // }
+            this.game.fishes.forEach(fish => {
+            if(this.isClicked(fish, evt))
+            {
+                // console.log('clicked on fish '+bbl.value);
+                fish.selected = true;
+            }});
         });
         this.game.canvas.addEventListener('mouseup', evt => {
             this.mouse.click = false;

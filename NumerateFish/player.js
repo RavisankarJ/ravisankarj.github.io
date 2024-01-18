@@ -96,4 +96,8 @@ export class Player{
         
         this.game.ctx.restore();
     }
+    restart(){
+        this.health = 10;
+        this.bubbles = [];
+    }
 }

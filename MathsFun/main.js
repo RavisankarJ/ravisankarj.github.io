@@ -1,9 +1,9 @@
-import { Player } from "./player.js";
+import { Hook } from "./hook.js";
 import { InputHandler } from "./input.js";
-import {Bubble} from "./bubbles.js";
+import {Fish} from "./fishes.js";
 import { UI } from "./UI.js";
 import { Background } from './background.js';
-import { Plant1 } from "./waterObjects.js";
+import { Plant1, Wave } from "./waterObjects.js";
 import { Level1_1, Level1_2, Level1_3, Level1_4, Level1_5, Level1_6, Level2_1,  Level2_2,  Level2_3,  Level2_4,  Level3_1, Level3_2, Level3_3, Level4_1, Level4_2, Level5_1, Level5_2, Level5_3 } from "./levels.js";
 import { LevelButton, MusicIcon, InfoButton, HomeButton } from "./buttons.js";
 let lastTime = 0, infoDivIndex = 0;
@@ -23,19 +23,19 @@ window.addEventListener('load', function () {
             this.gameOver = false;
             this.gamePause = false;
             this.time = 0;
-            this.player = new Player(this);
+            this.hook = new Hook(this);
             this.input = new InputHandler(this);
-            this.bubbles = [];
-            this.bubbleTimer = 0;
-            this.bubbleInterval = 2000;
+            this.fishes = [];
+            this.fishTimer = 0;
+            this.fishInterval = 2000;
             this.UI = new UI(this);
             this.score = 0;
             // this.levelIndex = 0;
             this.collisions = [];
             this.waterObjects = [new Plant1(this)];
             this.background = new Background(this);
-            this.bubbleSound = new Audio('assets/bubblesSound.wav');
-            this.bubbleSingle = new Audio('assets/bubbleSingle.wav');
+            this.fishSound = new Audio('assets/bubblesSound.wav');
+            this.fishSingle = new Audio('assets/bubbleSingle.wav');
             this.music = new Audio('assets/stage1.ogg');
             this.music.volume = 0.2;
             this.levelSelctionMusic = new Audio('assets/stage3.ogg');
@@ -43,7 +43,7 @@ window.addEventListener('load', function () {
             this.questionNumber = Math.round(Math.random()*10);
             this.boxNumbers = ['?', '?'];
             this.winningScore = 5;
-            this.bubbleValues = [];
+            this.fishValues = [];
             this.categories = [[new Level1_1(this), new Level1_2(this), new Level1_3(this), new Level1_4(this), new Level1_5(this), new Level1_6(this)],
                                 [new Level3_1(this), new Level3_2(this), new Level3_3(this)],
                                 [new Level2_1(this), new Level2_2(this), new Level2_3(this), new Level2_4(this)],
@@ -65,6 +65,9 @@ window.addEventListener('load', function () {
                 new LevelButton(this, 420, 470, 4, 'Multiples'),
                 new LevelButton(this, 270, 720, 5, 'Factors'),
             ];
+            this.waves = [];
+            this.waveTimer = 0;
+            this.waveInterval = 1000;
         }
         update(deltaTime) {
             this.time += deltaTime;
@@ -76,47 +79,68 @@ window.addEventListener('load', function () {
                     console.log('need user interaction');
                 });
             }else{
-            this.player.update(this.input.mouse, deltaTime);
+            this.hook.update(this.input.mouse, deltaTime);
             this.levelSelctionMusic.pause();
             this.music.play();
             //handle bubbles
-            if (this.bubbleTimer > this.bubbleInterval) {
-                this.addBubble();
-                this.bubbleTimer = 0;
-            } else this.bubbleTimer += deltaTime;
-            [...this.waterObjects,...this.bubbles, ...this.collisions].forEach(obj => obj.update(deltaTime));
-            this.bubbles = this.bubbles.filter(bubble => !bubble.markedForDeletion);          
+            if (this.fishTimer > this.fishInterval) {
+                this.addFish();
+                this.fishTimer = 0;
+            } else this.fishTimer += deltaTime;
+            if (this.waveTimer > this.waveInterval) {
+                this.addWave();
+                this.waveTimer = 0;
+            } else this.waveTimer += deltaTime;
+            [...this.waves, ...this.waterObjects,...this.fishes, ...this.collisions].forEach(obj => obj.update(deltaTime));
+            this.fishes = this.fishes.filter(fish => !fish.markedForDeletion);          
             this.collisions = this.collisions.filter(collision => !collision.markedForDeletion);
+            this.waves = this.waves.filter(wave => !wave.markedForDeletion);
         }
         }
         draw(context) {
             if(this.gameStart){
-                [this.background, ...this.waterObjects,this.infoButton, this.musicButton, ...this.levelBoxes].forEach(obj=>obj.draw(context));
+                [this.background,...this.waves, ...this.waterObjects,this.infoButton, this.musicButton, ...this.levelBoxes].forEach(obj=>obj.draw(context));
             }
-            else [this.background,...this.waterObjects,this.infoButton,...this.bubbles, this.player, ...this.collisions, this.UI, this.musicButton].forEach(obj => obj.draw(context));
+            else [this.background,...this.waves,...this.waterObjects,this.infoButton,...this.fishes, this.hook, ...this.collisions, this.UI, this.musicButton].forEach(obj => obj.draw(context));
         }
-        addBubble(){
-            this.bubbles.push(new Bubble(this));
-            console.log(this.bubbles.length);
+        addFish(){
+            this.fishes.push(new Fish(this));
+            // console.log(this.fishes.length);
+        }
+        addWave(){
+            var r = Math.round(Math.random()*7)+1
+            console.log(r);
+            switch(r){
+                case 1: this.waves.push(new Wave(this, 'w1',108,4)); break;
+                case 2: this.waves.push(new Wave(this, 'w2',152,6)); break;
+                case 3: this.waves.push(new Wave(this, 'w3',57,2)); break;
+                case 4: this.waves.push(new Wave(this, 'w4',289,7)); break;
+                case 5: this.waves.push(new Wave(this, 'w5',49,3)); break;
+                case 6: this.waves.push(new Wave(this, 'w6',154,4)); break;
+                case 7: this.waves.push(new Wave(this, 'w7',165,7)); break;
+                case 8: this.waves.push(new Wave(this, 'w8',322,6)); 
+                default: this.waves.push(new Wave(this, 'w1',108,4));
+            }
+            this.waves.push(new Wave(this, 'w1'));
         }
         restart() {
             var gameInfos = document.getElementsByClassName('gameInfo');
             for(var i = 0; i< gameInfos.length; i++){
                 gameInfos[i].style.display = "none";
             }
-            this.bubbles = [];
+            this.fishes = [];
             this.collisions = [];
             this.floatingPoints = [];
             this.UI.infoIdx = 0;
             this.score = 0;
-            if (this.gameOver && this.player.health > 0) this.currentLevel++;
-            this.player.restart();
+            if (this.gameOver && this.hook.health > 0) this.currentLevel++;
+            this.hook.restart();
             this.gameOver = false;
             // this.gameStart = false;
             if (this.currentLevel > this.levels.length - 1) this.currentLevel = 0;
             // this.currentLevel = this.levels[this.levelIndex];
             this.levels[this.currentLevel].enter();
-            // this.player.restart();
+            // this.hook.restart();
             lastTime = performance.now();
             animate(0);
         }
