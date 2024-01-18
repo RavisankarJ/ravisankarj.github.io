@@ -109,7 +109,6 @@ window.addEventListener('load', function () {
         }
         addWave(){
             var r = Math.round(Math.random()*7)+1
-            console.log(r);
             switch(r){
                 case 1: this.waves.push(new Wave(this, 'w1',108,4)); break;
                 case 2: this.waves.push(new Wave(this, 'w2',152,6)); break;
@@ -147,6 +146,7 @@ window.addEventListener('load', function () {
     }
     
     const game = new Game(canvas, ctx);
+    const useChromeElement = document.getElementById('useChrome');
     function animate(timeStamp){
         var deltaTime = timeStamp - lastTime;
         lastTime = timeStamp;
