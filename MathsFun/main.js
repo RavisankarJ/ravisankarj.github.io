@@ -82,7 +82,7 @@ window.addEventListener('load', function () {
             this.hook.update(this.input.mouse, deltaTime);
             this.levelSelctionMusic.pause();
             this.music.play();
-            //handle bubbles
+            //handle fishes
             if (this.fishTimer > this.fishInterval) {
                 this.addFish();
                 this.fishTimer = 0;

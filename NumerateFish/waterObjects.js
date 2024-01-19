@@ -28,8 +28,8 @@ class WaterObjects {
         //check if off screen
         if (this.x + this.width < 0) {
             this.markedForDeletion = true;
-            this.game.player.health -= this.impactPoint;
-            this.game.floatingPoints.push(new FloatingMessage('-' + this.impactPoint, this.x, this.y, 20, 50));
+            // this.game.player.health -= this.impactPoint;
+            // this.game.floatingPoints.push(new FloatingMessage('-' + this.impactPoint, this.x, this.y, 20, 50));
             // this.game.player.sizeModifier += this.impactPoint / 100;
         }
     }

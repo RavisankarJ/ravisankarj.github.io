@@ -13,7 +13,7 @@ export class Fish{
         this.frameInterval = 5000 / this.fps;
         this.markedForDeletion = false;
         this.y = Math.random() * (this.game.canvas.height-500)+450;
-        this.x = this.game.canvas.width + 10;
+        
         this.radius = 45;
         this.speed = Math.random() * 1+1;
         this.distance;
@@ -22,24 +22,32 @@ export class Fish{
         this.textColor = 'yellow';
         this.value = this.game.fishValues[Math.round(Math.random() * (this.game.fishValues.length-1))];
         this.colorFish = document.getElementById('fish_swim_left');
-        this.desaturatedFish = document.getElementById('bubbleRed');
-
+        this.desaturatedFish = document.getElementById('fish_swim_left_desaturated');
+        this.colorFishRight = document.getElementById('fish_swim_right');
+        this.desaturatedFishRight = document.getElementById('fish_swim_right_desaturated');
         this.selected = false;
         this.mousePointDistance;
-
+        this.direction = {left:1, right:-1}
+        this.movingDirection = Math.random() < 0.5 ? this.direction.left : this.direction.right;
         this.angle = 0;
         this.va = Math.random() * 0.1 + 0.1;
         this.swingValue = Math.floor(Math.random() * 5 + 1);
         this.width = 498;
         this.height = 327;
-        this.image = this.colorFish;
+        switch(this.movingDirection){
+            case this.direction.left: this.image = this.colorFish; break;
+            case this.direction.right: this.image = this.colorFishRight; break;
+            default: this.image = this.colorFish;
+        }
+        if(this.movingDirection==this.direction.left)this.x = this.game.canvas.width + 10;
+        else if(this.movingDirection == this.direction.right) this.x = 0 - 10;
     }
     update(deltaTime) {
         const dx = this.x - this.game.hook.x;
         const dy = this.y - this.game.hook.y;
         
         if(!this.inHook){
-            this.x -= this.speed;
+            this.x -= (this.speed*this.movingDirection);
             this.angle += this.va;
             this.y += this.swingValue * Math.sin(this.angle);
         }
@@ -53,8 +61,11 @@ export class Fish{
         } else {
             this.frameTimer += deltaTime;
         }
+        if(this.movingDirection == this.direction.left)
+            if(this.x<0-this.radius*2) this.markedForDeletion = true;
+        if(this.movingDirection == this.direction.right)
+            if(this.x>this.game.width+this.radius*2) this.markedForDeletion = true;
         
-        if(this.x<0-this.radius*2) this.markedForDeletion = true;
         if(this.selected)
         if (this.distance < this.radius + this.game.hook.radius) {
             if(!this.counted){
@@ -107,7 +118,7 @@ export class Fish{
         this.game.hook.fishes.splice(0, this.game.hook.fishes.length);
         Fish.resetFishes(this.game);
         if(!(this.game.winningScore>this.game.score)) {
-            console.log('you win');
+            // console.log('you win');
             this.game.gameOver = true;
         }
         
@@ -118,9 +129,13 @@ export class Fish{
             this.catchFish();
         } 
         else {
-            this.image = this.desaturatedFish;
+            switch(this.movingDirection){
+                case this.direction.left: this.image = this.desaturatedFish; break;
+                case this.direction.right: this.image = this.desaturatedFishRight; break;
+                default: this.image = this.desaturatedFish;
+            }
             this.game.wrongSound.play();
-            this.textColor = 'red';
+            this.textColor = '#ffa600';
             this.game.hook.health--;
         }
     }
@@ -133,7 +148,11 @@ export class Fish{
     static resetFishes(game){
         game.fishes.filter(fish => fish.counted & !fish.inFish).forEach(fish => {
             fish.counted = false;
-            fish.image = fish.colorFish;
+            switch(fish.movingDirection){
+                case fish.direction.left: fish.image = fish.colorFish; break;
+                case fish.direction.right: fish.image = fish.colorFishRight; break;
+                default: fish.image = fish.colorFish;
+            }
             fish.textColor = 'yellow';
             fish.selected = false;
         });

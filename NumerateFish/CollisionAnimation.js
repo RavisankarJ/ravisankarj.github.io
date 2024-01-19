@@ -18,6 +18,8 @@ export class CollisionAnimation {
         this.frameInterval = 1000 / this.fps;
         this.frameTimer = 0;
         this.speed = bubble.speed;
+        this.bubbleSound = new Audio('assets/bubblesSound.wav');
+        this.bubbleSound.play();
         // this.punchAudio = new Audio('punch.ogg');
         // this.punchAudio.volume = 0.1;
         

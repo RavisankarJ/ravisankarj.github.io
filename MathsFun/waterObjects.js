@@ -56,10 +56,6 @@ export class Plant1 extends WaterObjects {
         this.y = this.game.height - this.height;
         this.image = document.getElementById('plant1');
     }
-    update(deltaTime) {
-        super.update(deltaTime);
-        
-    }
 }
 
 export class Plant2 extends WaterObjects {
@@ -71,9 +67,6 @@ export class Plant2 extends WaterObjects {
         this.y = this.game.height - this.height-10;
         this.image = document.getElementById('plant2');
     }
-    update(deltaTime) {
-        super.update(deltaTime);
-    }
 }
 export class Wave extends WaterObjects {
     constructor(game, imageID, width, height) {
@@ -84,7 +77,16 @@ export class Wave extends WaterObjects {
         this.y = Math.random()*(this.game.height - 850)+402;
         this.image = document.getElementById(imageID);
     }
-    update(deltaTime) {
-        super.update(deltaTime);
+}
+
+export class Bucket extends WaterObjects {
+    constructor(game) {
+        super(game, false, false, 2);
+        this.sizeModifier = 0.5;
+        this.width = 571 * this.sizeModifier;
+        this.height = 659 * this.sizeModifier;
+        this.x = this.game.width - this.width-10;
+        this.y = this.game.height - this.height-10;
+        this.image = document.getElementById('bucket');
     }
 }
