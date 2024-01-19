@@ -1,5 +1,5 @@
 
-import { TwoOperands, ThreeOperands, OneOperand } from "./levels.js";
+import { TwoOperands, ThreeOperands, OneOperand, After, Before, InBetween } from "./levels.js";
 
 export class Fish{
     constructor(game){
@@ -99,14 +99,18 @@ export class Fish{
         this.game.score++;
         this.game.hook.fishes.push(this);
         this.inHook = true;
-        this.game.fishSound.play();
-        
+        this.game.correctSound.play();
+        if(this.game.levels[this.game.currentLevel] instanceof After ||
+            this.game.levels[this.game.currentLevel] instanceof Before ||
+            this.game.levels[this.game.currentLevel] instanceof InBetween)
+        this.game.levels[this.game.currentLevel].changeQuestion();
         this.game.hook.fishes.splice(0, this.game.hook.fishes.length);
         Fish.resetFishes(this.game);
         if(!(this.game.winningScore>this.game.score)) {
             console.log('you win');
             this.game.gameOver = true;
         }
+        
     }
     handleFishes(){
         if(this.game.levels[this.game.currentLevel].checkCorrectness(this)){
@@ -115,6 +119,7 @@ export class Fish{
         } 
         else {
             this.image = this.desaturatedFish;
+            this.game.wrongSound.play();
             this.textColor = 'red';
             this.game.hook.health--;
         }

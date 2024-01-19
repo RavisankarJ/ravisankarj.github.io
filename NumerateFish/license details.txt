@@ -30,3 +30,14 @@ https://www.gamedeveloperstudio.com/graphics/viewgraphic.php?page-name=Fish-game
 lake waves
 <a href="https://www.freepik.com/free-vector/opposite-adjectives-with-windy-calm_1172880.htm#fromView=search&term=lake+waves&track=ais&regularType=vector&page=1&position=22&uuid=10f853cd-15a6-428e-8889-2a5bb90270b4">Image by brgfx</a> on Freepik
 
+wrong sound
+<iframe frameborder="0" scrolling="no" src="https://freesound.org/embed/sound/iframe/590041/simple/small/" width="375" height="30"></iframe>
+
+ui-mistake.wav
+<iframe frameborder="0" scrolling="no" src="https://freesound.org/embed/sound/iframe/701703/simple/small/" width="375" height="30"></iframe>
+
+felplacerad
+<iframe frameborder="0" scrolling="no" src="https://freesound.org/embed/sound/iframe/49940/simple/small/" width="375" height="30"></iframe>
+
+wrong number
+<iframe frameborder="0" scrolling="no" src="https://freesound.org/embed/sound/iframe/455018/simple/small/" width="375" height="30"></iframe>

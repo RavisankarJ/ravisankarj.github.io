@@ -10,6 +10,7 @@ export class InputHandler{
             click: false
         }
         this.game.canvas.addEventListener('mousedown', evt => {
+            
             var rect = this.game.canvas.getBoundingClientRect();
             var scaleX = this.game.canvas.width / rect.width;
             var scaleY = this.game.canvas.height / rect.height;
@@ -78,13 +79,11 @@ export class InputHandler{
             this.game.fishes.forEach(fish => {
             if(this.isClicked(fish, evt))
             {
-                console.log('clicked on fish '+fish.value);
                 fish.selected = true;
             }});
         });
         this.game.canvas.addEventListener('mouseup', evt => {
             this.mouse.click = false;
-            console.log('input file clicking mouse '+this.mouse.click);
         });
     }
     isClicked(button, evt) {

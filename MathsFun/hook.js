@@ -1,4 +1,5 @@
 import { CollisionAnimation } from "./CollisionAnimation.js";
+import { WaterSplash } from "./WaterSplash.js";
 export class Hook{
     constructor(game){
         this.game = game;
@@ -61,7 +62,6 @@ export class Hook{
         }
         this.distanceToBoat = Math.sqrt(Pdx*Pdx+Pdy*Pdy);
         if(this.distanceToBoat<this.radius && this.fishes.length>0){
-            if(this.fishes.length>0)
             this.fishes.forEach(bub => {
                 this.game.collisions.push(new CollisionAnimation(this.game, bub));
                 bub.markedForDeletion = true;   
@@ -106,6 +106,12 @@ export class Hook{
             this.game.ctx.beginPath();
             this.game.ctx.moveTo(this.boat.x, this.boat.y);
             this.game.ctx.lineTo(this.x, this.y);
+            // console.log(Math.abs(this.y-400));
+            // console.log(Math.abs(this.y - this.game.input.mouse.y));
+            if(Math.abs(this.y-400)<=Math.abs(this.y - this.game.input.mouse.y)/10) {
+                console.log('here');
+                if(!WaterSplash.checkItHasWaterSplash(this.game.collisions))this.game.collisions.push(new WaterSplash(this.game, this.x-41, this.y));
+            }
             this.game.ctx.stroke();
             this.game.ctx.restore();
         }

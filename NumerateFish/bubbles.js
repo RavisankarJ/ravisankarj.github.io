@@ -92,6 +92,7 @@ export class Bubble{
         if(this.game.levels[this.game.currentLevel].checkCorrectness(this)){this.handleCorrectMatch()} 
         else {
             this.image = this.redBubble;
+            this.game.wrongSound.play();
             this.textColor = 'red';
             this.game.player.health--;
         }
