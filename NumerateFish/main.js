@@ -36,6 +36,7 @@ window.addEventListener('load', function () {
             this.background = new Background(this);
             this.bubbleSound = new Audio('assets/bubblesSound.wav');
             this.bubbleSingle = new Audio('assets/bubbleSingle.wav');
+            this.wrongSound = new Audio('assets/wrong.wav');
             this.music = new Audio('assets/stage1.ogg');
             this.music.volume = 0.2;
             this.levelSelctionMusic = new Audio('assets/stage3.ogg');
@@ -123,6 +124,7 @@ window.addEventListener('load', function () {
     }
     
     const game = new Game(canvas, ctx);
+    const useChromeElement = document.getElementById('useChrome');
     function animate(timeStamp){
         var deltaTime = timeStamp - lastTime;
         lastTime = timeStamp;

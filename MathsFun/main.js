@@ -3,8 +3,8 @@ import { InputHandler } from "./input.js";
 import {Fish} from "./fishes.js";
 import { UI } from "./UI.js";
 import { Background } from './background.js';
-import { Plant1, Wave } from "./waterObjects.js";
-import { Level1_1, Level1_2, Level1_3, Level1_4, Level1_5, Level1_6, Level2_1,  Level2_2,  Level2_3,  Level2_4,  Level3_1, Level3_2, Level3_3, Level4_1, Level4_2, Level5_1, Level5_2, Level5_3 } from "./levels.js";
+import { Plant1, Plant2, Wave } from "./waterObjects.js";
+import { Level1_1, Level1_2, Level1_3, Level1_4, Level2_1,  Level2_2,  Level2_3,  Level2_4,  Level2_5,  Level2_6,  Level3_1, Level3_2, Level3_3, Level3_4, Level4_1, Level4_2, Level5_1, Level5_2, Level5_3 } from "./levels.js";
 import { LevelButton, MusicIcon, InfoButton, HomeButton } from "./buttons.js";
 let lastTime = 0, infoDivIndex = 0;
 
@@ -34,8 +34,10 @@ window.addEventListener('load', function () {
             this.collisions = [];
             this.waterObjects = [new Plant1(this)];
             this.background = new Background(this);
-            this.fishSound = new Audio('assets/bubblesSound.wav');
+            // this.correctSound = new Audio('assets/bubblesSound.wav');
+            this.correctSound = new Audio('assets/correct.mp3');
             this.fishSingle = new Audio('assets/bubbleSingle.wav');
+            this.wrongSound = new Audio('assets/wrong.wav');
             this.music = new Audio('assets/stage1.ogg');
             this.music.volume = 0.2;
             this.levelSelctionMusic = new Audio('assets/stage3.ogg');
@@ -44,11 +46,10 @@ window.addEventListener('load', function () {
             this.boxNumbers = ['?', '?'];
             this.winningScore = 5;
             this.fishValues = [];
-            this.categories = [[new Level1_1(this), new Level1_2(this), new Level1_3(this), new Level1_4(this), new Level1_5(this), new Level1_6(this)],
-                                [new Level3_1(this), new Level3_2(this), new Level3_3(this)],
-                                [new Level2_1(this), new Level2_2(this), new Level2_3(this), new Level2_4(this)],
-                                [new Level4_1(this), new Level4_2(this)],
-                                [new Level5_1(this), new Level5_2(this), new Level5_3(this)]
+            this.categories = [[new Level1_1(this), new Level1_2(this), new Level1_3(this), new Level1_4(this)],
+                                [new Level2_1(this), new Level2_2(this), new Level2_3(this), new Level2_4(this),new Level2_5(this),new Level2_6(this)],
+                                [new Level3_1(this), new Level3_2(this), new Level3_3(this), new Level3_4(this)],
+                                [new Level4_1(this), new Level4_2(this)]
                                 ];
             this.levels = this.categories[0];
             this.currentLevel = 0;
@@ -59,11 +60,10 @@ window.addEventListener('load', function () {
             this.infoButton = new InfoButton(this);
             // this.homeButton = new HomeButton(this);
             this.levelBoxes = [
-                new LevelButton(this, 120, 170, 1, 'Addition'),
-                new LevelButton(this, 420, 170, 2, 'Addition'),
-                new LevelButton(this, 120, 470, 3, 'Subtraction'),
-                new LevelButton(this, 420, 470, 4, 'Multiples'),
-                new LevelButton(this, 270, 720, 5, 'Factors'),
+                new LevelButton(this, 120, 270, 1, 'Identify'),
+                new LevelButton(this, 420, 270, 2, 'Order'),
+                new LevelButton(this, 120, 570, 3, 'Big & Small'),
+                new LevelButton(this, 420, 570, 4, 'Series')
             ];
             this.waves = [];
             this.waveTimer = 0;

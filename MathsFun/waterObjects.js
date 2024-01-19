@@ -62,6 +62,19 @@ export class Plant1 extends WaterObjects {
     }
 }
 
+export class Plant2 extends WaterObjects {
+    constructor(game) {
+        super(game, false, false, 2);
+        this.width = 151 * this.sizeModifier;
+        this.height = 264 * this.sizeModifier;
+        this.x = this.game.width - this.width-10;
+        this.y = this.game.height - this.height-10;
+        this.image = document.getElementById('plant2');
+    }
+    update(deltaTime) {
+        super.update(deltaTime);
+    }
+}
 export class Wave extends WaterObjects {
     constructor(game, imageID, width, height) {
         super(game, true, true, 0);

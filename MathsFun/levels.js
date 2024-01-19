@@ -1,4 +1,8 @@
 import {QuestionBox} from "./buttons.js";
+
+export class ChaningQuestion{
+
+}
 export class OneOperand{
     constructor(game){
         this.game = game;
@@ -10,39 +14,104 @@ export class OneOperand{
     }
     
 }
-export class Multiples extends OneOperand{
+export class Identify extends OneOperand{
     constructor(game){
         super(game);
     }
-    checkCorrectness(bbl){
-        if(bbl.value%this.game.questionNumber==0) return true;
+    checkCorrectness(fish){
+        if(fish.value==this.game.questionNumber) return true;
         else return false;
     }
     drawQuestion(){
-        this.game.ctx.fillText('Multiples of '+this.game.questionNumber, this.game.width - 255, 90);
+        this.game.ctx.fillText('Catch '+this.game.questionNumber, this.game.width - 255, 90);
+    }
+    
+}
+export class Before extends OneOperand{
+    constructor(game){
+        super(game);
+        this.questions = [];
+    }
+    enter(){
+        this.createQuestionArray();
+        super.enter();
+    }
+    checkCorrectness(fish){
+        if(this.game.questionNumber-1==fish.value) return true;
+        else return false;
+    }
+    drawQuestion(){
+        this.game.ctx.fillText('Before '+this.game.questionNumber, this.game.width - 255, 90);
     }
 }
-export class Factors extends OneOperand{
+export class After extends OneOperand{
     constructor(game){
         super(game);
-        // this.factorValues = [];
+        this.questions = [];
     }
-    checkCorrectness(bbl){
-        if(this.game.questionNumber%bbl.value==0) return true;
+    enter(){
+        this.createQuestionArray();
+        super.enter();
+    }
+    checkCorrectness(fish){
+        if(parseInt(this.game.questionNumber)+1==fish.value) return true;
         else return false;
     }
     drawQuestion(){
-        this.game.ctx.fillText('Factors of '+this.game.questionNumber, this.game.width - 255, 90);
+        this.game.ctx.fillText('After '+this.game.questionNumber, this.game.width - 255, 90);
     }
-    findFactors(n){
-        var factorValues = [...Array(n + 1).keys()] 
-        .filter( 
-            (i) => n % i === 0 
-        ); 
-        return factorValues;
+}
+export class InBetween extends OneOperand{
+    constructor(game){
+        super(game);
+        this.questions = [];
     }
+    enter(){
+        this.createQuestionArray();
+        super.enter();
+    }
+    checkCorrectness(fish){
+        if(this.game.questionNumber==fish.value) return true;
+        else return false;
+    }
+    drawQuestion(){
+        this.game.ctx.fillText((this.game.questionNumber-1)+',  ___,  '+(parseInt(this.game.questionNumber)+1), this.game.width - 255, 90);
+    }
+}
 
+export class Big extends OneOperand{
+    constructor(game){
+        super(game);
+    }
+    
+    checkCorrectness(fish){
+        if(fish.value>this.game.questionNumber) return true;
+        else return false;
+    }
+    drawQuestion(){
+        this.game.ctx.save();
+        this.game.ctx.font = "bold 24px Arial Black";
+        this.game.ctx.fillText('Catch bigger than '+this.game.questionNumber, this.game.width - 300, 90);
+        this.game.ctx.restore();
+    }
 }
+export class Small extends OneOperand{
+    constructor(game){
+        super(game);
+    }
+    checkCorrectness(fish){
+        if(fish.value<this.game.questionNumber) return true;
+        else return false;
+    }
+    drawQuestion(){
+        this.game.ctx.save();
+        this.game.ctx.font = "bold 24px Arial Black";
+        this.game.ctx.fillText('Catch smaller thatn '+this.game.questionNumber, this.game.width - 300, 90);
+        this.game.ctx.restore();
+    }
+}
+
+
 export class TwoOperands{
     constructor(game){
         this.game = game;
@@ -117,176 +186,245 @@ export class AdditionTwoOperands extends TwoOperands{
     } 
 }
 
-export class Level1_1 extends AdditionTwoOperands{
+export class Level1_1 extends Identify{
     constructor(game) {
         super(game);
     }
     enter(){
-        this.game.questionNumber = Math.round(Math.random()*3+2);
+        this.game.questionNumber = Math.round(Math.random()*9);
         this.game.winningScore = 3;   
         super.enter();
     }
+    createFishValues(){
+        var arr = [];
+        for(var i = 0; i<=9; i++) {
+            arr.push(i);
+            arr.push(this.game.questionNumber);
+        }
+        return arr;
+    }
 }
-export class Level1_2 extends AdditionTwoOperands{
+export class Level1_2 extends Identify{
     constructor(game) {
         super(game);
     }
     enter(){
-        this.game.questionNumber = Math.round(Math.random()*4+6);
+        this.game.questionNumber = Math.round(Math.random()*10+10);
         this.game.winningScore = 3;   
         super.enter();
     }
+    createFishValues(){
+        var arr = [];
+        for(var i = 10; i<=20; i++) {
+            arr.push(i);
+            arr.push(this.game.questionNumber);
+        }
+        return arr;
+    }
 }
-export class Level1_3 extends AdditionTwoOperands{
+export class Level1_3 extends Identify{
     constructor(game) {
         super(game);
     }
     enter(){
-        this.game.questionNumber = Math.round(Math.random()*9+10);
+        this.game.questionNumber = (Math.round(Math.random()*9)*10)+10;
         this.game.winningScore = 2;   
         super.enter();
     }
     createFishValues(){
         var arr = [];
-        for(var i = 2; i<=this.game.questionNumber-2; i++) arr.push(i);
+        for(var i = 1; i<=10; i++) {arr.push(i*10);
+            arr.push(this.game.questionNumber);
+        }
         return arr;
     }
 }
 
-export class Level1_4 extends AdditionTwoOperands{
+export class Level1_4 extends Identify{
     constructor(game) {
         super(game);
     }
     enter(){
-        this.game.questionNumber = Math.round(Math.random()*7+3)*10;
+        this.game.questionNumber = Math.round(Math.random()*83)+11;
         this.game.winningScore = 2;   
         super.enter();
     }
     createFishValues(){
         var arr = [];
-        for(var i =0; i<=Math.round(this.game.questionNumber/10); i++) arr.push(i*10);
+        for(var i = this.game.questionNumber-5; i<=this.game.questionNumber+5; i++) {
+            arr.push(i);
+            arr.push(this.game.questionNumber);
+        }
         return arr;
     }
 }
-export class Level1_5 extends AdditionTwoOperands{
+
+export class Level2_1 extends Before{
     constructor(game) {
-        super(game);
+        super(game);    
     }
     enter(){
-        this.game.questionNumber = (Math.round(Math.random()*8+2))*50;
-        this.game.winningScore = 2;   
-        super.enter();
-    }
-    createFishValues(){
-        var arr = [];
-        for(var i =0; i<=Math.round(this.game.questionNumber/50); i++) arr.push(i*50);
-        return arr;
-    }
-}
-export class Level1_6 extends AdditionTwoOperands{
-    constructor(game) {
-        super(game);
-    }
-    enter(){
-        this.game.questionNumber = (Math.round(Math.random()*8+2))*25;
-        this.game.winningScore = 2;   
-        super.enter();
-    }
-    createFishValues(){
-        var arr = [];
-        for(var i =0; i<=Math.round(this.game.questionNumber/25); i++) arr.push(i*25);
-        return arr;
-    }
-}
-export class Level2_1 extends TwoOperands{
-    constructor(game) {
-        super(game);       
-    }
-    enter(){
-        super.enter();
-        this.game.questionNumber = Math.round(Math.random()*4+1);
         this.game.winningScore = 3;
-        this.game.operationChar = '-';
+        super.enter();
+        this.changeQuestion();
     }
     createFishValues(){
         var arr = [];
         for(var i =0; i<=9; i++){
             arr.push(i);
+            arr.push(...this.questions.map(n => n-1));
         }
         return arr;
     }
-    checkCorrectness(bbl2){
-        if(this.game.hook.fishes[0].value - bbl2.value==this.game.questionNumber) return true;
-        else return false;
+    createQuestionArray(){
+        var tempArr = [];
+        for(var i = 1; i<=10; i++) tempArr.push(i);
+        for(var i=0; i<this.game.winningScore; i++){
+            this.questions.push(tempArr.splice(Math.round(Math.random()*tempArr.length)-1,1));
+        }
+    }
+    changeQuestion(){
+        this.game.questionNumber = this.questions.pop();
     }
 }
-export class Level2_2 extends TwoOperands{
+export class Level2_2 extends Before{
     constructor(game) {
         super(game);       
     }
     enter(){
         super.enter();
-        this.game.questionNumber = Math.round(Math.random()*5+5);
         this.game.winningScore = 3;
-        this.game.fishValues = this.createFishValues();
-        this.game.operationChar = '-';
+        this.changeQuestion();
     }
     createFishValues(){
         var arr = [];
-        for(var i =0; i<=20; i++){
+        for(var i =9; i<=19; i++){
             arr.push(i);
+            arr.push(...this.questions.map(n => n-1));
         }
         return arr;
     }
-    checkCorrectness(bbl2){
-        if(this.game.hook.fishes[0].value - bbl2.value==this.game.questionNumber) return true;
-        else return false;
+    createQuestionArray(){
+        var tempArr = [];
+        for(var i = 10; i<=20; i++) tempArr.push(i);
+        for(var i=0; i<this.game.winningScore; i++){
+            this.questions.push(tempArr.splice(Math.round(Math.random()*tempArr.length)-1,1));
+        }
+    }
+    changeQuestion(){
+        this.game.questionNumber = this.questions.pop();
     }
 }
-export class Level2_3 extends TwoOperands{
+export class Level2_3 extends After{
     constructor(game) {
         super(game);       
     }
     enter(){
-        super.enter();
-        this.game.questionNumber = Math.round(Math.random()*3+7)*10;
         this.game.winningScore = 3;
-        this.game.fishValues = this.createFishValues();
-        this.game.operationChar = '-';
+        super.enter();
+        this.changeQuestion();
     }
     createFishValues(){
         var arr = [];
-        for(var i =0; i<=20; i++){
-            arr.push(i*10);
+        for(var i =1; i<=10; i++){
+            arr.push(i);
+            arr.push(...this.questions.map(n => parseInt(n)+1));
         }
         return arr;
     }
-    checkCorrectness(bbl2){
-        if(this.game.hook.fishes[0].value - bbl2.value==this.game.questionNumber) return true;
-        else return false;
+    createQuestionArray(){
+        var tempArr = [];
+        for(var i = 0; i<=9; i++) tempArr.push(i);
+        for(var i=0; i<this.game.winningScore; i++){
+            this.questions.push(tempArr.splice(Math.round(Math.random()*tempArr.length)-1,1));
+        }
+    }
+    changeQuestion(){
+        this.game.questionNumber = this.questions.pop();
     }
 }
-export class Level2_4 extends TwoOperands{
+export class Level2_4 extends After{
     constructor(game) {
         super(game);       
     }
     enter(){
+        this.game.winningScore = 3;
         super.enter();
-        this.game.questionNumber = Math.round(Math.random()*3+7)*50;
-        this.game.winningScore = 2;
-        this.game.fishValues = this.createFishValues();
-        this.game.operationChar = '-';
+        this.changeQuestion();
     }
     createFishValues(){
         var arr = [];
-        for(var i =0; i<=20; i++){
-            arr.push(i*50);
+        for(var i =11; i<=20; i++){
+            arr.push(i);
+            arr.push(...this.questions.map(n => parseInt(n)+1));
         }
         return arr;
     }
-    checkCorrectness(bbl2){
-        if(this.game.hook.fishes[0].value - bbl2.value==this.game.questionNumber) return true;
-        else return false;
+    createQuestionArray(){
+        var tempArr = [];
+        for(var i = 10; i<=19; i++) tempArr.push(i);
+        for(var i=0; i<this.game.winningScore; i++){
+            this.questions.push(tempArr.splice(Math.round(Math.random()*tempArr.length)-1,1));
+        }
+    }
+    changeQuestion(){
+        this.game.questionNumber = this.questions.pop();
+    }
+}
+export class Level2_5 extends InBetween{
+    constructor(game) {
+        super(game);       
+    }
+    enter(){
+        this.game.winningScore = 3;
+        super.enter();
+        this.changeQuestion();
+    }
+    createFishValues(){
+        var arr = [];
+        for(var i =1; i<=9; i++){
+            arr.push(i);
+            arr.push(...this.questions);
+        }
+        return arr;
+    }
+    createQuestionArray(){
+        var tempArr = [];
+        for(var i = 1; i<=10; i++) tempArr.push(i);
+        for(var i=0; i<this.game.winningScore; i++){
+            this.questions.push(tempArr.splice(Math.round(Math.random()*tempArr.length)-1,1));
+        }
+    }
+    changeQuestion(){
+        this.game.questionNumber = this.questions.pop();
+    }
+}
+export class Level2_6 extends InBetween{
+    constructor(game) {
+        super(game);       
+    }
+    enter(){
+        this.game.winningScore = 3;
+        super.enter();
+        this.changeQuestion();
+    }
+    createFishValues(){
+        var arr = [];
+        for(var i =10; i<=20; i++){
+            arr.push(i);
+            arr.push(...this.questions);
+        }
+        return arr;
+    }
+    createQuestionArray(){
+        var tempArr = [];
+        for(var i = 11; i<=19; i++) tempArr.push(i);
+        for(var i=0; i<this.game.winningScore; i++){
+            this.questions.push(tempArr.splice(Math.round(Math.random()*tempArr.length)-1,1));
+        }
+    }
+    changeQuestion(){
+        this.game.questionNumber = this.questions.pop();
     }
 }
 export class AdditionThreeOperands extends ThreeOperands{
@@ -312,17 +450,24 @@ export class AdditionThreeOperands extends ThreeOperands{
     }
 }
 
-export class Level3_1 extends AdditionThreeOperands{
+export class Level3_1 extends Big{
     constructor(game) {
         super(game);       
     }
     enter(){
-        this.game.questionNumber = Math.round(Math.random()*7+3);
+        this.game.questionNumber = Math.round(Math.random()*8+1);
         this.game.winningScore = 3;
         super.enter();
     }
+    createFishValues(){
+        var arr = [];
+        for(var i =0; i<=20; i++){
+            arr.push(i);
+        }
+        return arr;
+    }
 }
-export class Level3_2 extends AdditionThreeOperands{
+export class Level3_2 extends Big{
     constructor(game) {
         super(game);       
     }
@@ -331,23 +476,49 @@ export class Level3_2 extends AdditionThreeOperands{
         this.game.winningScore = 3;
         super.enter();
     }
+    createFishValues(){
+        var arr = [];
+        for(var i =9; i<=30; i++){
+            arr.push(i);
+        }
+        return arr;
+    }
 }
-export class Level3_3 extends AdditionThreeOperands{
+export class Level3_3 extends Small{
     constructor(game) {
         super(game);       
     }
     enter(){
-        this.game.questionNumber = Math.round(Math.random()*7+3)*10;
-        this.game.winningScore = 2;
+        this.game.questionNumber = Math.round(Math.random()*10+5);
+        this.game.winningScore = 3;
         super.enter();
     }
     createFishValues(){
         var arr = [];
-        for(var i =0; i<=Math.round(this.game.questionNumber/10)*2; i++) arr.push(i*5);
+        for(var i =0; i<=15; i++){
+            arr.push(i);
+        }
         return arr;
     }
 }
-export class Level4_1 extends Multiples{
+export class Level3_4 extends Small{
+    constructor(game) {
+        super(game);       
+    }
+    enter(){
+        this.game.questionNumber = Math.round(Math.random()*10+10);
+        this.game.winningScore = 3;
+        super.enter();
+    }
+    createFishValues(){
+        var arr = [];
+        for(var i =0; i<=20; i++){
+            arr.push(i);
+        }
+        return arr;
+    }
+}
+export class Level4_1 extends Identify{
     constructor(game) {
         super(game);       
     }
@@ -368,7 +539,7 @@ export class Level4_1 extends Multiples{
         return arr;
     }
 }
-export class Level4_2 extends Multiples{
+export class Level4_2 extends Identify{
     constructor(game) {
         super(game);       
     }
@@ -387,7 +558,7 @@ export class Level4_2 extends Multiples{
         return arr;
     }
 }
-export class Level5_1 extends Factors{
+export class Level5_1 extends Before{
     constructor(game) {
         super(game);       
     }
@@ -405,7 +576,7 @@ export class Level5_1 extends Factors{
         return arr;
     }
 }
-export class Level5_2 extends Factors{
+export class Level5_2 extends Before{
     constructor(game) {
         super(game);       
     }
@@ -423,7 +594,7 @@ export class Level5_2 extends Factors{
         return arr;
     }
 }
-export class Level5_3 extends Factors{
+export class Level5_3 extends Before{
     constructor(game) {
         super(game);       
     }
