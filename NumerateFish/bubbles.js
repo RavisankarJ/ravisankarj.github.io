@@ -1,4 +1,5 @@
 import { CollisionAnimation } from "./CollisionAnimation.js";
+import { FloatingMessage, FloatingPoint } from "./floatingPoints.js";
 import { TwoOperands, ThreeOperands, OneOperand } from "./levels.js";
 
 export class Bubble{
@@ -18,7 +19,10 @@ export class Bubble{
         this.value = this.game.bubbleValues[Math.round(Math.random() * (this.game.bubbleValues.length-1))];
         this.blueBubble = document.getElementById('bubble');
         this.redBubble = document.getElementById('bubbleRed');
-        this.image = document.getElementById('bubble');
+        this.hasFood = Math.random() < 0.3 ? true : false;
+        this.foodBubble = document.getElementById('bubbleGreen');
+        if(this.hasFood) this.image = this.foodBubble;
+        else this.image = this.blueBubble;
         this.width = 322;
         this.height = 322;
         
@@ -53,15 +57,7 @@ export class Bubble{
     draw() {
         if(!this.inFish)
         {
-            // this.game.ctx.fillStyle = this.color;
-            // this.game.ctx.beginPath();
-            // this.game.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            // this.game.ctx.fill();
-            // this.game.ctx.closePath();
-            // this.game.ctx.stroke();
-            // this.game.ctx.drawImage(this.image, this.frameX * this.width, this.frameY * this.height, this.width, this.height, this.x, this.y, this.width / 3, this.height / 3);
             this.game.ctx.drawImage(this.image, this.x-50, this.y-50, this.radius*2.2, this.radius*2.2);
-            // this.game.ctx.drawImage(this.image, this.frameX * this.width, this.frameY * this.height, this.width, this.height, this.x, this.y, this.width / 3, this.height / 3);
             this.game.ctx.save();
             this.game.ctx.fillStyle = this.textColor;
             this.game.ctx.font = "bold 32px Arial Black";
@@ -75,9 +71,18 @@ export class Bubble{
         this.game.score++;
         this.game.player.bubbles.push(this);
         this.inFish = true;
-        this.game.bubbleSound.play();
+        
         this.game.player.bubbles.forEach(bubble =>{
+            if(bubble.hasFood) 
+                if(this.game.player.health<10)
+                    {
+                        this.game.player.health+=1;
+                        this.game.floatingPoints.push(new FloatingMessage('+10',bubble.x, bubble.y, 10, 80));
+                    }
+            this.game.coins += bubble.value;
             this.game.collisions.push(new CollisionAnimation(this.game, bubble));
+            for(var i = 1; i<=bubble.value; i++)
+                if(i%2==1)this.game.floatingPoints.push(new FloatingPoint(this.game, bubble, i));
             bubble.markedForDeletion= true;
             // console.log('deleted this bubble '+ bubble);
         });
@@ -95,6 +100,7 @@ export class Bubble{
             this.game.wrongSound.play();
             this.textColor = 'red';
             this.game.player.health--;
+            this.game.floatingPoints.push(new FloatingMessage('-10',this.x, this.y, 10, 80));
         }
     }
     catchBubble(){
@@ -106,7 +112,8 @@ export class Bubble{
     static resetBubbles(game){
         game.bubbles.filter(bubble => bubble.counted & !bubble.inFish).forEach(bub => {
             bub.counted = false;
-            bub.image = bub.blueBubble;
+            if(bub.hasFood)bub.image = bub.foodBubble;
+            else bub.image = bub.blueBubble;
             bub.textColor = 'yellow';
         });
         for(var i = game.player.bubbles.length; i<game.boxNumbers.length; i++){

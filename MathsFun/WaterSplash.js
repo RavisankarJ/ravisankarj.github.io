@@ -20,11 +20,9 @@ export class WaterSplash {
         this.speed = fish.speed;
         // this.punchAudio = new Audio('punch.ogg');
         // this.punchAudio.volume = 0.1;
-        console.log(this);
     }
     draw(context) {
         context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width/4, this.height/4);
-        console.log('drawing splash');
     }
     update(deltaTime) {
         // this.y -= this.speed;
@@ -45,7 +43,6 @@ export class WaterSplash {
     static checkItHasWaterSplash(arr){
         var result = false;
         arr.forEach(obj => {
-            console.log(obj instanceof WaterSplash);
             result = (result) | (obj instanceof WaterSplash);
         });
         return result;

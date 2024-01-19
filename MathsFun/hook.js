@@ -109,7 +109,6 @@ export class Hook{
             // console.log(Math.abs(this.y-400));
             // console.log(Math.abs(this.y - this.game.input.mouse.y));
             if(Math.abs(this.y-400)<=Math.abs(this.y - this.game.input.mouse.y)/10) {
-                console.log('here');
                 if(!WaterSplash.checkItHasWaterSplash(this.game.collisions))this.game.collisions.push(new WaterSplash(this.game, this.x-41, this.y));
             }
             this.game.ctx.stroke();

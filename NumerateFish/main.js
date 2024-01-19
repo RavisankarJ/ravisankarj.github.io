@@ -32,9 +32,10 @@ window.addEventListener('load', function () {
             this.score = 0;
             // this.levelIndex = 0;
             this.collisions = [];
+            this.floatingPoints = [];
             this.waterObjects = [new Plant1(this)];
             this.background = new Background(this);
-            this.bubbleSound = new Audio('assets/bubblesSound.wav');
+            
             this.bubbleSingle = new Audio('assets/bubbleSingle.wav');
             this.wrongSound = new Audio('assets/wrong.wav');
             this.music = new Audio('assets/stage1.ogg');
@@ -66,6 +67,7 @@ window.addEventListener('load', function () {
                 new LevelButton(this, 420, 470, 4, 'Multiples'),
                 new LevelButton(this, 270, 720, 5, 'Factors'),
             ];
+            this.coins = 0;
         }
         update(deltaTime) {
             this.time += deltaTime;
@@ -85,16 +87,17 @@ window.addEventListener('load', function () {
                 this.addBubble();
                 this.bubbleTimer = 0;
             } else this.bubbleTimer += deltaTime;
-            [...this.waterObjects,...this.bubbles, ...this.collisions].forEach(obj => obj.update(deltaTime));
+            [...this.waterObjects,...this.bubbles, ...this.collisions, ...this.floatingPoints].forEach(obj => obj.update(deltaTime));
             this.bubbles = this.bubbles.filter(bubble => !bubble.markedForDeletion);          
             this.collisions = this.collisions.filter(collision => !collision.markedForDeletion);
+            this.floatingPoints = this.floatingPoints.filter(points => !points.markedForDeletion);
         }
         }
         draw(context) {
             if(this.gameStart){
                 [this.background, ...this.waterObjects,this.infoButton, this.musicButton, ...this.levelBoxes].forEach(obj=>obj.draw(context));
             }
-            else [this.background,...this.waterObjects,this.infoButton,...this.bubbles, this.player, ...this.collisions, this.UI, this.musicButton].forEach(obj => obj.draw(context));
+            else [this.background,...this.waterObjects,this.infoButton,...this.bubbles, this.player, ...this.collisions, ...this.floatingPoints, this.UI, this.musicButton].forEach(obj => obj.draw(context));
         }
         addBubble(){
             this.bubbles.push(new Bubble(this));

@@ -18,7 +18,7 @@ export class UI {
         context.textAlign = 'left';
         context.fillStyle = 'black';
         //level
-        context.fillText('Level: ' + (this.game.currentLevel+1), this.game.canvas.width/3, 50);
+        context.fillText('Level: ' + (this.game.currentLevel+1) + ' / ' + (this.game.levels.length), this.game.canvas.width/3, 50);
         //score
         context.drawImage(document.getElementById('star'), 10, 30, 30, 30);
         context.fillText(': ' + this.game.score + ' / '+this.game.winningScore, 50, 50);
@@ -33,7 +33,7 @@ export class UI {
         context.fillStyle = 'black';
         context.lineWidth = 2;
         context.strokeRect(35, 90, 100, 13);
-        context.drawImage(document.getElementById('heart'), 10, 80, 30, 30);
+        context.drawImage(document.getElementById('heart'), 10, 80, 50/1.3, 42/1.3);
         context.restore();
         //game over message
         if (this.game.gameOver) {
