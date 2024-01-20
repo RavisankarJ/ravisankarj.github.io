@@ -8,7 +8,8 @@ export class WaterSplash {
         this.width = fish.height;
         this.height = fish.height;
         this.x = x;
-        this.y = 310;
+        // this.y = 310;
+        this.y = this.game.background.splashPoint.splashY;
         this.frameX = 0;
         this.frameY = 0;
         this.maxFrameX = 6;

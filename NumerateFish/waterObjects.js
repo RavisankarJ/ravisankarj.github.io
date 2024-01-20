@@ -9,14 +9,15 @@ class WaterObjects {
         this.modifySize = modifySize;
         this.markedForDeletion = false;
         this.modifySize ? this.sizeModifier = Math.random() * 0.3 + 0.5 : this.sizeModifier = 1;
-        
+        this.speedX = Math.random()*2+1;
+        this.speedY = Math.random()*2+1;
         this.maxFrame = maxFrame;
         this.moveable = moveable;
     }
     update(deltaTime) {
         if(this.moveable){
             this.x -= this.speedX;
-            this.y -= this.speedY;
+            // this.y -= this.speedY;
         }
         if (this.frameTimer > this.frameInterval) {
             this.frameTimer = 0;
@@ -56,8 +57,31 @@ export class Plant1 extends WaterObjects {
         this.image = document.getElementById('plant1');
     }
     update(deltaTime) {
-        super.update(deltaTime);
-        
+        super.update(deltaTime); 
     }
+}
+export class Wave extends WaterObjects {
+    constructor(game, imageID, width, height) {
+        super(game, true, true, 0);
+        this.width = width * this.sizeModifier;
+        this.height = height * this.sizeModifier;
+        this.x = game.width+2;
+        this.y = Math.random()*(game.height-250)+250;
+        this.image = document.getElementById(imageID);
+    }
+    
+}
 
+export class Plant extends WaterObjects {
+    constructor(game, x=0, y =1, w = 270, h=73, img = 'plant1', mxFrame = 1) {
+        super(game, false, false, mxFrame);
+        this.width = w * this.sizeModifier;
+        this.height = h * this.sizeModifier;
+        this.x = x;
+        this.y = y*this.game.height - this.height;
+        this.image = document.getElementById(img);
+    }
+    update(deltaTime) {
+        super.update(deltaTime); 
+    }
 }

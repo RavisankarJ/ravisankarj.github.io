@@ -20,7 +20,7 @@ export class Bubble{
         this.blueBubble = document.getElementById('bubble');
         this.redBubble = document.getElementById('bubbleRed');
         this.hasFood = Math.random() < 0.3 ? true : false;
-        this.foodBubble = document.getElementById('bubbleGreen');
+        this.foodBubble = document.getElementById('bubbleworm');
         if(this.hasFood) this.image = this.foodBubble;
         else this.image = this.blueBubble;
         this.width = 322;
@@ -73,12 +73,11 @@ export class Bubble{
         this.inFish = true;
         
         this.game.player.bubbles.forEach(bubble =>{
-            if(bubble.hasFood) 
+            if(bubble.hasFood) {
                 if(this.game.player.health<10)
-                    {
-                        this.game.player.health+=1;
-                        this.game.floatingPoints.push(new FloatingMessage('+10',bubble.x, bubble.y, 10, 80));
-                    }
+                    this.game.player.health+=1;
+                this.game.floatingPoints.push(new FloatingMessage('+10',bubble.x, bubble.y, 10, 80));
+                }
             this.game.coins += bubble.value;
             this.game.collisions.push(new CollisionAnimation(this.game, bubble));
             for(var i = 1; i<=bubble.value; i++)

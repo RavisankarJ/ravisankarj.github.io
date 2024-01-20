@@ -5,8 +5,9 @@ export class Hook{
         this.game = game;
         this.width = 41;
         this.height = 89;
-        this.x = 300;
-        this.y = 200;
+        
+        this.x = this.game.background.hookPos.x;
+        this.y = this.game.background.hookPos.y;
         // this.playerLeft = document.getElementById('fish_swim_left');
         // this.playerLeftOpen = document.getElementById('openFishLeft');
         // this.playerRight = document.getElementById('fish_swim_right');
@@ -25,7 +26,7 @@ export class Hook{
         this.fishes = [];
         this.image = document.getElementById('hook');
         this.health = 10;
-        this.boat = {x:450, y:144}
+        this.boat = {x:this.game.background.boatPos.x, y:this.game.background.boatPos.y}
         this.distanceToFish;
         this.distanceToBoat;
         this.hookHasFish = false;
@@ -108,8 +109,9 @@ export class Hook{
             this.game.ctx.lineTo(this.x, this.y);
             // console.log(Math.abs(this.y-400));
             // console.log(Math.abs(this.y - this.game.input.mouse.y));
-            if(Math.abs(this.y-400)<=Math.abs(this.y - this.game.input.mouse.y)/10) {
+            if(Math.abs(this.y-this.game.background.splashPoint.hookY)<=Math.abs(this.y - this.game.input.mouse.y)/10) {
                 if(!WaterSplash.checkItHasWaterSplash(this.game.collisions))this.game.collisions.push(new WaterSplash(this.game, this.x-41, this.y));
+                // console.log(Math.abs(this.y-this.game.background.splashPoint));
             }
             this.game.ctx.stroke();
             this.game.ctx.restore();
