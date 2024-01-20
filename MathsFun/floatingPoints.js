@@ -4,8 +4,8 @@ export class FloatingPoint{
         this.bubble = bubble;
         this.x = bubble.x;
         this.y = bubble.y;
-        this.width = 20;
-        this.height =20;
+        this.width = 50/2;
+        this.height =45/2;
         this.targetX = (this.game.width/3)-20;
         this.targetY = 100-194/7;
         this.markedForDeletion = false;
@@ -23,7 +23,7 @@ export class FloatingPoint{
         if(this.timer > 100) this.markedForDeletion = true;
     }
     draw(context){
-        context.drawImage(document.getElementById('coin'), this.x, this.y, this.width, this.height);
+        context.drawImage(document.getElementById('shell'), this.x, this.y, this.width, this.height);
     }
 }
 

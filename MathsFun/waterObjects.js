@@ -29,24 +29,29 @@ class WaterObjects {
         //check if off screen
         if (this.x + this.width < 0) {
             this.markedForDeletion = true;
-            // this.game.hook.health -= this.impactPoint;
-            // this.game.floatingPoints.push(new FloatingMessage('-' + this.impactPoint, this.x, this.y, 20, 50));
-            // this.game.hook.sizeModifier += this.impactPoint / 100;
         }
     }
     draw(context) {
-        // context.save();
-        // context.shadowOffsetX = 2;
-        // context.shadowOffsetY = 2;
-        // context.shadowColor = 'black';
-        // context.shadowBlur = 1;
+        
         if (this.game.debug) context.strokeRect(this.x, this.y, this.width, this.height);
-        // context.drawImage(this.shadow, this.frameX * this.width / this.sizeModifier, 0, this.width / this.sizeModifier, this.height / this.sizeModifier, this.x+1, this.y+1, this.width+2, this.height+2);
+        
         context.drawImage(this.image, this.frameX * this.width / this.sizeModifier, 0, this.width / this.sizeModifier, this.height / this.sizeModifier, this.x, this.y, this.width, this.height);
-        // context.restore();
+        
     }
 }
-
+export class Plant extends WaterObjects {
+    constructor(game, x=0, y =1, w = 270, h=73, img = 'plant1', mxFrame = 1) {
+        super(game, false, false, mxFrame);
+        this.width = w * this.sizeModifier;
+        this.height = h * this.sizeModifier;
+        this.x = x;
+        this.y = y*this.game.height - this.height;
+        this.image = document.getElementById(img);
+    }
+    update(deltaTime) {
+        super.update(deltaTime); 
+    }
+}
 export class Plant1 extends WaterObjects {
     constructor(game) {
         super(game, false, false, 1);
@@ -74,7 +79,7 @@ export class Wave extends WaterObjects {
         this.width = width * this.sizeModifier;
         this.height = height * this.sizeModifier;
         this.x = this.game.width+2;
-        this.y = Math.random()*(this.game.height - 850)+402;
+        this.y = Math.random() * game.background.waveHeight.min + game.background.waveHeight.max;
         this.image = document.getElementById(imageID);
     }
 }

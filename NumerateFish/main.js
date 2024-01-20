@@ -2,8 +2,8 @@ import { Player } from "./player.js";
 import { InputHandler } from "./input.js";
 import {Bubble} from "./bubbles.js";
 import { UI } from "./UI.js";
-import { Background } from './background.js';
-import { Plant1 } from "./waterObjects.js";
+import { Background, BackgroundSet1, BackgroundSet2, BackgroundSet3, BackgroundSet4 } from './background.js';
+import { Plant1, Plant, Wave } from "./waterObjects.js";
 import { Level1_1, Level1_2, Level1_3, Level1_4, Level1_5, Level1_6, Level2_1,  Level2_2,  Level2_3,  Level2_4,  Level3_1, Level3_2, Level3_3, Level4_1, Level4_2, Level5_1, Level5_2, Level5_3 } from "./levels.js";
 import { LevelButton, MusicIcon, InfoButton, HomeButton } from "./buttons.js";
 let lastTime = 0, infoDivIndex = 0;
@@ -11,8 +11,8 @@ let lastTime = 0, infoDivIndex = 0;
 window.addEventListener('load', function () {
     const canvas = document.getElementById('canvas1');
     const ctx = canvas.getContext('2d');
-    canvas.width = 720;
-    canvas.height = 1280;
+    canvas.width = Background.canvasSize.width;
+    canvas.height = Background.canvasSize.height;
     class Game{
         constructor(canvas, ctx){
             this.canvas = canvas;
@@ -30,11 +30,20 @@ window.addEventListener('load', function () {
             this.bubbleInterval = 2000;
             this.UI = new UI(this);
             this.score = 0;
-            // this.levelIndex = 0;
+            
             this.collisions = [];
             this.floatingPoints = [];
-            this.waterObjects = [new Plant1(this)];
-            this.background = new Background(this);
+            // this.waterObjects = [new Plant(this)];
+            this.waterObjects = [];
+            this.backgrounds = [
+                new Background(this, BackgroundSet1),
+                new Background(this, BackgroundSet2),
+                new Background(this, BackgroundSet3),
+                new Background(this, BackgroundSet4)
+            ]
+            this.backgroundIndex = 0;
+            
+            this.background = this.backgrounds[this.backgroundIndex];
             
             this.bubbleSingle = new Audio('assets/bubbleSingle.wav');
             this.wrongSound = new Audio('assets/wrong.wav');
@@ -68,10 +77,13 @@ window.addEventListener('load', function () {
                 new LevelButton(this, 270, 720, 5, 'Factors'),
             ];
             this.coins = 0;
+            this.waves = [];
+            this.waveTimer = 0;
+            this.waveInterval = 1000;
         }
         update(deltaTime) {
             this.time += deltaTime;
-            this.background.update();
+            this.background.update(deltaTime);
             if(this.gameStart){
                 this.waterObjects.forEach(obj => obj.update(deltaTime));
                 this.music.pause();
@@ -87,21 +99,41 @@ window.addEventListener('load', function () {
                 this.addBubble();
                 this.bubbleTimer = 0;
             } else this.bubbleTimer += deltaTime;
-            [...this.waterObjects,...this.bubbles, ...this.collisions, ...this.floatingPoints].forEach(obj => obj.update(deltaTime));
+            if (this.waveTimer > this.waveInterval) {
+                this.addWave();
+                this.waveTimer = 0;
+            } else this.waveTimer += deltaTime;
+            [...this.waves,...this.waterObjects,...this.bubbles, ...this.collisions, ...this.floatingPoints].forEach(obj => obj.update(deltaTime));
             this.bubbles = this.bubbles.filter(bubble => !bubble.markedForDeletion);          
             this.collisions = this.collisions.filter(collision => !collision.markedForDeletion);
             this.floatingPoints = this.floatingPoints.filter(points => !points.markedForDeletion);
+            this.waves = this.waves.filter(wave => !wave.markedForDeletion);
         }
         }
         draw(context) {
             if(this.gameStart){
-                [this.background, ...this.waterObjects,this.infoButton, this.musicButton, ...this.levelBoxes].forEach(obj=>obj.draw(context));
+                [this.background,...this.waves, ...this.waterObjects,this.infoButton, this.musicButton, ...this.levelBoxes].forEach(obj=>obj.draw(context));
             }
-            else [this.background,...this.waterObjects,this.infoButton,...this.bubbles, this.player, ...this.collisions, ...this.floatingPoints, this.UI, this.musicButton].forEach(obj => obj.draw(context));
+            else [this.background,...this.waves,...this.waterObjects,this.infoButton,...this.bubbles, this.player, ...this.collisions, ...this.floatingPoints, this.UI, this.musicButton].forEach(obj => obj.draw(context));
         }
         addBubble(){
             this.bubbles.push(new Bubble(this));
             console.log(this.bubbles.length);
+        }
+        addWave(){
+            var r = Math.round(Math.random()*7)+1
+            switch(r){
+                case 1: this.waves.push(new Wave(this, 'w1',108,4)); break;
+                case 2: this.waves.push(new Wave(this, 'w2',152,6)); break;
+                case 3: this.waves.push(new Wave(this, 'w3',57,2)); break;
+                case 4: this.waves.push(new Wave(this, 'w4',289,7)); break;
+                case 5: this.waves.push(new Wave(this, 'w5',49,3)); break;
+                case 6: this.waves.push(new Wave(this, 'w6',154,4)); break;
+                case 7: this.waves.push(new Wave(this, 'w7',165,7)); break;
+                case 8: this.waves.push(new Wave(this, 'w8',322,6)); 
+                default: this.waves.push(new Wave(this, 'w1',108,4));
+            }
+            this.waves.push(new Wave(this, 'w1'));
         }
         restart() {
             var gameInfos = document.getElementsByClassName('gameInfo');

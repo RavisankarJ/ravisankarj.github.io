@@ -3,6 +3,14 @@ import {QuestionBox} from "./buttons.js";
 export class ChaningQuestion{
 
 }
+function ChangeBackground(game){
+    (game.backgroundIndex<game.backgrounds.length-1) ? game.backgroundIndex++ : game.backgroundIndex=0;
+        game.background = game.backgrounds[game.backgroundIndex];
+}
+function setHookPos(game){
+    game.hook.boat.x = game.background.boatPos.x;
+    game.hook.boat.y = game.background.boatPos.y;
+}
 export class OneOperand{
     constructor(game){
         this.game = game;
@@ -11,6 +19,8 @@ export class OneOperand{
         this.game.boxNumbers = [];
         this.questionBoxes = [];
         this.game.fishValues = this.createFishValues();
+        ChangeBackground(this.game);
+        setHookPos(this.game);
     }
     
 }
@@ -106,7 +116,7 @@ export class Small extends OneOperand{
     drawQuestion(){
         this.game.ctx.save();
         this.game.ctx.font = "bold 24px Arial Black";
-        this.game.ctx.fillText('Catch smaller thatn '+this.game.questionNumber, this.game.width - 300, 90);
+        this.game.ctx.fillText('Catch smaller than '+this.game.questionNumber, this.game.width - 300, 90);
         this.game.ctx.restore();
     }
 }
@@ -515,100 +525,6 @@ export class Level3_4 extends Small{
         for(var i =0; i<=20; i++){
             arr.push(i);
         }
-        return arr;
-    }
-}
-export class Level4_1 extends Identify{
-    constructor(game) {
-        super(game);       
-    }
-    enter(){
-        this.game.questionNumber = Math.round(Math.random()*3+2);
-        this.game.winningScore = 5;
-        super.enter();
-    }
-    createFishValues(){
-        var arr = [];
-        for(var i = 1; i<=this.game.questionNumber+10; i++) {
-            arr.push((i+this.game.questionNumber)*Math.round(Math.random()*this.game.questionNumber+1));
-            arr.push(i*this.game.questionNumber);
-            arr.push(i*this.game.questionNumber-i);
-            arr.push(i*this.game.questionNumber+i);
-        }
-        arr = Array.from(new Set(arr));
-        return arr;
-    }
-}
-export class Level4_2 extends Identify{
-    constructor(game) {
-        super(game);       
-    }
-    enter(){
-        this.game.questionNumber = Math.round(Math.random()*4+6);
-        this.game.winningScore = 3;
-        super.enter();
-    }
-    createFishValues(){
-        var arr = [];
-        for(var i = 1; i<=this.game.questionNumber+10; i++) {
-            arr.push((i+this.game.questionNumber)*Math.round(Math.random()*this.game.questionNumber+1));
-            arr.push(i*this.game.questionNumber);
-        }
-        arr = Array.from(new Set(arr));
-        return arr;
-    }
-}
-export class Level5_1 extends Before{
-    constructor(game) {
-        super(game);       
-    }
-    enter(){
-        this.game.questionNumber = Math.round(Math.random()*3+2) * Math.round(Math.random()*4+1);
-        this.game.winningScore = 3;
-        super.enter();
-    }
-    createFishValues(){
-        var arr = [];
-        for(var i = 2; i<=this.game.questionNumber+1; i++) {
-            arr.push(i);
-        }
-        arr.push(...this.findFactors(this.game.questionNumber));
-        return arr;
-    }
-}
-export class Level5_2 extends Before{
-    constructor(game) {
-        super(game);       
-    }
-    enter(){
-        this.game.questionNumber = Math.round(Math.random()*4+6) * Math.round(Math.random()*4+2);
-        this.game.winningScore = 3;
-        super.enter();
-    }
-    createFishValues(){
-        var arr = [];
-        for(var i = 2; i<=this.game.questionNumber+1; i++) {
-            arr.push(i);
-        }
-        arr.push(...this.findFactors(this.game.questionNumber));
-        return arr;
-    }
-}
-export class Level5_3 extends Before{
-    constructor(game) {
-        super(game);       
-    }
-    enter(){
-        this.game.questionNumber = Math.round(Math.random()*4+6) * Math.round(Math.random()*6+4);
-        this.game.winningScore = 3;
-        super.enter();
-    }
-    createFishValues(){
-        var arr = [];
-        for(var i = 2; i<=this.game.questionNumber/2; i++) {
-            arr.push(i);
-        }
-        arr.push(...this.findFactors(this.game.questionNumber));
         return arr;
     }
 }

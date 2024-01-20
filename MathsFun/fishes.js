@@ -1,4 +1,4 @@
-
+import { FloatingMessage, FloatingPoint } from "./floatingPoints.js";
 import { TwoOperands, ThreeOperands, OneOperand, After, Before, InBetween } from "./levels.js";
 
 export class Fish{
@@ -12,8 +12,8 @@ export class Fish{
         this.frameTimer=0;
         this.frameInterval = 5000 / this.fps;
         this.markedForDeletion = false;
-        this.y = Math.random() * (this.game.canvas.height-500)+450;
-        
+        this.y = Math.random() * this.game.background.fishSwimHeight.min+this.game.background.fishSwimHeight.max;
+        // this.y = this.game.background.fishSwimHeight;
         this.radius = 45;
         this.speed = Math.random() * 1+1;
         this.distance;
@@ -111,6 +111,9 @@ export class Fish{
         this.game.hook.fishes.push(this);
         this.inHook = true;
         this.game.correctSound.play();
+        this.game.shells += this.value;
+        for(var i = 1; i<=this.value; i++)
+            if(i%2==1)this.game.floatingPoints.push(new FloatingPoint(this.game, this, i));
         if(this.game.levels[this.game.currentLevel] instanceof After ||
             this.game.levels[this.game.currentLevel] instanceof Before ||
             this.game.levels[this.game.currentLevel] instanceof InBetween)
@@ -137,6 +140,7 @@ export class Fish{
             this.game.wrongSound.play();
             this.textColor = '#ffa600';
             this.game.hook.health--;
+            this.game.floatingPoints.push(new FloatingMessage('-10',this.x, this.y, 10, 80));
         }
     }
     catchFish(){

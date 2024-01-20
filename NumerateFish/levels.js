@@ -1,4 +1,9 @@
 import {QuestionBox} from "./buttons.js";
+function ChangeBackground(game){
+    (game.backgroundIndex<game.backgrounds.length-1) ? game.backgroundIndex++ : game.backgroundIndex=0;
+        game.background = game.backgrounds[game.backgroundIndex];
+}
+
 export class OneOperand{
     constructor(game){
         this.game = game;
@@ -6,7 +11,8 @@ export class OneOperand{
     enter(){
         this.game.boxNumbers = [];
         this.questionBoxes = [];
-        this.game.bubbleValues = this.createBubbleValues();
+        this.game.bubbleValues = this.createBubbleValues(); 
+        ChangeBackground(this.game);
     }
     
 }
@@ -54,6 +60,7 @@ export class TwoOperands{
             new QuestionBox(this.game, this.game.width - 190, 70, 70, 40),
         ];
         this.game.bubbleValues = this.createBubbleValues();
+        ChangeBackground(this.game);
     }
     drawQuestion(){
         this.questionBoxes.forEach(box => {
@@ -81,6 +88,7 @@ export class ThreeOperands{
             new QuestionBox(this.game, this.game.width - 160, 70, 60, 40)
         ];
         this.game.bubbleValues = this.createBubbleValues();
+        ChangeBackground(this.game);
     }
     drawQuestion(){
         this.questionBoxes.forEach(box => {

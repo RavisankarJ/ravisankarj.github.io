@@ -20,7 +20,7 @@ export class InputHandler{
             mouseOldPos.y = this.mouse.y;
             this.mouse.x = (evt.clientX - rect.left)*scaleX;
             this.mouse.y = (evt.clientY - rect.top)*scaleY;
-            
+            console.log(this.mouse.x, this.mouse.y);
             if(this.mouse.y<(60*this.game.height/rect.height)) {
                 this.mouse.x = mouseOldPos.x;
                 this.mouse.y = mouseOldPos.y;
