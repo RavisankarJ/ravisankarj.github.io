@@ -52,25 +52,26 @@ export class Factors extends OneOperand{
 export class TwoOperands{
     constructor(game){
         this.game = game;
-    }
-    enter(){
-        this.game.boxNumbers = ['?', '?'];
         this.questionBoxes = [
             new QuestionBox(this.game, this.game.width - 300, 70, 70, 40),
             new QuestionBox(this.game, this.game.width - 190, 70, 70, 40),
         ];
+    }
+    enter(){
+        this.game.boxNumbers = ['?', '?'];
+        
         this.game.bubbleValues = this.createBubbleValues();
         ChangeBackground(this.game);
     }
     drawQuestion(){
-        this.questionBoxes.forEach(box => {
-            box.draw(this.game.ctx);
-        });
+        // this.questionBoxes.forEach(box => {
+        //     box.draw(this.game.ctx);
+        // });
+        this.game.ctx.fillStyle = 'black';
         this.game.ctx.fillText(this.game.operationChar, this.game.width - 220, 95);
         this.game.ctx.fillText('= '+this.game.questionNumber, this.game.width - 105, 95);
-        this.game.ctx.fillStyle = 'white';
-        this.game.ctx.fill();
-        this.game.ctx.fillStyle = 'black';
+        
+        
         this.game.ctx.textAlign = 'centre';
         this.game.ctx.fillText(this.game.boxNumbers[0], this.game.width - 290, 95);
         this.game.ctx.fillText(this.game.boxNumbers[1], this.game.width - 185, 95);
@@ -79,30 +80,29 @@ export class TwoOperands{
 export class ThreeOperands{
     constructor(game){
         this.game = game;
-    }
-    enter(){
-        this.game.boxNumbers = ['?', '?', '?'];
         this.questionBoxes = [
             new QuestionBox(this.game, this.game.width - 340, 70, 60, 40),
             new QuestionBox(this.game, this.game.width - 250, 70, 60, 40),
             new QuestionBox(this.game, this.game.width - 160, 70, 60, 40)
         ];
+    }
+    enter(){
+        this.game.boxNumbers = ['?', '?', '?'];
+        
         this.game.bubbleValues = this.createBubbleValues();
         ChangeBackground(this.game);
     }
-    drawQuestion(){
-        this.questionBoxes.forEach(box => {
-            box.draw(this.game.ctx);
-        });
-        this.game.ctx.fillStyle = 'white';
-        this.game.ctx.fill();
-        this.game.ctx.fillStyle = 'black';
-        this.game.ctx.fillText(this.game.operationChar, this.game.width - 275, 95);
-        this.game.ctx.fillText(this.game.operationChar, this.game.width - 185, 95);
-        this.game.ctx.fillText('= '+this.game.questionNumber, this.game.width - 95, 95);
-        this.game.ctx.fillText(this.game.boxNumbers[0], this.game.width - 327, 95);
-        this.game.ctx.fillText(this.game.boxNumbers[1], this.game.width - 237, 95);
-        this.game.ctx.fillText(this.game.boxNumbers[2], this.game.width - 147, 95);
+    drawQuestion(ctx){
+        // this.questionBoxes.forEach(box => {
+        //     box.draw(ctx);
+        // });
+        ctx.fillStyle = 'black';
+        ctx.fillText(this.game.operationChar, this.game.width - 275, 95);
+        ctx.fillText(this.game.operationChar, this.game.width - 185, 95);
+        ctx.fillText('= '+this.game.questionNumber, this.game.width - 95, 95);
+        ctx.fillText(this.game.boxNumbers[0], this.game.width - 327, 95);
+        ctx.fillText(this.game.boxNumbers[1], this.game.width - 237, 95);
+        ctx.fillText(this.game.boxNumbers[2], this.game.width - 147, 95);
     }
 }
 
@@ -301,8 +301,7 @@ export class Level2_4 extends TwoOperands{
 export class AdditionThreeOperands extends ThreeOperands{
     constructor(game) {
         super(game);
-        this.game = game;
-        this.questionBoxes = []; 
+        
     }
     enter(){
         super.enter();

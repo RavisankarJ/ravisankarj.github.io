@@ -53,14 +53,8 @@ export class Fish{
         }
             
         this.distance = Math.sqrt(dx * dx + dy * dy);
-        //changing frames
-        if (this.frameTimer > this.frameInterval) {
-            this.frameTimer = 0;
-            if (this.frameX < this.maxFrame) this.frameX++;
-            else this.frameX = 0;
-        } else {
-            this.frameTimer += deltaTime;
-        }
+        
+        
         if(this.movingDirection == this.direction.left)
             if(this.x<0-this.radius*2) this.markedForDeletion = true;
         if(this.movingDirection == this.direction.right)
@@ -80,6 +74,7 @@ export class Fish{
                 this.game.hook.fishes.length>1 ? this.handleFishes() : this.catchFish();
             }
         }
+        //changing frames
         if (this.frameTimer > this.frameInterval) {
             this.frameTimer = 0;
             if (this.frameX < this.maxFrameX) this.frameX++;
@@ -112,8 +107,12 @@ export class Fish{
         this.inHook = true;
         this.game.correctSound.play();
         this.game.shells += this.value;
-        for(var i = 1; i<=this.value; i++)
-            if(i%2==1)this.game.floatingPoints.push(new FloatingPoint(this.game, this, i));
+        var shellDivider;
+        if(this.value<=10) shellDivider = 2;
+        else if (this.value>10 && this.value<=100) shellDivider = 10;
+        else if (this.value>100) shellDivider = 100;
+        for(var i = 1; i<=this.value/shellDivider; i++)
+            this.game.floatingPoints.push(new FloatingPoint(this.game, this, i));
         if(this.game.levels[this.game.currentLevel] instanceof After ||
             this.game.levels[this.game.currentLevel] instanceof Before ||
             this.game.levels[this.game.currentLevel] instanceof InBetween)

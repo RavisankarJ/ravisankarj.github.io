@@ -1,14 +1,14 @@
 class WaterObjects {
-    constructor(game, moveable, modifySize, maxFrame) {
+    constructor(game, moveable, modifySize, maxFrame, frameX = 0, frameY = 0) {
         this.game = game;
-        this.frameX = 0;
-        this.frameY = 0;
+        this.frameX = frameX;
+        this.frameY = frameY;
         this.fps = 2;
         this.frameInterval = 1000 / this.fps;
         this.frameTimer = 0;
         this.modifySize = modifySize;
         this.markedForDeletion = false;
-        this.modifySize ? this.sizeModifier = Math.random() * 0.3 + 0.5 : this.sizeModifier = 1;
+        this.modifySize ? this.sizeModifier = Math.random() * 3 + 0.5 : this.sizeModifier = 1;
         this.speedX = Math.random()*2+1;
         this.speedY = Math.random()*2+1;
         this.maxFrame = maxFrame;
@@ -29,21 +29,13 @@ class WaterObjects {
         //check if off screen
         if (this.x + this.width < 0) {
             this.markedForDeletion = true;
-            // this.game.player.health -= this.impactPoint;
-            // this.game.floatingPoints.push(new FloatingMessage('-' + this.impactPoint, this.x, this.y, 20, 50));
-            // this.game.player.sizeModifier += this.impactPoint / 100;
         }
     }
     draw(context) {
-        // context.save();
-        // context.shadowOffsetX = 2;
-        // context.shadowOffsetY = 2;
-        // context.shadowColor = 'black';
-        // context.shadowBlur = 1;
+        
         if (this.game.debug) context.strokeRect(this.x, this.y, this.width, this.height);
-        // context.drawImage(this.shadow, this.frameX * this.width / this.sizeModifier, 0, this.width / this.sizeModifier, this.height / this.sizeModifier, this.x+1, this.y+1, this.width+2, this.height+2);
         context.drawImage(this.image, this.frameX * this.width / this.sizeModifier, 0, this.width / this.sizeModifier, this.height / this.sizeModifier, this.x, this.y, this.width, this.height);
-        // context.restore();
+        
     }
 }
 
@@ -68,8 +60,7 @@ export class Wave extends WaterObjects {
         this.x = game.width+2;
         this.y = Math.random()*(game.height-250)+250;
         this.image = document.getElementById(imageID);
-    }
-    
+    }   
 }
 
 export class Plant extends WaterObjects {

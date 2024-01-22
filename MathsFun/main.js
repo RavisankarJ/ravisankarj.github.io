@@ -57,7 +57,8 @@ window.addEventListener('load', function () {
             this.winningScore = 5;
             this.fishValues = [];
             this.categories = [[new Level1_1(this), new Level1_2(this), new Level1_3(this), new Level1_4(this)],
-                                [new Level2_1(this), new Level2_2(this), new Level2_3(this), new Level2_4(this),new Level2_5(this),new Level2_6(this)],
+                                // [new Level2_1(this), new Level2_2(this), new Level2_3(this), new Level2_4(this),new Level2_5(this),new Level2_6(this)],
+                                [new Level2_5(this),new Level2_6(this)],
                                 [new Level3_1(this), new Level3_2(this), new Level3_3(this), new Level3_4(this)]
                                 ];
             this.levels = this.categories[0];
@@ -127,10 +128,10 @@ window.addEventListener('load', function () {
                 case 5: this.waves.push(new Wave(this, 'w5',49,3)); break;
                 case 6: this.waves.push(new Wave(this, 'w6',154,4)); break;
                 case 7: this.waves.push(new Wave(this, 'w7',165,7)); break;
-                case 8: this.waves.push(new Wave(this, 'w8',322,6)); 
+                case 8: this.waves.push(new Wave(this, 'w8',322,6)); break;
                 default: this.waves.push(new Wave(this, 'w1',108,4));
             }
-            this.waves.push(new Wave(this, 'w1'));
+            
         }
         restart() {
             var gameInfos = document.getElementsByClassName('gameInfo');

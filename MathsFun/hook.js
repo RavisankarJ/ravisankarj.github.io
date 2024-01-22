@@ -103,7 +103,7 @@ export class Hook{
         this.game.ctx.restore();
         if (this.distanceToFish>this.radius/2) {
             this.game.ctx.save();
-            this.game.ctx.lineWidth = 3;
+            this.game.ctx.lineWidth = 1;
             this.game.ctx.beginPath();
             this.game.ctx.moveTo(this.boat.x, this.boat.y);
             this.game.ctx.lineTo(this.x, this.y);

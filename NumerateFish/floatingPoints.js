@@ -23,7 +23,10 @@ export class FloatingPoint{
         if(this.timer > 100) this.markedForDeletion = true;
     }
     draw(context){
-        context.drawImage(document.getElementById('coin'), this.x, this.y, this.width, this.height);
+        context.drawImage(FloatingPoint.floatingImage.coin, this.x, this.y, this.width, this.height);
+    }
+    static floatingImage = {
+        coin : document.getElementById('coin')
     }
 }
 
