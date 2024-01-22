@@ -54,11 +54,13 @@ export class QuestionBox {
         this.height = height;
         this.x = x;
         this.y = y;
-        this.frameX = 0;
+        // this.frameX = 0;
     }
     draw(context) {
         // context.drawImage(this.icon, this.x, this.y, this.width, this.height);
-        context.rect(this.x, this.y, this.width, this.height);
+        context.fillStyle = 'white';
+        context.fillRect(this.x, this.y, this.width, this.height);
+        
     }
 }
 
@@ -78,8 +80,8 @@ export class LevelButton {
     draw(context) {
         context.drawImage(this.icon, 0, 0, 640, 604, this.x, this.y, this.width, this.height);
         context.save();
-        this.game.ctx.textBaseline = 'middle';
-        this.game.ctx.textAlign = 'center';
+        context.textBaseline = 'middle';
+        context.textAlign = 'center';
         context.font = 'bold 36px Arial';
         context.fillStyle = '#3C0753';
         context.fillText('L'+this.levelNumber, this.x+75, this.y+100);

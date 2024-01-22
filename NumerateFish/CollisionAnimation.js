@@ -1,7 +1,7 @@
 export class CollisionAnimation {
     constructor(game, bubble) {
         this.game = game;
-        this.image = document.getElementById('bubblePop');
+        this.image = CollisionAnimation.popimage.img;
         this.spriteWidth = 512;
         this.spriteHeight = 512;
         // this.sizeModifier = Math.random() * 0.5;
@@ -23,6 +23,9 @@ export class CollisionAnimation {
         // this.punchAudio = new Audio('punch.ogg');
         // this.punchAudio.volume = 0.1;
         
+    }
+    static popimage = {
+        img : document.getElementById('bubblePop')
     }
     draw(context) {
         context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width/2, this.height/2);

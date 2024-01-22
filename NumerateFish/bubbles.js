@@ -17,15 +17,22 @@ export class Bubble{
         this.inFish = false;
         this.textColor = 'yellow';
         this.value = this.game.bubbleValues[Math.round(Math.random() * (this.game.bubbleValues.length-1))];
-        this.blueBubble = document.getElementById('bubble');
-        this.redBubble = document.getElementById('bubbleRed');
+        // this.blueBubble = document.getElementById('bubble');
+        // this.redBubble = document.getElementById('bubbleRed');
+        this.blueBubble = Bubble.bubbleImage.blueBubble;
+        this.redBubble = Bubble.bubbleImage.redBubble;
         this.hasFood = Math.random() < 0.3 ? true : false;
-        this.foodBubble = document.getElementById('bubbleworm');
+        this.foodBubble = Bubble.bubbleImage.foodBubble;
         if(this.hasFood) this.image = this.foodBubble;
         else this.image = this.blueBubble;
         this.width = 322;
         this.height = 322;
         
+    }
+    static bubbleImage = {
+        blueBubble : document.getElementById('bubble'),
+        redBubble :  document.getElementById('bubbleRed'),
+        foodBubble : document.getElementById('bubbleworm')
     }
     update() {
         const dx = this.x - this.game.player.x;
@@ -71,7 +78,7 @@ export class Bubble{
         this.game.score++;
         this.game.player.bubbles.push(this);
         this.inFish = true;
-        
+        var shellDivider;
         this.game.player.bubbles.forEach(bubble =>{
             if(bubble.hasFood) {
                 if(this.game.player.health<10)
@@ -80,12 +87,15 @@ export class Bubble{
                 }
             this.game.coins += bubble.value;
             this.game.collisions.push(new CollisionAnimation(this.game, bubble));
-            for(var i = 1; i<=bubble.value; i++)
-                if(i%2==1)this.game.floatingPoints.push(new FloatingPoint(this.game, bubble, i));
+            if(bubble.value<=10) shellDivider = 2;
+            else if (bubble.value>10 && bubble.value<=100) shellDivider = 10;
+            else if (bubble.value>100) shellDivider = 100;
+            for(var i = 1; i<=bubble.value/shellDivider; i++)
+                this.game.floatingPoints.push(new FloatingPoint(this.game, bubble, i));
             bubble.markedForDeletion= true;
             // console.log('deleted this bubble '+ bubble);
         });
-        this.game.player.bubbles.splice(0, this.game.player.bubbles.length);
+        this.game.player.bubbles.length = 0;
         Bubble.resetBubbles(this.game);
         if(!(this.game.winningScore>this.game.score)) {
             console.log('you win');
@@ -103,9 +113,10 @@ export class Bubble{
         }
     }
     catchBubble(){
-        console.log(this.game.player.bubbles);
+        // console.log(this.game.player.bubbles);
         this.game.boxNumbers[this.game.player.bubbles.length] = this.value;
         this.game.player.bubbles.push(this);
+        
         this.inFish = true;
     }
     static resetBubbles(game){

@@ -1,8 +1,8 @@
 class WaterObjects {
-    constructor(game, moveable, modifySize, maxFrame) {
+    constructor(game, moveable, modifySize, maxFrame, frameX = 0, frameY = 0) {
         this.game = game;
-        this.frameX = 0;
-        this.frameY = 0;
+        this.frameX = frameX;
+        this.frameY = frameY;
         this.fps = 2;
         this.frameInterval = 1000 / this.fps;
         this.frameTimer = 0;

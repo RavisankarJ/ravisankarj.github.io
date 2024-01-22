@@ -22,15 +22,36 @@ class Layer{
 }
 
 class FisherMan extends Layer{
-    constructor(game, w, h, sM, i, x, y){
+    constructor(game, w, h, sM, i, x, y, sw, sh){
         super(game, w, h, sM, i, x, y);
+        this.frameX=0;
+        this.maxFrame = 1;
+        this.fps = 5;
+        this.swidth = sw;
+        this.sheight = sh;
+        this.frameTimer=0;
+        this.frameInterval = 1000 / this.fps;
+    }
+    update(deltaTime){
+        // if (this.frameTimer > this.frameInterval) {
+        //     this.frameTimer = 0;
+        //     if (this.frameX < this.maxFrame) this.frameX++;
+        //     else {
+        //         this.frameX = 0;
+        //         // if(this.frameY < this.maxFrameY) this.frameY++;
+        //         // else this.frameY = 0;
+        //     }
+        // } else this.frameTimer += deltaTime;
+        if(this.game.hook.isGoingToFish) this.frameX=1;
+        else this.frameX = 0;
     }
     draw(context){
-        context.drawImage(this.image, this.x, this.y, this.width, this.height);
+        context.drawImage(this.image, this.frameX * this.swidth, 0, this.swidth, this.sheight, this.x, this.y, this.width, this.height);
     }
 }
 
-// export class Background{
+{
+    // export class Background{
 //     constructor(game){
 //         this.game = game;
 //         this.fixBackImage = document.getElementById('fixedBackground');
@@ -52,6 +73,7 @@ class FisherMan extends Layer{
 //         });
 //     }
 // }
+}
 
 export class Background{
     constructor(game, bgset){
@@ -69,7 +91,9 @@ export class Background{
         // this.fisherMan = new FisherMan(this.game, 210*0.8, 300*0.8, 0, this.fishermanImage, 450, 140);
         this.fixLayer = new Layer(this.game, bgset.fixLayer.width, bgset.fixLayer.height, bgset.fixLayer.speedModifier, bgset.fixLayer.image, bgset.fixLayer.x, bgset.fixLayer.y);
         this.fisherManDetails = bgset.fisherMan;
-        this.fisherMan = new FisherMan(this.game, this.fisherManDetails.width, this.fisherManDetails.height, 0, this.fisherManDetails.image, this.fisherManDetails.x, this.fisherManDetails.y);
+
+        this.fisherMan = new FisherMan(this.game, this.fisherManDetails.dwidth, this.fisherManDetails.dheight, 0, this.fisherManDetails.image, this.fisherManDetails.x, this.fisherManDetails.y, this.fisherManDetails.swidth, this.fisherManDetails.sheight);
+        
         this.backgroundLayers = [this.fixLayer, ...this.layers, ...this.plants, this.fisherMan];
         this.fishSwimHeight = bgset.fishSwimHeight;
         this.waveHeight = bgset.waveHeight;
@@ -101,8 +125,10 @@ export const BackgroundSet1 = {
         speedModifier:0
     },
     fisherMan: {
-        width: 210*0.8,
-        height: 300*0.8,
+        swidth: 210,
+        sheight: 300,
+        dwidth: 210*0.8,
+        dheight: 300*0.8,
         x: 450,
         y: 140,
         image: document.getElementById('fisherman1')
@@ -154,8 +180,10 @@ export const BackgroundSet2 = {
         speedModifier:0
     },
     fisherMan: {
-        width: 210*0.8,
-        height: 300*0.8,
+        swidth: 210,
+        sheight: 300,
+        dwidth: 210*0.8,
+        dheight: 300*0.8,
         x: 150,
         y: 240,
         image: document.getElementById('fisherman')
@@ -185,7 +213,7 @@ export const BackgroundSet2 = {
     splashPoint: {hookY: 540, splashY: 465},
     mousePos : {x: 164, y: 303},
     hookPos : {x: 164, y: 303},
-    boatPos : {x: 314, y: 247}
+    boatPos : {x: 310, y: 247}
 }
 export const BackgroundSet3 = {
     fixLayer : {
@@ -197,8 +225,10 @@ export const BackgroundSet3 = {
         speedModifier:0
     },
     fisherMan: {
-        width: 458*0.5,
-        height: 533*0.5,
+        swidth: 458,
+        sheight: 533,
+        dwidth: 458*0.5,
+        dheight: 533*0.5,
         x: 200,
         y: 90,
         image: document.getElementById('fishergirl')

@@ -51,12 +51,15 @@ window.addEventListener('load', function () {
             this.music.volume = 0.2;
             this.levelSelctionMusic = new Audio('assets/stage3.ogg');
             this.levelSelctionMusic.volume = 0.4;
-            this.questionNumber = Math.round(Math.random()*10);
+            this.questionNumber = 0;
             this.boxNumbers = ['?', '?'];
             this.winningScore = 5;
             this.bubbleValues = [];
-            this.categories = [[new Level1_1(this), new Level1_2(this), new Level1_3(this), new Level1_4(this), new Level1_5(this), new Level1_6(this)],
-                                [new Level3_1(this), new Level3_2(this), new Level3_3(this)],
+            this.categories = [
+                // [new Level1_1(this), new Level1_2(this), new Level1_3(this), new Level1_4(this), new Level1_5(this), new Level1_6(this)],
+                                [new Level1_1(this)],
+                                // [new Level3_1(this), new Level3_2(this), new Level3_3(this)],
+                                [new Level3_3(this)],
                                 [new Level2_1(this), new Level2_2(this), new Level2_3(this), new Level2_4(this)],
                                 [new Level4_1(this), new Level4_2(this)],
                                 [new Level5_1(this), new Level5_2(this), new Level5_3(this)]
@@ -104,11 +107,12 @@ window.addEventListener('load', function () {
                 this.waveTimer = 0;
             } else this.waveTimer += deltaTime;
             [...this.waves,...this.waterObjects,...this.bubbles, ...this.collisions, ...this.floatingPoints].forEach(obj => obj.update(deltaTime));
+            }
             this.bubbles = this.bubbles.filter(bubble => !bubble.markedForDeletion);          
             this.collisions = this.collisions.filter(collision => !collision.markedForDeletion);
             this.floatingPoints = this.floatingPoints.filter(points => !points.markedForDeletion);
             this.waves = this.waves.filter(wave => !wave.markedForDeletion);
-        }
+            // console.log(this.bubbles.length, this.waves.length, this.collisions.length, this.waterObjects.length, this.bubbleValues.length, this.floatingPoints.length);
         }
         draw(context) {
             if(this.gameStart){
@@ -118,7 +122,7 @@ window.addEventListener('load', function () {
         }
         addBubble(){
             this.bubbles.push(new Bubble(this));
-            console.log(this.bubbles.length);
+            // console.log(this.bubbles.length);
         }
         addWave(){
             var r = Math.round(Math.random()*7)+1
@@ -130,17 +134,17 @@ window.addEventListener('load', function () {
                 case 5: this.waves.push(new Wave(this, 'w5',49,3)); break;
                 case 6: this.waves.push(new Wave(this, 'w6',154,4)); break;
                 case 7: this.waves.push(new Wave(this, 'w7',165,7)); break;
-                case 8: this.waves.push(new Wave(this, 'w8',322,6)); 
+                case 8: this.waves.push(new Wave(this, 'w8',322,6)); break;
                 default: this.waves.push(new Wave(this, 'w1',108,4));
             }
-            this.waves.push(new Wave(this, 'w1'));
+            
         }
         restart() {
             var gameInfos = document.getElementsByClassName('gameInfo');
             for(var i = 0; i< gameInfos.length; i++){
                 gameInfos[i].style.display = "none";
             }
-            this.bubbles = [];
+            this.bubbles.length = 0;
             this.collisions = [];
             this.floatingPoints = [];
             this.UI.infoIdx = 0;
@@ -201,6 +205,7 @@ window.addEventListener('load', function () {
     });
 
     function showInfoContainer(idx) {
+        game.gamePause = true;
         var infoContainerElement = document.getElementById('infoContainers');
         infoContainerElement.style.display = "flex";
         infoDivIndex += idx;

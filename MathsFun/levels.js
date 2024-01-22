@@ -85,7 +85,8 @@ export class InBetween extends OneOperand{
         else return false;
     }
     drawQuestion(){
-        this.game.ctx.fillText((this.game.questionNumber-1)+',  ___,  '+(parseInt(this.game.questionNumber)+1), this.game.width - 255, 90);
+        // this.game.ctx.fillText((this.game.questionNumber-1) + ',  ___,  ' +(parseInt(this.game.questionNumber)+1), this.game.width - 255, 90);
+        this.game.ctx.fillText(`${this.game.questionNumber-1},  ___,  ${parseInt(this.game.questionNumber)+1}`, this.game.width - 255, 90);
     }
 }
 
@@ -402,7 +403,7 @@ export class Level2_5 extends InBetween{
         var tempArr = [];
         for(var i = 1; i<=10; i++) tempArr.push(i);
         for(var i=0; i<this.game.winningScore; i++){
-            this.questions.push(tempArr.splice(Math.round(Math.random()*tempArr.length)-1,1));
+            this.questions.push(...tempArr.splice(Math.round(Math.random()*tempArr.length)-1,1));
         }
     }
     changeQuestion(){
@@ -430,7 +431,7 @@ export class Level2_6 extends InBetween{
         var tempArr = [];
         for(var i = 11; i<=19; i++) tempArr.push(i);
         for(var i=0; i<this.game.winningScore; i++){
-            this.questions.push(tempArr.splice(Math.round(Math.random()*tempArr.length)-1,1));
+            this.questions.push(...tempArr.splice(Math.round(Math.random()*tempArr.length-1),1));
         }
     }
     changeQuestion(){
