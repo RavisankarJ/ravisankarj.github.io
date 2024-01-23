@@ -3,7 +3,8 @@ class WaterObjects {
         this.game = game;
         this.frameX = frameX;
         this.frameY = frameY;
-        this.fps = 2;
+        // this.fps = 2;
+        this.fps = Math.random()*2+2;
         this.frameInterval = 1000 / this.fps;
         this.frameTimer = 0;
         this.modifySize = modifySize;
@@ -64,15 +65,21 @@ export class Wave extends WaterObjects {
 }
 
 export class Plant extends WaterObjects {
-    constructor(game, x=0, y =1, w = 270, h=73, img = 'plant1', mxFrame = 1) {
+    constructor(game, x=0, y =1, w = 270, h=73, img = 'plant1', mxFrame = 1, dw=w, dh=h) {
         super(game, false, false, mxFrame);
         this.width = w * this.sizeModifier;
         this.height = h * this.sizeModifier;
         this.x = x;
         this.y = y*this.game.height - this.height;
         this.image = document.getElementById(img);
+        this.dw = dw;
+        this.dh = dh;
     }
     update(deltaTime) {
         super.update(deltaTime); 
+    }
+    draw(context) {
+        context.drawImage(this.image, this.frameX * this.width / this.sizeModifier, 0, this.width / this.sizeModifier, this.height / this.sizeModifier, this.x, this.y, this.dw, this.dh);
+        
     }
 }
