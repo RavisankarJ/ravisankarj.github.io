@@ -6,11 +6,12 @@ import { Background, BackgroundSet1, BackgroundSet2, BackgroundSet3, BackgroundS
 import { Plant1, Plant, Wave } from "./waterObjects.js";
 import { Level1_1, Level1_2, Level1_3, Level1_4, Level1_5, Level1_6, Level2_1,  Level2_2,  Level2_3,  Level2_4,  Level3_1, Level3_2, Level3_3, Level4_1, Level4_2, Level5_1, Level5_2, Level5_3 } from "./levels.js";
 import { LevelButton, MusicIcon, InfoButton, HomeButton } from "./buttons.js";
-let lastTime = 0, infoDivIndex = 0;
+let lastTime = 0;
 
 window.addEventListener('load', function () {
     const canvas = document.getElementById('canvas1');
     const ctx = canvas.getContext('2d');
+    var infoDivIndex = 0;
     canvas.width = Background.canvasSize.width;
     canvas.height = Background.canvasSize.height;
     class Game{
@@ -56,10 +57,8 @@ window.addEventListener('load', function () {
             this.winningScore = 5;
             this.bubbleValues = [];
             this.categories = [
-                // [new Level1_1(this), new Level1_2(this), new Level1_3(this), new Level1_4(this), new Level1_5(this), new Level1_6(this)],
-                                [new Level1_1(this)],
-                                // [new Level3_1(this), new Level3_2(this), new Level3_3(this)],
-                                [new Level3_3(this)],
+                [new Level1_1(this), new Level1_2(this), new Level1_3(this), new Level1_4(this), new Level1_5(this), new Level1_6(this)],
+                                [new Level3_1(this), new Level3_2(this), new Level3_3(this)],
                                 [new Level2_1(this), new Level2_2(this), new Level2_3(this), new Level2_4(this)],
                                 [new Level4_1(this), new Level4_2(this)],
                                 [new Level5_1(this), new Level5_2(this), new Level5_3(this)]
@@ -71,10 +70,10 @@ window.addEventListener('load', function () {
             this.music.muted = false;
             
             this.infoButton = new InfoButton(this);
-            // this.homeButton = new HomeButton(this);
+            this.homeButton = new HomeButton(this);
             this.levelBoxes = [
                 new LevelButton(this, 120, 170, 1, 'Addition'),
-                new LevelButton(this, 420, 170, 2, 'Addition'),
+                new LevelButton(this, 420, 170, 2, 'Addition+'),
                 new LevelButton(this, 120, 470, 3, 'Subtraction'),
                 new LevelButton(this, 420, 470, 4, 'Multiples'),
                 new LevelButton(this, 270, 720, 5, 'Factors'),
@@ -112,13 +111,13 @@ window.addEventListener('load', function () {
             this.collisions = this.collisions.filter(collision => !collision.markedForDeletion);
             this.floatingPoints = this.floatingPoints.filter(points => !points.markedForDeletion);
             this.waves = this.waves.filter(wave => !wave.markedForDeletion);
-            // console.log(this.bubbles.length, this.waves.length, this.collisions.length, this.waterObjects.length, this.bubbleValues.length, this.floatingPoints.length);
+            // console.log(deltaTime);
         }
         draw(context) {
             if(this.gameStart){
-                [this.background,...this.waves, ...this.waterObjects,this.infoButton, this.musicButton, ...this.levelBoxes].forEach(obj=>obj.draw(context));
+                [this.background,...this.waves, ...this.waterObjects, this.infoButton, this.musicButton, ...this.levelBoxes].forEach(obj=>obj.draw(context));
             }
-            else [this.background,...this.waves,...this.waterObjects,this.infoButton,...this.bubbles, this.player, ...this.collisions, ...this.floatingPoints, this.UI, this.musicButton].forEach(obj => obj.draw(context));
+            else [this.background,...this.waves,...this.waterObjects,this.homeButton, this.infoButton,...this.bubbles, this.player, ...this.collisions, ...this.floatingPoints, this.UI, this.musicButton].forEach(obj => obj.draw(context));
         }
         addBubble(){
             this.bubbles.push(new Bubble(this));
@@ -159,6 +158,19 @@ window.addEventListener('load', function () {
             // this.player.restart();
             lastTime = performance.now();
             animate(0);
+        }
+        quit(){
+                this.currentLevel = 0;
+                this.bubbles.length = 0;
+                this.collisions = [];
+                this.floatingPoints = [];
+                this.UI.infoIdx = 0;
+                this.score = 0;
+                this.player.restart();
+                this.gamePause = false;
+                this.gameStart = true;
+                lastTime = performance.now();
+                animate(lastTime);
         }
     }
     
@@ -223,6 +235,15 @@ window.addEventListener('load', function () {
     }
     document.getElementById('prev').addEventListener('click', evt => showInfoContainer(-1));
     document.getElementById('next').addEventListener('click', evt => showInfoContainer(1));
+    document.getElementById('quitButton').addEventListener('click',function(){ 
+        document.getElementById('quitLevel').style.display = 'none';
+        
+        game.quit();
+    });
+    document.getElementById('noQuit').addEventListener('click', function(){ 
+        document.getElementById('quitLevel').style.display = 'none';
+        if(game.gamePause) resumeGame();
+    });
     document.getElementById('close').addEventListener('click', function(){
         document.getElementById('infoContainers').style.display = 'none';
         // document.getElementById('start').style.display = "block";

@@ -66,15 +66,14 @@ export class InputHandler{
                 }
             });
             if (this.isClickedButton(this.game.infoButton, evt)) {
-                this.game.gamePause = true;
-                document.getElementById('infoContainers').style.display = "flex";
+                if(!this.game.gamePause){this.game.gamePause = true;
+                document.getElementById('infoContainers').style.display = "flex";}
             }
-            // if (this.isClickedButton(this.game.homeButton, evt)) {
-            //     this.game.gameOver = true;
-            //     this.game.currentLevel = 0;
-            //     this.game.gameStart = true;
-            //     this.game.restart(); 
-            // }
+            if (this.isClickedButton(this.game.homeButton, evt)) {
+                if(!this.game.gamePause){this.game.gamePause = true;
+                document.getElementById('quitLevel').style.display = "flex";}
+                // this.game.quit();   
+            }
         });
         this.game.canvas.addEventListener('mouseup', evt => {
             this.mouse.click = false;
