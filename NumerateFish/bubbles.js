@@ -67,7 +67,7 @@ export class Bubble{
             this.game.ctx.drawImage(this.image, this.x-50, this.y-50, this.radius*2.2, this.radius*2.2);
             this.game.ctx.save();
             this.game.ctx.fillStyle = this.textColor;
-            this.game.ctx.font = "bold 32px Arial Black";
+            this.game.ctx.font = "bold 40px Pacifico";
             this.game.ctx.textAlign = 'center';
             this.game.ctx.textBaseline = 'middle';
             this.game.ctx.fillText(this.value,this.x, this.y);

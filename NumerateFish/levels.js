@@ -1,4 +1,5 @@
 import {QuestionBox} from "./buttons.js";
+
 function ChangeBackground(game){
     (game.backgroundIndex<game.backgrounds.length-1) ? game.backgroundIndex++ : game.backgroundIndex=0;
         game.background = game.backgrounds[game.backgroundIndex];
@@ -13,6 +14,7 @@ export class OneOperand{
         this.questionBoxes = [];
         this.game.bubbleValues = this.createBubbleValues(); 
         ChangeBackground(this.game);
+        this.game.qbg.showSwitch = true;
     }
     
 }
@@ -62,6 +64,7 @@ export class TwoOperands{
         
         this.game.bubbleValues = this.createBubbleValues();
         ChangeBackground(this.game);
+        this.game.qbg.showSwitch = true;
     }
     drawQuestion(){
         // this.questionBoxes.forEach(box => {
@@ -91,6 +94,7 @@ export class ThreeOperands{
         
         this.game.bubbleValues = this.createBubbleValues();
         ChangeBackground(this.game);
+        this.game.qbg.showSwitch = true;
     }
     drawQuestion(ctx){
         // this.questionBoxes.forEach(box => {
@@ -235,7 +239,7 @@ export class Level2_2 extends TwoOperands{
     }
     enter(){
         super.enter();
-        this.game.questionNumber = Math.round(Math.random()*5+5);
+        this.game.questionNumber = Math.round(Math.random()*4+6);
         this.game.winningScore = 3;
         this.game.bubbleValues = this.createBubbleValues();
         this.game.operationChar = '-';
@@ -258,7 +262,7 @@ export class Level2_3 extends TwoOperands{
     }
     enter(){
         super.enter();
-        this.game.questionNumber = Math.round(Math.random()*3+7)*10;
+        this.game.questionNumber = Math.round(Math.random()*4+6)*10;
         this.game.winningScore = 3;
         this.game.bubbleValues = this.createBubbleValues();
         this.game.operationChar = '-';
@@ -361,7 +365,7 @@ export class Level4_1 extends Multiples{
     }
     enter(){
         this.game.questionNumber = Math.round(Math.random()*3+2);
-        this.game.winningScore = 5;
+        this.game.winningScore = 1;
         super.enter();
     }
     createBubbleValues(){
