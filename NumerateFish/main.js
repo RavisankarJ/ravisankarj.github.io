@@ -3,7 +3,7 @@ import { InputHandler } from "./input.js";
 import {Bubble} from "./bubbles.js";
 import { UI } from "./UI.js";
 import { Background, BackgroundSet1, BackgroundSet2, BackgroundSet3, BackgroundSet4 } from './background.js';
-import { Plant1, Plant, Wave } from "./waterObjects.js";
+import { Wave, QuestionBackground } from "./backgroundObjects.js";
 import { Level1_1, Level1_2, Level1_3, Level1_4, Level1_5, Level1_6, Level2_1,  Level2_2,  Level2_3,  Level2_4,  Level3_1, Level3_2, Level3_3, Level4_1, Level4_2, Level5_1, Level5_2, Level5_3 } from "./levels.js";
 import { LevelButton, MusicIcon, InfoButton, HomeButton } from "./buttons.js";
 let lastTime = 0;
@@ -31,11 +31,13 @@ window.addEventListener('load', function () {
             this.bubbleInterval = 2000;
             this.UI = new UI(this);
             this.score = 0;
-            
+            this.qbg = new QuestionBackground(this);
+            this.qbgTimer = 0;
+            this.qbgInterval = 5000;
             this.collisions = [];
             this.floatingPoints = [];
-            // this.waterObjects = [new Plant(this)];
-            this.waterObjects = [];
+            // this.bgObjects = [new Plant(this)];
+            this.bgObjects = [];
             this.backgrounds = [
                 new Background(this, BackgroundSet1),
                 new Background(this, BackgroundSet2),
@@ -87,7 +89,7 @@ window.addEventListener('load', function () {
             this.time += deltaTime;
             this.background.update(deltaTime);
             if(this.gameStart){
-                this.waterObjects.forEach(obj => obj.update(deltaTime));
+                this.bgObjects.forEach(obj => obj.update(deltaTime));
                 this.music.pause();
                 this.levelSelctionMusic.play().catch(function(){
                     console.log('need user interaction');
@@ -105,7 +107,13 @@ window.addEventListener('load', function () {
                 this.addWave();
                 this.waveTimer = 0;
             } else this.waveTimer += deltaTime;
-            [...this.waves,...this.waterObjects,...this.bubbles, ...this.collisions, ...this.floatingPoints].forEach(obj => obj.update(deltaTime));
+            if(this.qbg.showSwitch)
+            if (this.qbgTimer > this.qbgInterval) {
+                this.qbg.showSwitch = false;
+                this.qbgTimer = 0;
+                
+            } else this.qbgTimer += deltaTime;
+            [...this.waves,...this.bgObjects,...this.bubbles, ...this.collisions, ...this.floatingPoints, this.qbg].forEach(obj => obj.update(deltaTime));
             }
             this.bubbles = this.bubbles.filter(bubble => !bubble.markedForDeletion);          
             this.collisions = this.collisions.filter(collision => !collision.markedForDeletion);
@@ -115,9 +123,9 @@ window.addEventListener('load', function () {
         }
         draw(context) {
             if(this.gameStart){
-                [this.background,...this.waves, ...this.waterObjects, this.infoButton, this.musicButton, ...this.levelBoxes].forEach(obj=>obj.draw(context));
+                [this.background,...this.waves, ...this.bgObjects, this.infoButton, this.musicButton, ...this.levelBoxes].forEach(obj=>obj.draw(context));
             }
-            else [this.background,...this.waves,...this.waterObjects,this.homeButton, this.infoButton,...this.bubbles, this.player, ...this.collisions, ...this.floatingPoints, this.UI, this.musicButton].forEach(obj => obj.draw(context));
+            else [this.background,...this.waves,...this.bgObjects,this.homeButton, this.infoButton,...this.bubbles, this.player, ...this.collisions, ...this.floatingPoints, this.qbg, this.UI, this.musicButton].forEach(obj => obj.draw(context));
         }
         addBubble(){
             this.bubbles.push(new Bubble(this));

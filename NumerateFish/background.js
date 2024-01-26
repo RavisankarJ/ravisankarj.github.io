@@ -1,4 +1,4 @@
-import { Plant, Plant1 } from "./waterObjects.js";
+import { Plant } from "./backgroundObjects.js";
 
 class Layer{
     constructor(game,width, height, speedModifier, image, x, y){
@@ -60,6 +60,7 @@ export class Background{
         this.game = game;
         this.layers = [];
         this.plants = [];
+        
         bgset.layers.forEach(layer => {
             this.layers.push(new Layer(this.game, layer.width, layer.height, layer.speedModifier, layer.image, layer.x, layer.y));
         });
