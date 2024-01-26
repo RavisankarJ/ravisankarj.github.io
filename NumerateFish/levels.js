@@ -365,7 +365,7 @@ export class Level4_1 extends Multiples{
     }
     enter(){
         this.game.questionNumber = Math.round(Math.random()*3+2);
-        this.game.winningScore = 1;
+        this.game.winningScore = 5;
         super.enter();
     }
     createBubbleValues(){
