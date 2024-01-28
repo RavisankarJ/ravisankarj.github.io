@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Numerate Fish</title>
+    <title>Fishing the Numbers</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Pacifico&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css" />
@@ -17,20 +17,45 @@
 
 <body>
     <!-- <canvas id="canvas2"></canvas> -->
-    <img src="assets/fish_swim_left.png" id="fish_swim_left" class="player">
-    <img src="assets/fish_swim_right.png" id="fish_swim_right" class="player">
-    <img src="assets/openFishLeft.png" id="openFishLeft" class="player">
-    <img src="assets/openFishRight.png" id="openFishRight" class="player">
-    <img src="assets/Bubble - Blue.png" id="bubble" class="bubble">
-    <img src="assets/Bubble - Red.png" id="bubbleRed" class="bubble">
-    <img src="assets/Bubble - Green.png" id="bubbleGreen" class="bubble">
-    <img src="assets/Bubble_worm.png" id="bubbleworm" class="bubble">
-    <img src="assets/bubble_pop.png" id="bubblePop" class="bubble">
+    <img src="assets/fish_swim_left.png" id="fish_swim_left" class="bubble">
+    <img src="assets/fish_swim_left_desaturated.png" id="fish_swim_left_desaturated" class="bubble">
+    <img src="assets/fish_swim_right.png" id="fish_swim_right" class="bubble">
+    <img src="assets/fish_swim_right_desaturated.png" id="fish_swim_right_desaturated" class="bubble">
+    <!-- <img src="assets/fish_swim_left_green.png" id="green_fish_swim_left" class="bubble">
+    <img src="assets/fish_swim_right_green.png" id="green_fish_swim_right" class="bubble">
+
+    <img src="assets/fish_swim_left_blue.png" id="blue_fish_swim_left" class="bubble">
+    <img src="assets/fish_swim_right_blue.png" id="blue_fish_swim_right" class="bubble">
+
+    <img src="assets/fish_swim_left_pink.png" id="pink_fish_swim_left" class="bubble">
+    <img src="assets/fish_swim_right_pink.png" id="pink_fish_swim_right" class="bubble">
+
+    <img src="assets/fish_swim_left_yellow.png" id="yellow_fish_swim_left" class="bubble">
+    <img src="assets/fish_swim_right_yellow.png" id="yellow_fish_swim_right" class="bubble"> -->
+
+    
+    <img src="assets/bird_sprite.png" id="bird" class="layer">
+    <img src="assets/bird_sprite_right.png" id="birdRight" class="layer">
+    <img src="assets/hook.png" id="hook" class="player">
+    <img src="assets/hooks.png" id="hooks" class="player">
+    <img src="assets/fish.png" id="fish" class="bubble">
+    <!-- <img src="assets/fisherman.png" id="fisherman" class="layer"> -->
+    <img src="assets/fisherman_sprite.png" id="fisherman" class="layer">
+    <img src="assets/fisherman_sprite1.png" id="fisherman1" class="layer">
+    <!-- <img src="assets/fisherman1.png" id="fisherman1" class="layer"> -->
+    <!-- <img src="assets/girl_fishing.png" id="fishergirl" class="layer"> -->
+    <img src="assets/fishergirl_sprite.png" id="fishergirl" class="layer">
+    <!-- <img src="assets/Bubble - Blue.png" id="bubble" class="bubble">
+    <img src="assets/Bubble - Red.png" id="bubbleRed" class="bubble"> -->
+    
+    <img src="assets/water_splash.png" id="waterSplash" class="bubble">
     <img src="assets/layer1.png" id="layer1" class="layer">
     <img src="assets/background.png" id="fixedBackground" class="layer">
     <img src="assets/background2.png" id="fixedBackground2" class="layer">
     <img src="assets/background3.png" id="fixedBackground3" class="layer">
-    <img src="assets/background4.png" id="fixedBackground4" class="layer">
+    <img src="assets/wateryLayer.png" id="wateryLayer1" class="layer">
+    <img src="assets/wateryLayer2.png" id="wateryLayer2" class="layer">
+    <img src="assets/wateryLayer3.png" id="wateryLayer3" class="layer">
     <img src="assets/plant1.png" id="plant1" class="layer">
     <img src="assets/grass1.png" id="grass1" class="layer">
     <img src="assets/plant2.png" id="plant2" class="layer">
@@ -41,10 +66,9 @@
     <img src="assets/plant7.png" id="plant7" class="layer">
     <img src="assets/plant8.png" id="plant8" class="layer">
     <img src="assets/plant9.png" id="plant9" class="layer">
-    <img src="assets/star.png" id="star" class="icon">
-    <img src="assets/coin.png" id="coin" class="icon">
-    <img src="assets/coin collection.png" id="coinCollection" class="icon">
-    <img src="assets/maths box.png" id="mathsbox" class="icon">
+    <img src="assets/bucket fish.png" id="bucket" class="layer">
+    
+    <img src="assets/shell.png" id="shell" class="icon">
     <img src="assets/musicIcon.png" id="musicButton" class="icon">
     <img src="assets/heart.png" id="heart" class="icon">
     <img src="assets/levelIcon.png" id="levelIcon" class="icon">
@@ -60,7 +84,6 @@
     <img src="assets/w7.png" id="w7" class="layer">
     <img src="assets/w8.png" id="w8" class="layer">
     <img src="assets/arrow1.png" id="arrow1" class="icon">
-    <img src="assets/arrow2.png" id="arrow2" class="icon">
     <div id="gameDiv">
         <canvas id="canvas1"></canvas>
         <div id="useChrome" class="card">
@@ -78,9 +101,8 @@
                 <div class="textContainer">
                     <div class="card">
                         <div>
-                            <h3 class="info__title">Numerate Fish</h3>
-                            <div class="info__content">Catch the missing numbers to solve the given equation. <p style="margin-top: 1rem;">The
-                                    question is open ended. So there will be many answers for a question. The player has to wait for the answer bubble to appear and then catch it.</p>
+                            <h3 class="info__title">Fishing the Numbers</h3>
+                            <div class="info__content">Fish the numbers (using hook) as per the question displayed on top ride side.  <p style="margin-top: 1rem;">Some questions are open ended. So there will be many answers for those questions. Player has to wait for the answer fish to appear and then catch it.</p>
                             </div>
                         </div>
                     </div>
@@ -91,14 +113,13 @@
                 <div class="textContainer">
                     <div class="card">
                         <div>
-                            <h3 class="info__title">Question / Equation
+                            <h3 class="info__title">Question
                             </h3>
                             <div class="info__content">
                                 <ul>
-                                    <li>The question or equation will be displayed on the top right side.
+                                    <li>The question will be displayed on the top right side.
                                     </li>
-                                    <li>An arrow will be shown each time the question changes. </li>
-                                    <li>The questions are open ended. So there will be many answers for a same question.</li>
+                                    <li>An arrow will be shown each time the question changes.</li>
                                 </ul>
                             </div>
                         </div>
@@ -110,17 +131,14 @@
                 <div class="textContainer">
                     <div class="card">
                         <div>
-                            <h3 class="info__title">How to answer the question?
+                            <h3 class="info__title">How to fish the numbers?
                             </h3>
                             <div class="info__content">
                                 <ul>
-                                    <li>Click / Touch on the bubble which has the required number.</li>
-                                    <li>The fish will catch the number</li>
-                                    <li>For 2 operand questions you need to catch 2 bubbles</li>
-                                    <li>For 3 operand questions you need to catch 3 bubbles</li>
-                                    <li>The numbers you caught will be filled in the question / equation on top right side.</li>
-                                    <li>For more than one operand questions, incase if you caught a wrong bubble and you may click on the fish to release the bublle.</li>
-                                    <li>Note: If fish touch or cross wrong number it will affect fish's health.</li>
+                                    <li>Click / Touch on the fish which has the required number.
+                                    </li>
+                                    <li>The hook will catch the number</li>
+                                    <li>Note: If you catch the wrong fish it will affect player's health.</li>
                                 </ul>
                             </div>
                         </div>
@@ -132,43 +150,23 @@
                 <div class="textContainer">
                     <div class="card">
                         <div>
-                            <h3 class="info__title">Fish Health
+                            <h3 class="info__title">Health, Level, Score and Attemps
                             </h3>
                             <div class="info__content">
                                 <ul>
-                                    <li>You can view the fish's health on top left corner</li>
-                                    <li>Fish's health will decrease if fish catches wrong bubbles</li>
-                                    <li>Fish's health will increase if you catch special right bubble with food.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="info fade">
-                <div class="imgContainer"><img src="assets/info5.png" /></div>
-                <div class="textContainer">
-                    <div class="card">
-                        <div>
-                            <h3 class="info__title">Level, Score and Attempts
-                            </h3>
-                            <div class="info__content">
-                                <ul>
+                                    <li>You can view the player's health on top left corner. Player's health will decrease if you catch wrong fish.</li>
                                     <li>You win if you give right answers all the attempts. The number of attempts will be displayed on top left side.</li>
                                     <li>The current level will be displayed on top center. Each level will increase the difficulty.</li>
-                                    <li>The more you answer the more you collect coins. You can view your coins near the coin collection picture.</li>
+                                    <li>The more you answer the more you collect shells. You can view your shells near the shell picture.</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
-
             <i id="prev" class="fa-solid fa-arrow-left"></i>
             <i id="next" class="fa-solid fa-arrow-right"></i>
             <div class="dots">
-                <span class="dot"></span>
                 <span class="dot"></span>
                 <span class="dot"></span>
                 <span class="dot"></span>
@@ -177,40 +175,9 @@
             <i id="close" class="fa-solid fa-circle-xmark"></i>
         </div>
         <div id="levelInfoContainers" class="gameInfo">
-            <div class="info fade">
-                <div class="imgContainer"><img src="assets/infoLevel3.png" /></div>
-                <div class="textContainer">
-                    <div class="card">
-                        <div>
-                            <h3 class="info__title">Level 3: Storm of Pathogens</h3>
-                            <div class="info__content">Ready to face storm of pathogens.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="info fade">
-                <div class="imgContainer"><img src="assets/infoLevel4.png" /></div>
-                <div class="textContainer">
-                    <div class="card">
-                        <div>
-                            <h3 class="info__title">Level 4: Storm and Speedy pathogens</h3>
-                            <div class="info__content">Ready to face speedy storm of pathogens.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="info fade">
-                <div class="imgContainer"><img src="assets/infoLevel5.png" /></div>
-                <div class="textContainer">
-                    <div class="card">
-                        <div>
-                            <h3 class="info__title">Level 5: Storm and More Speedy pathogens</h3>
-                            <div class="info__content">Ready to face speedy storm of pathogens. I hope you have
-                                collected powers as much as possible.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
+            
+            
             
         </div>
         <div id="start" class="gameInfo card">
@@ -246,37 +213,43 @@
                 </div>
             </div>
             <div class="info fade">
-                <div class="imgContainer">
-                    <img src="assets/credit1.png" />
-                    
-                </div>
+                <div class="imgContainer"><img src="assets/credit1.png" /></div>
                 <div class="textContainer">
                     <div class="card">
                         <div>
-                            <h3 class="info__title">Player, Bubble, Bubble pop animation</h3>
-                            <div class="info__content"><ul>
-                                <li>Fish animation image sprite by <a href="https://opengameart.org/content/cartoon-fish">Game Developer Studio</a> on opengameart.org</li>
-                                <li>Bubble image by <a href="https://opengameart.org/content/bubbles8-colors">HorrorPen on opengameart</a></li>
-                                <li>Worm inside the bubble designed by <a href="https://pixabay.com/vectors/earthworm-worm-icon-cartoon-5652736/">Chippyri on Pixabay</a></li>
-                                <li>Bubble pop up animation designed by <a href="https://www.gamedeveloperstudio.com/graphics/viewgraphic.php?page-name=Bubble-popping-animation&item=1u5l0o9z5m3s6b612j" >Brooks</a></li>
-                            </ul></div>
+                            <h3 class="info__title">Player</h3>
+                            <div class="info__content">
+                                <li>Fishermen <a href="https://www.freepik.com/free-vector/three-boys-fishing-river_1824083.htm#fromView=search&term=Fishing&track=sph&regularType=vector&page=1&position=41&uuid=5ad7b5f5-7d71-489a-8f54-b798e037571d">Image by brgfx</a> on Freepik</li>
+                                <li>Fishergirl <a href="https://www.freepik.com/free-vector/girl-cartoon-character-sitting-fishing-white_13987760.htm#fromView=search&term=Fishing&track=sph&regularType=vector&page=1&position=16&uuid=2f1162c0-71c7-45b1-b12c-6325fea7093f">Image by brgfx</a> on Freepik</li>
+                                <li>Hook <a href="https://www.freepik.com/free-vector/set-various-modern-colorful-fishing-bait_29006426.htm#fromView=search&term=Fishing&track=sph&regularType=vector&page=1&position=4&uuid=2f1162c0-71c7-45b1-b12c-6325fea7093f">Image by jcomp</a> on Freepik</li>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="info fade">
-                <div class="imgContainer">
-                    <img src="assets/credit2.png" />
-                </div>
+                <div class="imgContainer"><img src="assets/credit2.png" /></div>
                 <div class="textContainer">
                     <div class="card">
                         <div>
                             <h3 class="info__title">Backgrounds</h3>
                             <div class="info__content">
-                                <li><a href="https://www.freepik.com/free-vector/sea-background-video-conferencing_9470396.htm#query=underwater%20cartoon&position=1&from_view=keyword&track=ais&uuid=7740bbf7-0e94-41ab-8bff-6515817a5b1d">Image by pikisuperstar on Freepik</a></li>
-                                <li><a href="https://www.freepik.com/free-vector/flat-world-oceans-day-background_25799617.htm">Image by Freepik</a></li>
-                                <li><a href="https://www.freepik.com/free-vector/world-oceans-day-hand-drawn-flat-background_25892213.htm#from_view=detail_serie">Image by Freepik</a></li>
+                                <li>Background 1 <a href="https://www.freepik.com/free-vector/three-boys-fishing-river_1824083.htm#fromView=search&term=Fishing&track=sph&regularType=vector&page=1&position=41&uuid=5ad7b5f5-7d71-489a-8f54-b798e037571d">Image by brgfx</a> on Freepik and by <a href="https://www.rawpixel.com/image/6458465/vector-background-face-sticker">Image</a></li>
+                                <li>Background 2 <a href="https://www.freepik.com/free-vector/boy-fishing-by-river_4923706.htm#fromView=search&term=Fishing&track=sph&regularType=vector&page=1&position=23&uuid=d0b5a818-5fcd-4058-85e7-9d7698ee7af9">Image by brgfx</a> on Freepik and by <a href="https://www.freepik.com/free-vector/underwater-background-with-marine-animals_2271736.htm#&position=0&from_view=search&track=ais&uuid=bef4f021-8f19-4822-88fe-291cd07727d7">Freepik</a></li>
+                                <li>Background 3 <a href="https://www.freepik.com/free-vector/wooden-pier-lake-pond-river-landscape-wharf-with-ropes-lantern-barrel-sacks-picturesque-background-with-clouds-spruces-mountains-reflection-water-cartoon-illustration_9498832.htm#&position=0&from_view=search&track=ais&uuid=0fe38ec2-01d6-403f-a87c-cef84aa1805e">Image by upklyak</a> on Freepik and by <a href="https://www.freepik.com/free-vector/underwater-background-with-marine-animals_2271736.htm#&position=0&from_view=search&track=ais&uuid=bef4f021-8f19-4822-88fe-291cd07727d7">Freepik</a></li>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="info fade">
+                <div class="imgContainer"><img src="assets/fish_swim_left.png" /></div>
+                <div class="textContainer">
+                    <div class="card">
+                        <div>
+                            <h3 class="info__title">Fish Sprite</h3>
+                            <div class="info__content">Fish animation image sprite by <a href="https://opengameart.org/content/cartoon-fish">Game Developer Studio</a> on opengameart.org</div>
+
                         </div>
                     </div>
                 </div>
@@ -289,7 +262,7 @@
                             <h3 class="info__title">Different Icons</h3>
                             <div class="info__content">
                                 <li>Stage selection image by <a href="https://pixabay.com/users/bricketh-1005143/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=5084443">Brick</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=5084443">Pixabay</a></li>
-                                <li>Coin image by <a href="https://www.freepik.com/free-vector/modern-indian-rupee-composition_3419125.htm#&position=43&from_view=search&track=ais&uuid=5c429311-7dc0-450c-812b-f9f3cc502065">freepik</a></li>
+                                <li>Shell <a href="https://www.freepik.com/free-vector/underwater-organism-realistic-set-jellyfish-seashell-algae-coral-starfish-seaweed-isolated-vector-illustration_58596545.htm#fromView=image_search&track=&regularType=vector&page=1&position=0&uuid=509d06bb-2032-4da3-9a6d-b04cafe2849c">Image by macrovector</a> on Freepik</li>
                                 <li>Arrow Image by <a href="https://www.freepik.com/free-vector/flat-design-arrow-collection_12811102.htm#fromView=search&term=arrow&track=sph&regularType=vector&page=1&position=20&uuid=246ede85-5f20-43ee-929d-b77bed2d93e1">Freepik</a></li>
                                 <li>Home image by <a href="https://pixabay.com/vectors/symbol-gui-internet-internet-page-2480166/">Jan from >Pixabay</a></li>
                                 <li>Heart <a href="https://www.freepik.com/free-vector/gradient-heart_35202409.htm#&position=4&from_view=search&track=ais&uuid=5fb8713c-d0b3-48fe-85f5-0cc19ea13aac">image by freepik</a></li>
@@ -307,11 +280,12 @@
                 <div class="textContainer">
                     <div class="card">
                         <div>
-                            <h3 class="info__title">Plants</h3>
+                            <h3 class="info__title">Plants & Bird</h3>
                             <div class="info__content">
                                 <li><a href="https://www.freepik.com/free-vector/flat-coral-collection_4289384.htm#fromView=search&term=underwater+plants&track=ais&regularType=vector&page=1&position=4&uuid=fb491eab-1fb8-40a5-886e-2563b7d49e3f?log-in=email">Image by Freepik</a></li>
                                 <li><a href="https://www.freepik.com/free-vector/hand-drawn-coral-collection_4436243.htm#fromView=search&term=underwater+plants&track=ais&regularType=vector&page=1&position=49&uuid=e2551c1d-f589-4297-9f6e-4c18c0e0300e">Image by Freepik</a></li>
                                 <li><a href="https://www.freepik.com/free-vector/hand-drawn-coral-with-fishes-collection_4332798.htm">Image by Freepik</a></li>
+                                <li>Bird Image by <a href="https://www.freepik.com/free-vector/flat-design-animation-frames-element-collection_31630031.htm">Freepik</a></li>
                                 </div>
                         </div>
                     </div>
@@ -326,11 +300,13 @@
                         <div>
                             <h3 class="info__title">Audio</h3>
                             <div class="info__content">
-                                <li><a href="https://opengameart.org/content/bubble-sound-effects">Bubble pop sound</a></li>
-                                <li><a href="https://opengameart.org/content/4-chiptunes-adventure">Background music</a></li>
-                                <li>Wrong selection sound
-                                    <iframe frameborder="0" scrolling="no" src="https://freesound.org/embed/sound/iframe/590041/simple/small/" width="375" height="30"></iframe></li>
-                                <li><a href="https://www.freepik.com/free-vector/sound-wave-equalizer-vector-design-set_3791221.htm#fromView=search&term=audio&track=sph&regularType=vector&page=1&position=9&uuid=df2b5330-e281-448b-97e0-cfaaf5ab19f9">Audio credit image by rawpixel.com</a> on Freepik</li>
+                                <li>Correct answer sound on freesound<iframe frameborder="0" scrolling="no" src="https://freesound.org/embed/sound/iframe/546084/simple/small/" width="375" height="30"></iframe></li>
+                                <li><a href="https://pixabay.com/music/upbeat-fun-kids-playful-comic-carefree-game-happy-positive-music-57026/">Stage selection music</a></li>
+                                <li><a href="https://pixabay.com/music/happy-childrens-tunes-playful-140946/">Background music</a></li>
+                                <li>Water splash sound on freesound
+                                    <iframe frameborder="0" scrolling="no" src="https://freesound.org/embed/sound/iframe/50623/simple/small/" width="375" height="30"></iframe></li>
+                                <li>Wrong answer sound on freesound<iframe frameborder="0" scrolling="no" src="https://freesound.org/embed/sound/iframe/49940/simple/small/" width="375" height="30"></iframe></li>
+                                <li>Audio credit <a href="https://www.freepik.com/free-vector/sound-wave-equalizer-vector-design-set_3791221.htm#fromView=search&term=audio&track=sph&regularType=vector&page=1&position=9&uuid=df2b5330-e281-448b-97e0-cfaaf5ab19f9">image by rawpixel.com</a> on Freepik</li>
                             </div>
                         </div>
                     </div>
@@ -371,6 +347,7 @@
                 <span class="dot"></span>
                 <span class="dot"></span>
                 <span class="dot"></span>
+                <span class="dot"></span>
             </div>
             <div id="goHome">
                 <button><i class="fa-solid fa-house"></i></button>
@@ -383,7 +360,6 @@
                 <!-- <p class="card__content">Great, you solved the equation.</p> -->
                 <p style="text-align: center; margin-top: 5px;"><button id="quitButton">Yes</button><button id="noQuit">No</button></p>
             </div>
-
         </div>
     </div>
     <div id="loader" class="loader"></div>
