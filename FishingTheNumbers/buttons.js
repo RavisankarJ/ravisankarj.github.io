@@ -94,3 +94,19 @@ export class LevelButton {
         context.restore();
     }
 }
+
+export class ShellIcon {
+    constructor(game) {
+        this.game = game;
+        this.icon = document.getElementById('shell');
+        this.width = 50;
+        this.height = 45;
+        this.radius = 30;
+        this.x = (this.game.width/3)-20;
+        this.y = 100-194/7;
+        
+    }
+    // draw(context) {
+    //     context.drawImage(this.icon, this.width * this.frameX, 0, this.width, this.height, this.x, this.y, this.width, this.height);
+    // }
+}

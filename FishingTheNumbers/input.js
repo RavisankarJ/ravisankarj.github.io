@@ -1,6 +1,6 @@
 import { CollisionAnimation } from "./CollisionAnimation.js";
 import { Fish } from "./fishes.js";
-
+import { FloatingMessage } from "./floatingPoints.js";
 export class InputHandler{
     constructor(game){
         this.game = game;
@@ -67,6 +67,18 @@ export class InputHandler{
                 if(!this.game.gamePause){this.game.gamePause = true;
                 document.getElementById('quitLevel').style.display = "flex";}
                 // this.game.quit();   
+            }
+            if (this.isClickedButton(this.game.shellIcon, evt)) {
+                if(!this.game.gamePause && !this.game.gameStart && !this.game.gameOver){
+                    // console.log(this.game.shells);
+                    if(this.game.hook.health<10)
+                        if(this.game.shells>(10*(this.game.currentLevel+1))){
+                            this.game.shells-=(10*(this.game.currentLevel+1));
+                            this.game.hook.health+=1;
+                            this.game.floatingPoints.push(new FloatingMessage('+10',this.game.shellIcon.x, this.game.shellIcon.y, 10, 80));
+                        }
+                }
+                
             }
             this.game.fishes.forEach(fish => {
             if(this.isClicked(fish, evt))

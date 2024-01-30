@@ -179,3 +179,45 @@ export class QuestionBackground{
         }
     }
 }
+
+export class FadeFishes {
+    constructor(game) {
+        this.game = game;
+        this.direction = {left: 1, right: -1};
+        this.y = Math.random()*600+400;
+        this.movingDirection = Math.random()>0.5?this.direction.left:this.direction.right;
+        switch(this.movingDirection){
+            case this.direction.left: {
+                this.image = document.getElementById('fadeFishes1');
+                this.x = this.game.width + 10;
+                this.width = 182;
+                this.height = 77;
+            }break;
+            case this.direction.right: {
+                this.image = document.getElementById('fadeFishes2');
+                this.x = 0 - 10;
+                this.width = 107;
+                this.height= 49;
+            }break;
+            default: {
+                this.image = document.getElementById('fadeFishes1');
+                this.x = this.game.width + 10;
+                this.width = 182;
+                this.height = 77;
+            }
+        }
+        this.sizeModifier = Math.random()*0.5+0.5;  
+        this.speed = Math.random()*0.4+0.1;
+        // console.log('fadefishes constructed');
+    }   
+    update(deltaTime){
+        this.x -= (this.speed*this.movingDirection);
+        if(this.movingDirection == this.direction.left)
+            if(this.x<0-this.width) this.markedForDeletion = true;
+        if(this.movingDirection == this.direction.right)
+            if(this.x>this.game.width+this.width) this.markedForDeletion = true;
+    }
+    draw(context){
+        context.drawImage(this.image, this.x, this.y, this.width*this.sizeModifier, this.height*this.sizeModifier);
+    }
+}

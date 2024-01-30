@@ -3,7 +3,7 @@ import { InputHandler } from "./input.js";
 import {Bubble} from "./bubbles.js";
 import { UI } from "./UI.js";
 import { Background, BackgroundSet1, BackgroundSet2, BackgroundSet3, BackgroundSet4 } from './background.js';
-import { Wave, QuestionBackground } from "./backgroundObjects.js";
+import { Wave, QuestionBackground, FadeFishes } from "./backgroundObjects.js";
 import { Level1_1, Level1_2, Level1_3, Level1_4, Level1_5, Level1_6, Level2_1,  Level2_2,  Level2_3,  Level2_4,  Level3_1, Level3_2, Level3_3, Level4_1, Level4_2, Level5_1, Level5_2, Level5_3 } from "./levels.js";
 import { LevelButton, MusicIcon, InfoButton, HomeButton } from "./buttons.js";
 let lastTime = 0;
@@ -132,7 +132,7 @@ window.addEventListener('load', function () {
             // console.log(this.bubbles.length);
         }
         addWave(){
-            var r = Math.round(Math.random()*7)+1
+            var r = Math.round(Math.random()*8)+1
             switch(r){
                 case 1: this.waves.push(new Wave(this, 'w1',108,4)); break;
                 case 2: this.waves.push(new Wave(this, 'w2',152,6)); break;
@@ -142,6 +142,7 @@ window.addEventListener('load', function () {
                 case 6: this.waves.push(new Wave(this, 'w6',154,4)); break;
                 case 7: this.waves.push(new Wave(this, 'w7',165,7)); break;
                 case 8: this.waves.push(new Wave(this, 'w8',322,6)); break;
+                case 9: this.waves.push(new FadeFishes(this));break;
                 default: this.waves.push(new Wave(this, 'w1',108,4));
             }
             

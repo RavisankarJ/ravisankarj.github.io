@@ -5,7 +5,7 @@ import { UI } from "./UI.js";
 import { Background, BackgroundSet1, BackgroundSet2, BackgroundSet3} from './background.js';
 import { Wave, QuestionBackground, Birds, WaterLayer } from "./backgroundObjects.js";
 import { Level1_1, Level1_2, Level1_3, Level1_4, Level2_1,  Level2_2,  Level2_3,  Level2_4,  Level2_5,  Level2_6,  Level3_1, Level3_2, Level3_3, Level3_4} from "./levels.js";
-import { LevelButton, MusicIcon, InfoButton, HomeButton } from "./buttons.js";
+import { LevelButton, MusicIcon, InfoButton, HomeButton, ShellIcon } from "./buttons.js";
 let lastTime = 0, infoDivIndex = 0;
 
 window.addEventListener('load', function () {
@@ -76,6 +76,7 @@ window.addEventListener('load', function () {
             
             this.infoButton = new InfoButton(this);
             this.homeButton = new HomeButton(this);
+            this.shellIcon = new ShellIcon(this);
             this.levelBoxes = [
                 new LevelButton(this, 50, 570, 1, 'Identify'),
                 new LevelButton(this, 270, 570, 2, 'Order'),
