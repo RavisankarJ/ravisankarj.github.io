@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemical Elements Chapter 1</title>
+
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 100%;
+            margin: auto;
+            padding: 15px;
+            background: #f9f9f9;
+            color: #333;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        input,
+        button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 1rem;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+        }
+
+        button:hover:not(:disabled) {
+            background-color: #0056b3;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .correct {
+            background-color: #28a745 !important;
+            color: white;
+        }
+
+        .wrong {
+            background-color: #dc3545 !important;
+            color: white;
+        }
+
+        #progressBarContainer {
+            background: #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 20px;
+            margin-bottom: 15px;
+        }
+
+        #progressBar {
+            background: #28a745;
+            width: 0%;
+            height: 100%;
+            transition: width 0.3s;
+        }
+
+        audio {
+            /* width: 100%; */
+            margin: 10px 0;
+        }
+
+        #submitStatus {
+            text-align: center;
+            padding: 15px;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+        }
+
+        /* .question-header h2 {
+            font-size: 1.1rem;
+        } */
+
+        .question-header button {
+            font-size: 1.8rem;
+            margin-left: 15px;
+        }
+
+
+        #PlayBtn {
+            background: transparent;
+            border: none;
+            font-size: 2rem;
+            margin: 0 auto;
+            display: block;
+            color: #007BFF;
+        }
+
+        /* #nextBtn {
+            background-color: #9828a7;
+            color: white;
+            border: none;
+            font-size: 1rem;
+            padding: 12px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+        }
+
+        #nextBtn:hover:not(:disabled) {
+            background-color: #7c2188;
+        } */
+
+
+
+        /* CSS */
+        .button-91 {
+            color: #fff;
+            padding: 15px 25px;
+            background-color: #006d67;
+            background-image: radial-gradient(93% 87% at 87% 89%, rgba(0, 0, 0, 0.23) 0%, transparent 86.18%), radial-gradient(66% 66% at 26% 20%, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 69.79%, rgba(255, 255, 255, 0) 100%);
+            box-shadow: inset -3px -3px 9px rgba(255, 255, 255, 0.25), inset 0px 3px 9px rgba(255, 255, 255, 0.3), inset 0px 1px 1px rgba(255, 255, 255, 0.6), inset 0px -8px 36px rgba(0, 0, 0, 0.3), inset 0px 1px 5px rgba(255, 255, 255, 0.6), 2px 19px 31px rgba(0, 0, 0, 0.2);
+            border-radius: 14px;
+            font-weight: bold;
+            font-size: 16px;
+
+            border: 0;
+
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Enter Your Name</h2>
+    <input type="text" id="studentName" placeholder="Your Name">
+    <button onclick="startQuiz()">Start Quiz</button>
+
+    <div id="quiz" class="hidden">
+        <div class="question-header">
+            <h2>Question <span id="qNumber">1</span></h2>
+            <button id="PlayBtn" class="hidden" onclick="playAudio()">▶️</button>
+        </div>
+
+        <p> Progress: <span id="progressText">1 / 1</span> </p>
+        <div style="background: #ddd; border-radius: 10px; overflow: hidden; height: 20px; margin-bottom: 15px;">
+            <div id="progressBar" style="background: #4CAF50; width: 0%; height: 100%; transition: width 0.3s;"></div>
+        </div>
+        <p class="loading" id="audioLoading">Loading audio...</p>
+        <audio id="audio" preload="auto" oncanplaythrough="audioReady()"></audio>
+
+        <div id="options"></div>
+        <button id="nextBtn" class="hidden button-91" onclick="nextQuestion()">Next</button>
+        <p>Time left: <span id="timer">10</span>s</p>
+    </div>
+
+    <div id="submitting" class="hidden">
+        <p class="loading">Submitting results, please wait...</p>
+
+    </div>
+
+    <div id="end" class="hidden">
+        <h2>Thank you for completing the quiz!</h2>
+        <p>Your results have been submitted.</p>
+    </div>
+    <div id="submitStatus" style="margin-top: 20px; font-weight: bold;">
+        <button id="retryBtn" class="hidden" onclick="submitResults()" style="margin-top: 10px;">Retry</button>
+    </div>
+    <!-- Feedback Sounds -->
+    <audio id="correctSound" src="audio/points.ogg" preload="auto"></audio>
+    <audio id="wrongSound" src="audio/wrong.wav" preload="auto"></audio>
+
+    <script>
+        const questions = [
+            {
+                audio: 'audio/aluminium.mp3',
+                options: ['Aluminium', 'Aluminiumm', 'Aluminem', 'Aluminam'],
+                answer: 'Aluminium'
+            },
+            {
+                audio: 'audio/barium.mp3',
+                options: ['Bareum', 'Barium', 'Bariam', 'Bayrium'],
+                answer: 'Barium'
+            },
+
+            {
+                audio: 'audio/oxygen.mp3',
+                options: ['Oxygen', 'Oxigen', 'Oxygin', 'Oxegen'],
+                answer: 'Oxygen'
+            },
+
+            {
+                audio: 'audio/hydrogen.mp3',
+                options: ['Hydrogen', 'Hidrogen', 'Hydrigen', 'Hyrdogen'],
+                answer: 'Hydrogen'
+            },
+
+            {
+                audio: 'audio/iron.mp3',
+                options: ['Iron', 'Iorn', 'Irion', 'iern'],
+                answer: 'Iron'
+            },
+            {
+                audio: 'audio/calcium.mp3',
+                options: ['Calcium', 'Calcuim', 'Calcim', 'Kalcium'],
+                answer: 'Calcium'
+            },
+            {
+                audio: 'audio/potassium.mp3',
+                options: ['Potassium', 'Potasium', 'Potassiumm', 'Potasiam'],
+                answer: 'Potassium'
+            },
+            {
+                audio: 'audio/copper.mp3',
+                options: ['Copper', 'Coppar', 'Couper', 'Coppur'],
+                answer: 'Copper'
+            },
+            {
+                audio: 'audio/zinc.mp3',
+                options: ['Zinc', 'Zink', 'Sinc', 'Zync'],
+                answer: 'Zinc'
+            },
+            {
+                audio: 'audio/sodium.mp3',
+                options: ['Sodium', 'Sodeum', 'Sodiam', 'Sodioum'],
+                answer: 'Sodium'
+            },
+            {
+                audio: 'audio/magnesium.mp3',
+                options: ['Magnesium', 'Magnesuim', 'Magnesiam', 'Magnessium'],
+                answer: 'Magnesium'
+            },
+            {
+                audio: 'audio/sulphur.mp3',
+                options: ['Sulphur', 'Sulfur', 'Sulfer', 'Sufur'],
+                answer: 'Sulphur'
+            },
+            {
+                audio: 'audio/iodine.mp3',
+                options: ['Iodine', 'Iodin', 'Iodeen', 'Idoine'],
+                answer: 'Iodine'
+            },
+            {
+                audio: 'audio/chlorine.mp3',
+                options: ['Chlorine', 'Clorine', 'Clorin', 'Clorene'],
+                answer: 'Chlorine'
+            },
+            {
+                audio: 'audio/bromine.mp3',
+                options: ['Bromine', 'Bromin', 'Broomeen', 'Bramine'],
+                answer: 'Bromine'
+            },
+            {
+                audio: 'audio/silver.mp3',
+                options: ['Silver', 'Silever', 'Silvr', 'Silvar'],
+                answer: 'Silver'
+            },
+            {
+                audio: 'audio/lead.mp3',
+                options: ['Lead', 'Led', 'Leed', 'Ledd'],
+                answer: 'Lead'
+            },
+
+            {
+                audio: 'audio/manganese.mp3',
+                options: ['Manganese', 'Manganeese', 'Manganees', 'Manganesium'],
+                answer: 'Manganese'
+            }
+            // Add more questions up to 18
+        ];
+
+        let current = 0;
+        let timer, audioInterval;
+        const answers = [];
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+        }
+        function startQuiz() {
+            const name = document.getElementById('studentName').value.trim();
+            if (!name) return alert('Please enter your name');
+            shuffleArray(questions);
+            document.getElementById('quiz').classList.remove('hidden');
+            document.querySelector('input').disabled = true;
+            document.querySelector('button').disabled = true;
+            showQuestion();
+        }
+
+        function playAudio() {
+            const audio = document.getElementById('audio');
+            audio.play();
+        }
+
+        function audioReady() {
+            document.getElementById('audioLoading').classList.add('hidden');
+        }
+
+        function showQuestion() {
+            const q = questions[current];
+            const currentNum = current + 1;
+            const total = questions.length;
+            document.getElementById('qNumber').textContent = currentNum;
+            document.getElementById('progressText').textContent = currentNum + ' / ' + total;
+            document.getElementById('progressBar').style.width = (currentNum / total) * 100 + '%';
+            const audio = document.getElementById('audio');
+            // Shuffle the options array
+            const shuffledOptions = [...q.options];
+            shuffleArray(shuffledOptions);
+            document.getElementById('audioLoading').classList.remove('hidden');
+            audio.src = q.audio;
+
+            document.getElementById('options').innerHTML = '';
+            shuffledOptions.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.textContent = opt;
+                btn.onclick = () => selectAnswer(opt);
+                document.getElementById('options').appendChild(btn);
+            });
+
+            let timeLeft = 100;
+            document.getElementById('timer').textContent = timeLeft;
+            clearInterval(timer);
+            clearInterval(audioInterval);
+            timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    clearInterval(audioInterval);
+                    nextQuestion();
+                }
+            }, 1000);
+
+            audioInterval = setInterval(() => {
+                audio.currentTime = 0;
+                audio.play();
+            }, 2000);
+        }
+
+        function selectAnswer(choice) {
+            clearInterval(timer);
+            clearInterval(audioInterval);
+            const correct = questions[current].answer;
+            const correctSound = document.getElementById('correctSound');
+            const wrongSound = document.getElementById('wrongSound');
+
+            if (choice === correct) {
+                correctSound.play();
+            } else {
+                wrongSound.play();
+            }
+
+            answers.push({
+                question: current + 1,
+                selected: choice,
+                correct: correct,
+                isCorrect: choice === correct ? 'Yes' : 'No'
+            });
+            // Show visual feedback
+            const buttons = document.querySelectorAll('#options button');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === correct) {
+                    btn.classList.add('correct');
+                }
+                if (btn.textContent === choice && choice !== correct) {
+                    btn.classList.add('wrong');
+                }
+            });
+
+            // Show "Next" button
+            document.getElementById('nextBtn').classList.remove('hidden');
+
+            // setTimeout(() => nextQuestion(), 500); // Small delay for feedback sound
+        }
+
+        function nextQuestion() {
+            document.getElementById('nextBtn').classList.add('hidden');
+
+            // Reset option buttons
+            const optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = '';
+
+
+            current++;
+            if (current < questions.length) {
+                showQuestion();
+            } else {
+                submitResults();
+            }
+        }
+
+        async function submitResults() {
+            document.getElementById('quiz').classList.add('hidden');
+            const name = document.getElementById('studentName').value.trim();
+
+
+            const formURL = 'https://docs.google.com/forms/d/e/1FAIpQLSdYSoEr2h9YidEBFu0Ye7J9qZvufVFq40HB8da7Hjo7cPRA9Q/formResponse';
+            const submitStatus = document.getElementById('submitStatus');
+
+            const retryButton = document.getElementById('retryBtn');
+            console.log(document.getElementById('retryBtn'));
+            retryButton.classList.add('hidden');
+            submitStatus.textContent = 'Submitting results...';
+            submitStatus.style.color = 'black';
+            console.log('i am here at 228');
+
+
+            try {
+                for (let ans of answers) {
+                    const data = new FormData();
+                    data.append('entry.752504212', name); // Replace with your actual entry IDs
+                    data.append('entry.1517528711', ans.question);
+                    data.append('entry.1176053886', ans.selected);
+                    data.append('entry.981247191', ans.correct);
+                    data.append('entry.860396002', ans.isCorrect);
+                    await fetch(formURL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: data
+                    });
+                    //let submittedCount = 0;
+                    /* answers.forEach((ans) => {
+                         const data = new FormData();
+                         data.append('entry.1234567890', name);
+                         data.append('entry.2345678901', ans.question);
+                         data.append('entry.3456789012', ans.selected);
+                         data.append('entry.4567890123', ans.correct);
+                         data.append('entry.5678901234', ans.isCorrect);
+         
+                         fetch(formURL, { method: 'POST', mode: 'no-cors', body: data })
+                             .finally(() => {
+                                 submittedCount++;
+                                 if (submittedCount === answers.length) {
+                                     document.getElementById('submitting').classList.add('hidden');
+                                     document.getElementById('end').classList.remove('hidden');
+                                 }
+                             });
+                     });*/
+                }
+                submitStatus.textContent = '✅ Submission successful! Thank you for completing the quiz.';
+                submitStatus.style.color = 'green';
+            } catch (error) {
+                console.error('Error submitting results:', error);
+                submitStatus.textContent = '❌ There was a problem submitting your answers. Please click Retry. Ensure you have internet.';
+                submitStatus.style.color = 'red';
+                retryButton.classList.remove('hidden');
+            }
+
+            // document.getElementById('submitting').classList.remove('hidden');
+        }
+    </script>
+</body>
+
+</html>
