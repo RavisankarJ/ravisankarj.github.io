@@ -288,7 +288,7 @@
         ];
 
         let current = 0;
-        let timer, audioInterval;
+        let timer, audioInterval, questionStartTime, timeTaken;
         const answers = [];
         function shuffleArray(arr) {
             for (let i = arr.length - 1; i > 0; i--) {
@@ -336,8 +336,8 @@
                 btn.onclick = () => selectAnswer(opt);
                 document.getElementById('options').appendChild(btn);
             });
-
-            let timeLeft = 100;
+            questionStartTime = Date.now();
+            let timeLeft = 10;
             document.getElementById('timer').textContent = timeLeft;
             clearInterval(timer);
             clearInterval(audioInterval);
@@ -345,6 +345,13 @@
                 timeLeft--;
                 document.getElementById('timer').textContent = timeLeft;
                 if (timeLeft <= 0) {
+                    answers.push({
+                        question: current + 1,
+                        selected: null,
+                        correct: questions[current].answer,
+                        isCorrect: 'No',
+                        timeTaken: 10
+                    });
                     clearInterval(timer);
                     clearInterval(audioInterval);
                     nextQuestion();
@@ -369,12 +376,13 @@
             } else {
                 wrongSound.play();
             }
-
+            timeTaken = Math.round((Date.now() - questionStartTime) / 1000); // in seconds
             answers.push({
                 question: current + 1,
                 selected: choice,
                 correct: correct,
-                isCorrect: choice === correct ? 'Yes' : 'No'
+                isCorrect: choice === correct ? 'Yes' : 'No',
+                timeTaken: timeTaken
             });
             // Show visual feedback
             const buttons = document.querySelectorAll('#options button');
@@ -419,12 +427,10 @@
             const submitStatus = document.getElementById('submitStatus');
 
             const retryButton = document.getElementById('retryBtn');
-            console.log(document.getElementById('retryBtn'));
+
             retryButton.classList.add('hidden');
             submitStatus.textContent = 'Submitting results...';
             submitStatus.style.color = 'black';
-            console.log('i am here at 228');
-
 
             try {
                 for (let ans of answers) {
@@ -434,6 +440,7 @@
                     data.append('entry.1176053886', ans.selected);
                     data.append('entry.981247191', ans.correct);
                     data.append('entry.860396002', ans.isCorrect);
+                    data.append('entry.136111682', ans.timeTaken);
                     await fetch(formURL, {
                         method: 'POST',
                         mode: 'no-cors',
