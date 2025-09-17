@@ -300,13 +300,15 @@
 
             // Collect answers summary
             let answers = studentAnswers;
+            let now = new Date();
+            let istTime = now.toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
 
             // ✅ Send data to Google Sheet via Sheet.best
             fetch("https://api.sheetbest.com/sheets/f0e43c01-15fa-4b51-94cd-d459a37833dc", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify([{
-                    timestamp: new Date().toISOString(),
+                    timestamp: istTime,
                     name: studentName,
                     q1: answers[0],
                     q2: answers[1],
