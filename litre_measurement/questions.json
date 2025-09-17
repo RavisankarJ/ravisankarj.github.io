@@ -1,0 +1,80 @@
+[
+    {
+        "target": 1000,
+        "maxMov": -1,
+        "exactMove": -1,
+        "question": "Fill the tank 1L."
+    },
+    {
+        "target": 3000,
+        "maxMov": 6,
+        "exactMove": 1,
+        "question": "Fill the tank 3L in exactly 6 moves."
+    },
+    {
+        "target": 9450,
+        "maxMov": -1,
+        "exactMove": -1,
+        "question": "Fill the tank 9450mL."
+    },
+    {
+        "target": 5350,
+        "maxMov": 10,
+        "exactMove": -1,
+        "question": "Fill the tank 5350mL in less than 10 moves."
+    },
+    {
+        "target": 15500,
+        "maxMov": 20,
+        "exactMove": -1,
+        "question": "Fill the tank 15500mL in less than 20 moves."
+    },
+    {
+        "target": 950,
+        "maxMov": -1,
+        "exactMove": -1,
+        "question": "Fill the tank 950mL."
+    },
+    {
+        "target": 950,
+        "maxMov": 6,
+        "exactMove": 1,
+        "question": "Fill the tank 950mL in exactly 6 moves."
+    },
+    {
+        "target": 8800,
+        "maxMov": 11,
+        "exactMove": -1,
+        "question": "Fill the tank 88000mL in less than 11 moves."
+    },
+    {
+        "target": 600,
+        "maxMov": 3,
+        "exactMove": 1,
+        "question": "Fill the tank 600mL in exactly 3 moves."
+    },
+    {
+        "target": 17450,
+        "maxMov": -1,
+        "exactMove": -1,
+        "question": "Fill the tank 17450mL."
+    },
+    {
+        "target": 3450,
+        "maxMov": 10,
+        "exactMove": -1,
+        "question": "Fill the tank 3450mL in less than 10 moves."
+    },
+    {
+        "target": 9000,
+        "maxMov": 10,
+        "exactMove": 1,
+        "question": "Fill the tank 9000mL in exactly 10 moves."
+    },
+    {
+        "target": 8000,
+        "maxMov": 10,
+        "exactMove": -1,
+        "question": "Fill the tank 8000mL in less than 10 moves."
+    }
+]

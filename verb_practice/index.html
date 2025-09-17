@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verb Forms Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+        }
+
+        .card {
+            /* background: #fff; */
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            transition: all 0.3s ease;
+        }
+
+        h1,
+        h2 {
+            margin: 10px 0;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            margin: 15px 0;
+            width: 90%;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        button {
+            background: #4facfe;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #00c6ff;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .timer {
+            font-weight: bold;
+            margin: 10px 0;
+            color: #ff5252;
+        }
+
+        .score {
+            font-size: 24px;
+            font-weight: bold;
+            color: #016004;
+            animation: pop 1s ease forwards;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            color: red;
+            font-size: 14px;
+        }
+
+
+        @keyframes pop {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card" id="startScreen">
+        <h1>Verb Forms Quiz</h1>
+        <p>Enter your name to begin:</p>
+        <input type="text" id="studentName" placeholder="Your Name">
+        <button onclick="startQuiz()">Start</button>
+    </div>
+
+    <div class="card hidden" id="quizScreen">
+        <h2 id="verbPrompt"></h2>
+        <div class="timer">Time left: <span id="time">30</span>s</div>
+        <input type="text" id="form1" placeholder="Verb form 1"><br>
+        <input type="text" id="form2" placeholder="Verb form 2"><br>
+        <input type="text" id="form3" placeholder="Verb form 3"><br>
+        <button id="submitBtn" onclick="submitAnswer()">Submit</button>
+        <div id="feedback" class="feedback"></div>
+        <button id="nextBtn" class="hidden" onclick="nextQuestion()">Next Question</button>
+    </div>
+
+    <div class="card hidden" id="resultScreen">
+        <h1>Quiz Finished!</h1>
+        <div class="score" id="scoreDisplay"></div>
+        <button onclick="restartQuiz()">Play Again</button>
+    </div>
+
+    <script>
+        const verbs = [
+            { forms: ["awake", "awoke", "awoken"] },
+            // { forms: ["am, is, are", "was, were", "been"] },
+            { forms: ["beat", "beat", "beaten"] },
+            { forms: ["become", "became", "become"] },
+            { forms: ["begin", "began", "begun"] },
+            { forms: ["bend", "bent", "bent"] },
+            { forms: ["bet", "bet", "bet"] },
+            { forms: ["bid", "bid", "bid"] },
+            { forms: ["bite", "bit", "bitten"] },
+            { forms: ["blow", "blew", "blown"] },
+            { forms: ["break", "broke", "broken"] },
+            { forms: ["bring", "brought", "brought"] },
+            { forms: ["broadcast", "broadcast", "broadcast"] },
+            { forms: ["build", "built", "built"] },
+            { forms: ["buy", "bought", "bought"] },
+            { forms: ["catch", "caught", "caught"] },
+            { forms: ["choose", "chose", "chosen"] },
+            { forms: ["come", "came", "come"] },
+            { forms: ["cost", "cost", "cost"] },
+            { forms: ["cut", "cut", "cut"] },
+            { forms: ["dig", "dug", "dug"] },
+            { forms: ["do", "did", "done"] },
+           /* { forms: ["draw", "drew", "drawn"] },
+            { forms: ["drink", "drank", "drunk"] },
+            { forms: ["drive", "drove", "driven"] },
+            { forms: ["eat", "ate", "eaten"] },
+            { forms: ["fall", "fell", "fallen"] },
+            { forms: ["feel", "felt", "felt"] },
+            { forms: ["fight", "fought", "fought"] },
+            { forms: ["find", "found", "found"] },
+            { forms: ["fly", "flew", "flown"] },
+            { forms: ["forget", "forgot", "forgotten"] },
+            { forms: ["forgive", "forgave", "forgiven"] },
+            // { forms: ["get", "got", "got, gotten"] },
+            { forms: ["give", "gave", "given"] },
+            { forms: ["go", "went", "gone"] },
+            { forms: ["grow", "grew", "grown"] },
+            { forms: ["hang", "hung", "hung"] },
+            { forms: ["have", "had", "had"] },
+            { forms: ["hear", "heard", "heard"] },
+            { forms: ["hit", "hit", "hit"] },
+            { forms: ["hold", "held", "held"] },
+            { forms: ["keep", "kept", "kept"] },
+            { forms: ["know", "knew", "known"] },
+            { forms: ["lay", "laid", "laid"] },
+            { forms: ["lead", "led", "led"] },
+            { forms: ["leave", "left", "left"] },
+            { forms: ["lend", "lent", "lent"] },
+            { forms: ["let", "let", "let"] },
+            { forms: ["lie", "lay", "lain"] },
+            { forms: ["lose", "lost", "lost"] },
+            { forms: ["make", "made", "made"] },
+            { forms: ["mean", "meant", "meant"] },
+            { forms: ["meet", "met", "met"] },
+            { forms: ["pay", "paid", "paid"] },
+            { forms: ["put", "put", "put"] },
+            { forms: ["read", "read", "read"] },
+            { forms: ["ride", "rode", "ridden"] },
+            { forms: ["ring", "rang", "rung"] },
+            { forms: ["rise", "rose", "risen"] },
+            { forms: ["run", "ran", "run"] },
+            { forms: ["say", "said", "said"] },
+            { forms: ["see", "saw", "seen"] },
+            { forms: ["sell", "sold", "sold"] },
+            { forms: ["send", "sent", "sent"] },
+            { forms: ["sing", "sang", "sung"] },
+            { forms: ["sit", "sat", "sat"] },
+            { forms: ["sleep", "slept", "slept"] },
+            { forms: ["speak", "spoke", "spoken"] },
+            { forms: ["spend", "spent", "spent"] },
+            { forms: ["stand", "stood", "stood"] },
+            { forms: ["swim", "swam", "swum"] },
+            { forms: ["take", "took", "taken"] },
+            { forms: ["teach", "taught", "taught"] },
+            { forms: ["tear", "tore", "torn"] },
+            { forms: ["tell", "told", "told"] },
+            { forms: ["think", "thought", "thought"] },
+            { forms: ["throw", "threw", "thrown"] },
+            { forms: ["understand", "understood", "understood"] },
+            { forms: ["wake", "woke", "woken"] },
+            { forms: ["win", "won", "won"] },
+            { forms: ["write", "wrote", "written"] }*/
+        ];
+
+        let studentName = "";
+        let studentAnswers = [];
+
+        let currentQuestion = 0;
+        let questionVerb;
+        let score = 0;
+        let currentVerb;
+        let timer;
+        let timeLeft = 60;
+        let maxQuestion = 5;
+        function startQuiz() {
+            studentName = document.getElementById("studentName").value.trim();
+            if (!studentName) {
+                alert("Please enter your name!");
+                return;
+            }
+            document.getElementById("startScreen").classList.add("hidden");
+            document.getElementById("quizScreen").classList.remove("hidden");
+            currentQuestion = 0;
+            score = 0;
+            studentAnswers = [];
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            if (currentQuestion >= maxQuestion) {
+                endQuiz();
+                return;
+            }
+            currentVerb = verbs[Math.floor(Math.random() * verbs.length)];
+
+            // 🔹 Show a random verb form
+            let formIndex = Math.floor(Math.random() * 3);
+            questionVerb = currentVerb.forms[formIndex];
+            document.getElementById("verbPrompt").innerText =
+                `Verb ${currentQuestion + 1}/${maxQuestion}: "${questionVerb}"`;
+
+            document.getElementById("form1").value = "";
+            document.getElementById("form2").value = "";
+            document.getElementById("form3").value = "";
+            document.getElementById("feedback").innerHTML = "";
+            document.getElementById("nextBtn").classList.add("hidden");
+            document.getElementById("submitBtn").disabled = false;
+
+            timeLeft = 60;
+            document.getElementById("time").innerText = timeLeft;
+
+            clearInterval(timer);
+            timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById("time").innerText = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    submitAnswer();
+                }
+            }, 1000);
+        }
+
+        function submitAnswer() {
+            clearInterval(timer);
+            document.getElementById("submitBtn").disabled = true;
+
+            let ans1 = document.getElementById("form1").value.trim().toLowerCase();
+            let ans2 = document.getElementById("form2").value.trim().toLowerCase();
+            let ans3 = document.getElementById("form3").value.trim().toLowerCase();
+
+            let correctForms = currentVerb.forms.map(f => f.toLowerCase());
+            let studentForms = [ans1, ans2, ans3];
+
+            let feedbackMsg = "";
+            studentForms.forEach((ans, i) => {
+                if (ans === correctForms[i]) {
+                    score++;   // ✅ award 1 point for each correct
+                } else {
+                    feedbackMsg += `❌ ${["Verb 1", "Verb 2", "Verb 3"][i]}: Correct is "${currentVerb.forms[i]}"<br>`;
+                }
+            });
+
+            if (!feedbackMsg) {
+                feedbackMsg = "✅ All correct!";
+            }
+
+            document.getElementById("feedback").innerHTML = feedbackMsg;
+            document.getElementById("nextBtn").classList.remove("hidden");
+            studentAnswers.push([questionVerb, ans1, ans2, ans3].join("/"));  // store attempt for each Q
+            currentQuestion++; // move index but don’t load next question yet
+        }
+
+        function endQuiz() {
+            document.getElementById("quizScreen").classList.add("hidden");
+            document.getElementById("resultScreen").classList.remove("hidden");
+            document.getElementById("scoreDisplay").innerText =
+                `${studentName}, your score is ${score}/15 🎉`;
+
+            // Collect answers summary
+            let answers = studentAnswers;
+            let now = new Date();
+            let istTime = now.toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
+
+            // ✅ Send data to Google Sheet via Sheet.best
+            fetch("https://api.sheetbest.com/sheets/f0e43c01-15fa-4b51-94cd-d459a37833dc", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify([{
+                    timestamp: istTime,
+                    name: studentName,
+                    q1: answers[0],
+                    q2: answers[1],
+                    q3: answers[2],
+                    q4: answers[3],
+                    q5: answers[4],
+                    score: score
+                }])
+            })
+                .then(res => res.json())
+                .then(data => console.log("Saved:", data))
+                .catch(err => console.error("Error:", err));
+        }
+
+
+        function restartQuiz() {
+          // Reset variables
+          score = 0;
+          currentQuestion = 0;
+          studentAnswers = [];   // ✅ important: clear old answers
+
+          // Reset screens
+          document.getElementById("resultScreen").classList.add("hidden");
+          document.getElementById("startScreen").classList.remove("hidden");
+        }
+
+    </script>
+</body>
+
+</html>
