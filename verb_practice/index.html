@@ -325,9 +325,16 @@
 
 
         function restartQuiz() {
-            document.getElementById("resultScreen").classList.add("hidden");
-            document.getElementById("startScreen").classList.remove("hidden");
+          // Reset variables
+          score = 0;
+          currentQuestion = 0;
+          studentAnswers = [];   // ✅ important: clear old answers
+
+          // Reset screens
+          document.getElementById("resultScreen").classList.add("hidden");
+          document.getElementById("startScreen").classList.remove("hidden");
         }
+
     </script>
 </body>
 
