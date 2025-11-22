@@ -17,7 +17,6 @@
         }
 
         .card {
-            /* background: #fff; */
             padding: 20px;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -79,7 +78,6 @@
             font-size: 14px;
         }
 
-
         @keyframes pop {
             0% {
                 transform: scale(0.5);
@@ -95,6 +93,7 @@
 </head>
 
 <body>
+    <!-- Start Screen -->
     <div class="card" id="startScreen">
         <h1>Verb Forms Quiz</h1>
         <p>Enter your name to begin:</p>
@@ -102,6 +101,7 @@
         <button onclick="startQuiz()">Start</button>
     </div>
 
+    <!-- Quiz Screen -->
     <div class="card hidden" id="quizScreen">
         <h2 id="verbPrompt"></h2>
         <div class="timer">Time left: <span id="time">30</span>s</div>
@@ -113,6 +113,7 @@
         <button id="nextBtn" class="hidden" onclick="nextQuestion()">Next Question</button>
     </div>
 
+    <!-- Result Screen -->
     <div class="card hidden" id="resultScreen">
         <h1>Quiz Finished!</h1>
         <div class="score" id="scoreDisplay"></div>
@@ -122,7 +123,6 @@
     <script>
         const verbs = [
             { forms: ["awake", "awoke", "awoken"] },
-            // { forms: ["am, is, are", "was, were", "been"] },
             { forms: ["beat", "beat", "beaten"] },
             { forms: ["become", "became", "become"] },
             { forms: ["begin", "began", "begun"] },
@@ -142,67 +142,7 @@
             { forms: ["cost", "cost", "cost"] },
             { forms: ["cut", "cut", "cut"] },
             { forms: ["dig", "dug", "dug"] },
-            { forms: ["do", "did", "done"] },
-           /* { forms: ["draw", "drew", "drawn"] },
-            { forms: ["drink", "drank", "drunk"] },
-            { forms: ["drive", "drove", "driven"] },
-            { forms: ["eat", "ate", "eaten"] },
-            { forms: ["fall", "fell", "fallen"] },
-            { forms: ["feel", "felt", "felt"] },
-            { forms: ["fight", "fought", "fought"] },
-            { forms: ["find", "found", "found"] },
-            { forms: ["fly", "flew", "flown"] },
-            { forms: ["forget", "forgot", "forgotten"] },
-            { forms: ["forgive", "forgave", "forgiven"] },
-            // { forms: ["get", "got", "got, gotten"] },
-            { forms: ["give", "gave", "given"] },
-            { forms: ["go", "went", "gone"] },
-            { forms: ["grow", "grew", "grown"] },
-            { forms: ["hang", "hung", "hung"] },
-            { forms: ["have", "had", "had"] },
-            { forms: ["hear", "heard", "heard"] },
-            { forms: ["hit", "hit", "hit"] },
-            { forms: ["hold", "held", "held"] },
-            { forms: ["keep", "kept", "kept"] },
-            { forms: ["know", "knew", "known"] },
-            { forms: ["lay", "laid", "laid"] },
-            { forms: ["lead", "led", "led"] },
-            { forms: ["leave", "left", "left"] },
-            { forms: ["lend", "lent", "lent"] },
-            { forms: ["let", "let", "let"] },
-            { forms: ["lie", "lay", "lain"] },
-            { forms: ["lose", "lost", "lost"] },
-            { forms: ["make", "made", "made"] },
-            { forms: ["mean", "meant", "meant"] },
-            { forms: ["meet", "met", "met"] },
-            { forms: ["pay", "paid", "paid"] },
-            { forms: ["put", "put", "put"] },
-            { forms: ["read", "read", "read"] },
-            { forms: ["ride", "rode", "ridden"] },
-            { forms: ["ring", "rang", "rung"] },
-            { forms: ["rise", "rose", "risen"] },
-            { forms: ["run", "ran", "run"] },
-            { forms: ["say", "said", "said"] },
-            { forms: ["see", "saw", "seen"] },
-            { forms: ["sell", "sold", "sold"] },
-            { forms: ["send", "sent", "sent"] },
-            { forms: ["sing", "sang", "sung"] },
-            { forms: ["sit", "sat", "sat"] },
-            { forms: ["sleep", "slept", "slept"] },
-            { forms: ["speak", "spoke", "spoken"] },
-            { forms: ["spend", "spent", "spent"] },
-            { forms: ["stand", "stood", "stood"] },
-            { forms: ["swim", "swam", "swum"] },
-            { forms: ["take", "took", "taken"] },
-            { forms: ["teach", "taught", "taught"] },
-            { forms: ["tear", "tore", "torn"] },
-            { forms: ["tell", "told", "told"] },
-            { forms: ["think", "thought", "thought"] },
-            { forms: ["throw", "threw", "thrown"] },
-            { forms: ["understand", "understood", "understood"] },
-            { forms: ["wake", "woke", "woken"] },
-            { forms: ["win", "won", "won"] },
-            { forms: ["write", "wrote", "written"] }*/
+            { forms: ["do", "did", "done"] }
         ];
 
         let studentName = "";
@@ -215,6 +155,7 @@
         let timer;
         let timeLeft = 60;
         let maxQuestion = 5;
+
         function startQuiz() {
             studentName = document.getElementById("studentName").value.trim();
             if (!studentName) {
@@ -236,7 +177,6 @@
             }
             currentVerb = verbs[Math.floor(Math.random() * verbs.length)];
 
-            // 🔹 Show a random verb form
             let formIndex = Math.floor(Math.random() * 3);
             questionVerb = currentVerb.forms[formIndex];
             document.getElementById("verbPrompt").innerText =
@@ -277,7 +217,7 @@
             let feedbackMsg = "";
             studentForms.forEach((ans, i) => {
                 if (ans === correctForms[i]) {
-                    score++;   // ✅ award 1 point for each correct
+                    score++;
                 } else {
                     feedbackMsg += `❌ ${["Verb 1", "Verb 2", "Verb 3"][i]}: Correct is "${currentVerb.forms[i]}"<br>`;
                 }
@@ -289,8 +229,8 @@
 
             document.getElementById("feedback").innerHTML = feedbackMsg;
             document.getElementById("nextBtn").classList.remove("hidden");
-            studentAnswers.push([questionVerb, ans1, ans2, ans3].join("/"));  // store attempt for each Q
-            currentQuestion++; // move index but don’t load next question yet
+            studentAnswers.push([questionVerb, ans1, ans2, ans3].join("/"));
+            currentQuestion++;
         }
 
         function endQuiz() {
@@ -299,43 +239,34 @@
             document.getElementById("scoreDisplay").innerText =
                 `${studentName}, your score is ${score}/15 🎉`;
 
-            // Collect answers summary
             let answers = studentAnswers;
             let now = new Date();
             let istTime = now.toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
 
-            // ✅ Send data to Google Sheet via Sheet.best
-            fetch("https://api.sheetbest.com/sheets/f0e43c01-15fa-4b51-94cd-d459a37833dc", {
+            fetch("https://script.google.com/macros/s/AKfycbwq3eyMMeaqEW7sbEz_I94JpUwRRBti_ck7SmL9WX1-wvV2fux5XE2QSjp_mNprmkyYcw/exec", {
                 method: "POST",
+                mode: "no-cors",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify([{
+                body: JSON.stringify({
                     timestamp: istTime,
                     name: studentName,
-                    q1: answers[0],
-                    q2: answers[1],
-                    q3: answers[2],
-                    q4: answers[3],
-                    q5: answers[4],
+                    answers: studentAnswers,
                     score: score
-                }])
+                })
             })
                 .then(res => res.json())
                 .then(data => console.log("Saved:", data))
                 .catch(err => console.error("Error:", err));
         }
 
-
         function restartQuiz() {
-          // Reset variables
-          score = 0;
-          currentQuestion = 0;
-          studentAnswers = [];   // ✅ important: clear old answers
+            score = 0;
+            currentQuestion = 0;
+            studentAnswers = [];
 
-          // Reset screens
-          document.getElementById("resultScreen").classList.add("hidden");
-          document.getElementById("startScreen").classList.remove("hidden");
+            document.getElementById("resultScreen").classList.add("hidden");
+            document.getElementById("startScreen").classList.remove("hidden");
         }
-
     </script>
 </body>
 
