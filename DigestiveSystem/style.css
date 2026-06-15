@@ -1,0 +1,930 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+
+:root {
+    --accent: #f39c12;
+    --accent-dark: #e67e22;
+    --glass: rgba(15, 15, 15, 0.75);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --text: #ffffff;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: 'Outfit', sans-serif;
+    background-color: #050505;
+    color: var(--text);
+}
+
+canvas {
+    display: block;
+}
+
+/* MAIN BRANDING HEADER */
+#mainHeader {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    z-index: 1000;
+    pointer-events: none;
+    text-align: right;
+}
+
+#btnAppInfo {
+    pointer-events: auto;
+}
+
+.logo-box h1 {
+    font-size: 1.6rem;
+    font-weight: 900;
+    margin: 0;
+    letter-spacing: 3px;
+    color: #fff;
+    text-transform: uppercase;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(135deg, #be2f2f 0%, #a64040 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: #f3de12;
+    text-transform: uppercase;
+    margin-top: 5px;
+    opacity: 0.9;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.subtitle::after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+}
+
+/* SIDE TOOLTIP (RIGHT) */
+#organTooltip {
+    position: absolute;
+    top: 30%;
+    right: 20px;
+    transform: translateY(-50%);
+    background: var(--glass);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    padding: 15px 25px;
+    border-radius: 15px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    z-index: 100;
+    transition: all 0.4s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    width: 240px;
+    max-height: 240px;
+    text-align: center;
+}
+
+#organTooltip.hidden {
+    opacity: 0;
+    transform: translateY(-50%) translateX(100px);
+}
+
+#organDetailImage {
+    width: 100%;
+    max-height: 150px;
+    object-fit: contain;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.chewing-sprite {
+    width: 142px;
+    height: 150px;
+    background-image: url('assets/mouth_chewing_sprite.png');
+    background-size: 400% 100%;
+    animation: chew 0.6s steps(3) infinite;
+    margin: 10px auto 0 auto;
+    border-radius: 10px;
+}
+
+@keyframes chew {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: 100% 0;
+    }
+}
+
+/* MALFUNCTION ALERT */
+#malfunctionAlert {
+    position: absolute;
+    top: 15%;
+    left: 20px;
+    background: rgba(40, 10, 10, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid #e74c3c;
+    padding: 15px 25px;
+    border-radius: 15px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e74c3c;
+    z-index: 100;
+    transition: all 0.4s ease;
+    box-shadow: 0 0 20px rgba(231, 76, 60, 0.4);
+    width: 250px;
+}
+
+#malfunctionAlert.hidden {
+    opacity: 0;
+    transform: translateX(-50px);
+    pointer-events: none;
+}
+
+/* SIDE DRAWER SYSTEM (SLEEK) */
+#sideDrawer {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    z-index: 500;
+    transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+#sideDrawer.closed {
+    transform: translateY(-50%) translateX(280px);
+    /* Only show tabs */
+}
+
+/* TABS THAT STICK OUT */
+.drawer-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-right: -1px;
+}
+
+.drawer-tab {
+    width: 35px;
+    height: 100px;
+    background: rgba(20, 20, 20, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-right: none;
+    border-radius: 12px 0 0 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #aaa;
+    writing-mode: vertical-rl;
+    text-transform: uppercase;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.drawer-tab:hover {
+    color: var(--accent);
+    background: rgba(30, 30, 30, 1);
+    width: 40px;
+}
+
+.drawer-tab.active {
+    color: var(--accent);
+    background: rgba(15, 15, 15, 0.9);
+    width: 45px;
+    border-color: var(--accent);
+    box-shadow: -8px 0 20px rgba(243, 156, 18, 0.2);
+}
+
+/* CONTENT CONTAINER */
+.drawer-content {
+    width: 280px;
+    height: 500px;
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(25px);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px 0 0 15px;
+    padding: 25px;
+    box-sizing: border-box;
+    box-shadow: -15px 0 40px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+}
+
+.drawer-panel {
+    display: none;
+    flex-direction: column;
+    height: 100%;
+}
+
+.drawer-panel.active {
+    display: flex;
+}
+
+.drawer-panel h3 {
+    margin: 0 0 20px 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--accent);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
+}
+
+/* FOOD GRID (VERTICAL) */
+#foodGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+#foodGrid::-webkit-scrollbar {
+    width: 4px;
+}
+
+#foodGrid::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+}
+
+.foodTile {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 12px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.foodTile img {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 8px;
+}
+
+.foodTile span {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.foodTile:hover {
+    background: rgba(243, 156, 18, 0.1);
+    border-color: var(--accent);
+    transform: translateY(-3px);
+}
+
+/* SETTINGS LIST */
+.settings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.control-btn {
+    width: 100%;
+    text-align: left;
+    padding: 12px 20px;
+}
+
+/* SLEEK TOGGLE BUTTONS */
+.control-btn {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 12px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.control-btn::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.control-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    transform: translateX(5px);
+}
+
+.control-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(243, 156, 18, 0.4);
+}
+
+/* SLIM QUIZ RIBBON */
+/* COMPACT VERTICAL QUIZ PANEL */
+#quizMissionOverlay {
+    position: absolute;
+    top: 25px;
+    /* left: 50%; */
+    /* transform: translateX(-50%); */
+    background: rgba(15, 15, 15, 0.85);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15px 20px;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    z-index: 1000;
+    width: auto;
+    max-width: 45%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: center;
+}
+
+#quizMissionOverlay.hidden {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-80px);
+    pointer-events: none;
+}
+
+.mission-tag {
+    background: var(--accent);
+    color: #000;
+    font-size: 0.6rem;
+    font-weight: 900;
+    padding: 2px 10px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.mission-text {
+    width: 100%;
+    margin: 5px 0;
+}
+
+#quizQuestionText {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #fff;
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+.quiz-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding-top: 5px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+#quizFeedback.correct {
+    color: #2ecc71;
+}
+
+#quizFeedback.incorrect {
+    color: #e74c3c;
+}
+
+/* QUIZ PANEL STYLES */
+.quiz-info p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #ccc;
+    margin-bottom: 20px;
+}
+
+.quiz-stats {
+    display: flex;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.stat-item {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.stat-item span {
+    color: #fff;
+    margin-left: 5px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* PLAYBACK CONTROLS (DOCKED BOTTOM) */
+#playbackControls {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    background: rgba(15, 15, 15, 0.85);
+    backdrop-filter: blur(20px);
+    padding: 14px 40px;
+    border-radius: 60px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1000;
+    width: 550px;
+    max-width: 95vw;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+
+#playbackControls.hidden {
+    opacity: 0;
+    transform: translateX(-50%) translateY(80px);
+    pointer-events: none;
+}
+
+#btnPause {
+    background: var(--accent);
+    border: none;
+    color: white;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.2s, background 0.3s;
+}
+
+#btnPause:hover {
+    background: var(--accent-dark);
+    transform: scale(1.1);
+}
+
+#progressSlider {
+    flex-grow: 1;
+    cursor: pointer;
+    accent-color: var(--accent);
+    height: 5px;
+}
+
+#speedControls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-left: 15px;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#speedControls span {
+    font-size: 1.1rem;
+    cursor: default;
+}
+
+#speedControl {
+    width: 80px;
+    cursor: pointer;
+    accent-color: var(--accent);
+}
+
+@media (max-width: 768px) {
+    #playbackControls {
+        width: 90vw;
+        bottom: 160px;
+        padding: 8px 15px;
+        gap: 10px;
+    }
+
+    #speedControls {
+        padding-left: 10px;
+    }
+
+    #speedControl {
+        width: 60px;
+    }
+}
+
+#nutritionalDashboard {
+    position: absolute;
+    top: 60%;
+    left: 20px;
+    transform: translateY(-50%);
+    width: 280px;
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    padding: 20px;
+    z-index: 90;
+    transition: all 0.5s ease;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+#nutritionalDashboard.hidden {
+    transform: translateY(-50%) translateX(-320px);
+    opacity: 0;
+}
+
+.dashboard-header h2 {
+    margin: 0;
+    font-size: 1.3rem;
+    color: var(--accent);
+}
+
+#dashFoodType {
+    font-size: 0.75rem;
+    color: #aaa;
+    margin-bottom: 12px;
+}
+
+.stat-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.stat-label span {
+    font-weight: 600;
+    color: #f1c40f;
+}
+
+.original-val {
+    font-size: 0.7rem;
+    color: #777;
+    font-weight: normal;
+}
+
+.progress-bg {
+    width: 100%;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+    margin-top: 3px;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+#activeEnzymeBox {
+    margin-top: 15px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#enzymeName {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #3498db;
+    margin-bottom: 8px;
+}
+
+#enzymeWorkList {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.enzyme-work-item {
+    font-size: 0.7rem;
+}
+
+/* FOOD SELECTOR (BOTTOM RIBBON) */
+#foodPanel {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+    z-index: 100;
+}
+
+.food-scroll {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 10px 0;
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.food-scroll::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari */
+}
+
+.foodItem {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--glass);
+    padding: 8px 12px;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    min-width: 80px;
+}
+
+.foodItem img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.foodItem span {
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.foodItem:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+    background: rgba(243, 156, 18, 0.1);
+}
+
+/* POPUP (CENTERED) */
+#infoPopup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    padding: 30px;
+    border-radius: 20px;
+    width: 320px;
+    text-align: center;
+    z-index: 1000;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+#infoPopup.hidden {
+    display: none;
+}
+
+#infoPopup h3 {
+    margin-top: 0;
+    color: var(--accent);
+}
+
+#closePopup {
+    background: var(--accent);
+    border: none;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+    #playbackControls {
+        width: 90vw;
+        bottom: 160px;
+        padding: 8px 15px;
+    }
+
+    #nutritionalDashboard {
+        width: 90vw;
+        left: 5vw;
+        bottom: 230px;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+
+    .stat-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    #foodPanel {
+        bottom: 10px;
+    }
+
+    .food-scroll {
+        justify-content: flex-start;
+    }
+
+    #organTooltip {
+        font-size: 0.9rem;
+        padding: 8px 20px;
+        width: auto;
+        white-space: nowrap;
+    }
+}
+
+/* SCENARIO CONTROLS */
+.scenario-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.scenario-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px 15px;
+    border-radius: 12px;
+}
+
+.scenario-info {
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 15px;
+    line-height: 1.4;
+}
+
+/* TOGGLE SWITCH STYLES */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: var(--accent);
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px var(--accent);
+}
+
+input:checked+.slider:before {
+    transform: translateX(20px);
+}
+
+/* TUTORIAL MODAL */
+#tutorialModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease;
+}
+
+#tutorialModal.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.tutorial-content {
+    position: relative;
+    width: 600px;
+    max-width: 90vw;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    text-align: center;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    color: #aaa;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close-btn:hover {
+    color: #fff;
+}
+
+.tutorial-text {
+    font-size: 1.1rem;
+    margin: 15px 0;
+    line-height: 1.5;
+    min-height: 50px;
+}
+
+.tutorial-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.tutorial-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    transition: background 0.3s;
+}
+
+.dot.active {
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+}

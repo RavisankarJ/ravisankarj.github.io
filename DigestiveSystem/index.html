@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Human Digestive System Simulation</title>
+    <link rel="stylesheet" href="./style.css" />
+
+</head>
+
+<body>
+    <!-- Main Branding Header -->
+    <header id="mainHeader">
+        <button id="btnAppInfo" class="control-btn"
+            style="width: auto; position: absolute; left: -110px; top: 0; padding: 10px 15px;">Guide</button>
+        <div class="logo-box">
+            <h1>HUMAN DIGESTIVE SYSTEM</h1>
+            <div class="subtitle">Interactive 3D Physiology Simulation</div>
+        </div>
+    </header>
+    <script type="module" src="./scripts/main.js"></script>
+    <div id="organTooltip">
+        <div id="organNameText">Current Organ: Mouth</div>
+        <img id="organDetailImage" src="" alt="Organ Detail" style="display: none;">
+        <div id="organSpriteAnimation" class="chewing-sprite" style="display: none;"></div>
+    </div>
+    <div id="malfunctionAlert" class="hidden">Malfunction Alert</div>
+
+    <!-- Unified Right Side Drawer System -->
+    <div id="sideDrawer" class="closed">
+        <!-- Tabs that stick out -->
+        <div class="drawer-tabs">
+            <div id="tabFood" class="drawer-tab active" title="Food Menu">FOOD</div>
+            <div id="tabSettings" class="drawer-tab" title="Display Settings">SETTINGS</div>
+            <div id="tabQuiz" class="drawer-tab" title="Knowledge Check">QUIZ</div>
+        </div>
+
+        <!-- The actual content panels -->
+        <div class="drawer-content">
+            <!-- Food Panel -->
+            <div id="panelFood" class="drawer-panel active">
+                <h3>Select Food</h3>
+                <div id="foodGrid">
+                    <div class="foodTile" data-food="apple">
+                        <img src="assets/apple.png" alt="Apple">
+                        <span>Apple</span>
+                    </div>
+                    <div class="foodTile" data-food="banana">
+                        <img src="assets/banana.png" alt="Banana">
+                        <span>Banana</span>
+                    </div>
+                    <div class="foodTile" data-food="briyani">
+                        <img src="assets/briyani.png" alt="Biryani">
+                        <span>Biryani</span>
+                    </div>
+                    <div class="foodTile" data-food="fish">
+                        <img src="assets/fish.png" alt="Fish">
+                        <span>Fish</span>
+                    </div>
+                    <div class="foodTile" data-food="chips">
+                        <img src="assets/chips.png" alt="Chips">
+                        <span>Chips</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Panel -->
+            <div id="panelSettings" class="drawer-panel">
+                <h3>Display Settings</h3>
+                <div class="settings-list">
+                    <button id="togglePathBtn" class="control-btn">Show Path</button>
+                    <button id="toggleMarkersBtn" class="control-btn">Show Markers</button>
+                </div>
+
+                <h3 style="margin-top: 30px;">Physiology Scenarios</h3>
+                <div class="scenario-controls">
+                    <div class="scenario-item">
+                        <span>Proper Chewing</span>
+                        <label class="switch">
+                            <input type="checkbox" id="simChewing" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="scenario-item">
+                        <span>Healthy Pancreas</span>
+                        <label class="switch">
+                            <input type="checkbox" id="simPancreas" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="scenario-item">
+                        <span>Healthy Liver</span>
+                        <label class="switch">
+                            <input type="checkbox" id="simLiver" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <p class="scenario-info">Toggle these to see how organ health affects nutrient absorption in the
+                    dashboard.</p>
+            </div>
+
+            <!-- Quiz Panel -->
+            <div id="panelQuiz" class="drawer-panel">
+                <h3>Knowledge Check</h3>
+                <div class="quiz-info">
+                    <p>Test your knowledge! Start the quiz and click on the correct organs in the 3D view.</p>
+                    <div class="quiz-stats">
+                        <div class="stat-item">Score: <span id="quizScore">0</span></div>
+                        <div class="stat-item">Progress: <span id="quizProgress">0/0</span></div>
+                    </div>
+                    <button id="btnStartQuiz" class="control-btn active">Start New Quiz</button>
+                    <button id="btnStopQuiz" class="control-btn hidden" style="margin-top:10px;">End Quiz</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quiz Question Overlay -->
+    <div id="quizMissionOverlay" class="hidden">
+        <div class="mission-tag">QUIZ</div>
+        <div class="mission-text">
+            <div id="quizQuestionText">Click on the correct organ...</div>
+        </div>
+        <div class="quiz-actions">
+            <div id="quizFeedback"></div>
+            <button id="btnHintQuiz" class="control-btn"
+                style="width: auto; padding: 8px 15px; border-color: rgba(255,255,255,0.3);">Hint</button>
+            <button id="btnSkipQuiz" class="control-btn" style="width: auto; padding: 8px 15px;">Skip</button>
+        </div>
+    </div>
+
+    <!-- Playback Controls -->
+    <div id="playbackControls" class="hidden">
+        <button id="btnPause" title="Play/Pause">||</button>
+        <input type="range" id="progressSlider" min="0" max="1" step="0.001" value="0" />
+        <div id="speedControls">
+            <span class="label-small">Speed</span>
+            <input type="range" id="speedControl" min="0.0001" max="0.005" step="0.0001" value="0.001" />
+        </div>
+    </div>
+
+    <!-- Nutritional Dashboard -->
+    <div id="nutritionalDashboard" class="hidden">
+        <div class="dashboard-header">
+            <h2 id="dashFoodName">Apple</h2>
+            <div id="dashFoodType">Original Composition</div>
+        </div>
+
+        <div class="stat-grid">
+            <div class="stat-group">
+                <div class="stat-label">Carbs <span id="val-carbs">0%</span></div>
+                <div class="progress-bg">
+                    <div id="bar-carbs" class="progress-fill"></div>
+                </div>
+            </div>
+            <div class="stat-group">
+                <div class="stat-label">Protein <span id="val-protein">0%</span></div>
+                <div class="progress-bg">
+                    <div id="bar-protein" class="progress-fill"></div>
+                </div>
+            </div>
+            <div class="stat-group">
+                <div class="stat-label">Fats <span id="val-fats">0%</span></div>
+                <div class="progress-bg">
+                    <div id="bar-fats" class="progress-fill"></div>
+                </div>
+            </div>
+            <div class="stat-group">
+                <div class="stat-label">Water <span id="val-water">0%</span></div>
+                <div class="progress-bg">
+                    <div id="bar-water" class="progress-fill"
+                        style="background: linear-gradient(90deg, #3498db, #2980b9);"></div>
+                </div>
+            </div>
+            <div class="stat-group">
+                <div class="stat-label">Fiber <span id="val-fiber">0%</span></div>
+                <div class="progress-bg">
+                    <div id="bar-fiber" class="progress-fill"
+                        style="background: linear-gradient(90deg, #27ae60, #2ecc71);"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="activeEnzymeBox">
+            <div class="label-small">Active Secretions</div>
+            <div id="enzymeName">None</div>
+            <div id="enzymeWorkList"></div>
+        </div>
+    </div>
+
+    <div id="infoPopup" class="hidden">
+        <h3 id="popupTitle">Organ Name</h3>
+        <p id="popupContent">Details about this organ will appear here.</p>
+        <button id="closePopup">Close</button>
+    </div>
+
+    <!-- Tutorial Modal -->
+    <div id="tutorialModal" class="hidden">
+        <div class="tutorial-content">
+            <button id="btnCloseTutorial" class="close-btn">&times;</button>
+            <h2 style="margin-top: 0; color: var(--accent);">How to Use the Simulation</h2>
+            <div class="tutorial-slider">
+                <!-- Using placeholder. User should add their actual images here -->
+                <div
+                    style="width: 100%; height: 300px; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; border-radius: 12px; margin-bottom: 15px;">
+                    <img id="tutorialImage" src="assets/tutorial_1.png" alt="Tutorial Image Placeholder"
+                        style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 12px;">
+                </div>
+            </div>
+            <p id="tutorialText" class="tutorial-text">1. Select a food item from the menu on the right to start.</p>
+            <div class="tutorial-controls">
+                <button id="btnPrevTutorial" class="control-btn" style="width: auto;">&#8592; Prev</button>
+                <div id="tutorialDots" class="tutorial-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+                <button id="btnNextTutorial" class="control-btn" style="width: auto;">Next &#8594;</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
