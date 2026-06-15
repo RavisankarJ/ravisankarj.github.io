@@ -94,7 +94,7 @@ export function createFoodSprite(foodName) {
 
     const texture =
         textureLoader.load(
-            `/assets/${foodName}1.png`
+            `assets/${foodName}1.png`
         );
 
     const material =
