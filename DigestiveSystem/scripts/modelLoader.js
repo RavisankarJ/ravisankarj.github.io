@@ -9,8 +9,8 @@ export function loadDigestiveSystem(scene) {
 
     loader.load(
 
-      // "/models/digestive-system.glb",
-      "/models/digestivie_path_mesh1.glb",
+      // "models/digestive-system.glb",
+      "models/digestivie_path_mesh1.glb",
 
       (gltf) => {
 
